@@ -1,0 +1,419 @@
+[gd_scene load_steps=23 format=3 uid="uid://c3uugdt1acons"]
+
+[ext_resource type="Script" uid="uid://btrthufmhaejy" path="res://scripts/MainMenu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://bp11yxjecgp1k" path="res://assets/AssetSitable.png" id="3_sitable"]
+[ext_resource type="Texture2D" uid="uid://bs3qaj6qemmpd" path="res://assets/PatungKecil.png" id="4_2nypq"]
+[ext_resource type="Texture2D" uid="uid://d1pds7s0ihk83" path="res://assets/Tombol Pengaturan.png" id="5_settings_btn"]
+[ext_resource type="Texture2D" uid="uid://c406smycmw8ru" path="res://assets/Wajah_Karakter.png" id="6_avatar"]
+[ext_resource type="Texture2D" uid="uid://dj6sq3ahd8a5h" path="res://assets/Icon Belajar Bertahap_baru.png" id="7_btn_belajar"]
+[ext_resource type="Texture2D" uid="uid://k81e8f40id5y" path="res://assets/Icon Materi Aksara_baru.png" id="8_btn_materi"]
+[ext_resource type="Texture2D" uid="uid://ccbu83wicqefr" path="res://assets/Icon Latihan_baru.png" id="9_btn_latihan"]
+[ext_resource type="Texture2D" uid="uid://5o50qvg2p3ox" path="res://assets/Icon Papan Peringkat_baru.png" id="10_btn_peringkat"]
+[ext_resource type="FontFile" uid="uid://da4dq8uesj4ik" path="res://assets/fonts/Sigmar-Regular.ttf" id="11_font"]
+[ext_resource type="Texture2D" uid="uid://bgwyu30o7yexw" path="res://assets/SettingPopUp.png" id="12_popup_frame"]
+[ext_resource type="Texture2D" uid="uid://b0up24evnb0si" path="res://assets/Close.png" id="13_close"]
+[ext_resource type="Texture2D" uid="uid://c5brycg6jn4fw" path="res://assets/InputFieldSetting.png" id="14_input_field"]
+[ext_resource type="Texture2D" uid="uid://b7pvi13h4cflh" path="res://assets/SoundOn.png" id="15_sound_on"]
+[ext_resource type="Texture2D" uid="uid://csjuec1nhjimq" path="res://assets/ButtonWoodLayout.png" id="16_btn_wood"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_greeting"]
+font = ExtResource("11_font")
+font_size = 52
+font_color = Color(0.25098, 0.117647, 0.0901961, 1)
+shadow_size = 4
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_menu_btn"]
+font = ExtResource("11_font")
+font_size = 40
+outline_size = 14
+outline_color = Color(0.25098, 0.117647, 0.0901961, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_popup_title"]
+font = ExtResource("11_font")
+font_size = 62
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ubah_nama"]
+font = ExtResource("11_font")
+font_size = 36
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_input"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_terapkan"]
+font = ExtResource("11_font")
+font_size = 64
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 4)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AssetSitable" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -860.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_sitable")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PatungKecil" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 465.0
+offset_top = 1101.0
+offset_right = 606.0
+offset_bottom = 1334.676
+pivot_offset = Vector2(20, 21)
+texture = ExtResource("4_2nypq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnSettings" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 210.0
+offset_bottom = 210.0
+pivot_offset = Vector2(85, 85)
+texture_normal = ExtResource("5_settings_btn")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AvatarContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -170.0
+offset_top = 220.0
+offset_right = 170.0
+offset_bottom = 560.0
+grow_horizontal = 2
+pivot_offset = Vector2(170, 170)
+
+[node name="Avatar" type="TextureRect" parent="AvatarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_avatar")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelGreeting" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 580.0
+offset_right = 400.0
+offset_bottom = 670.0
+grow_horizontal = 2
+text = "Haiii Arma."
+label_settings = SubResource("LabelSettings_greeting")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -280.0
+offset_right = 480.0
+offset_bottom = 740.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnBelajar" type="TextureButton" parent="GridMenu"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 40.0
+offset_right = 450.0
+offset_bottom = 460.0
+pivot_offset = Vector2(210, 210)
+texture_normal = ExtResource("7_btn_belajar")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="GridMenu/BtnBelajar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "BELAJAR
+BERTAHAP"
+label_settings = SubResource("LabelSettings_menu_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnMateri" type="TextureButton" parent="GridMenu"]
+layout_mode = 0
+offset_left = 510.0
+offset_top = 40.0
+offset_right = 930.0
+offset_bottom = 460.0
+pivot_offset = Vector2(210, 210)
+texture_normal = ExtResource("8_btn_materi")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="GridMenu/BtnMateri"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "DAFTAR
+MATERI"
+label_settings = SubResource("LabelSettings_menu_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnLatihan" type="TextureButton" parent="GridMenu"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 530.0
+offset_right = 450.0
+offset_bottom = 950.0
+pivot_offset = Vector2(210, 210)
+texture_normal = ExtResource("9_btn_latihan")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="GridMenu/BtnLatihan"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "LATIHAN"
+label_settings = SubResource("LabelSettings_menu_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnPeringkat" type="TextureButton" parent="GridMenu"]
+layout_mode = 0
+offset_left = 510.0
+offset_top = 530.0
+offset_right = 930.0
+offset_bottom = 950.0
+pivot_offset = Vector2(210, 210)
+texture_normal = ExtResource("10_btn_peringkat")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="GridMenu/BtnPeringkat"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "PAPAN
+PERINGKAT"
+label_settings = SubResource("LabelSettings_menu_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingPopupLayer" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="SettingPopupLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="PopupContainer" type="Control" parent="SettingPopupLayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -730.0
+offset_right = 440.0
+offset_bottom = 730.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(440, 730)
+
+[node name="PopupFrame" type="TextureRect" parent="SettingPopupLayer/PopupContainer"]
+layout_mode = 0
+offset_right = 880.0
+offset_bottom = 1125.0
+texture = ExtResource("12_popup_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleLabel" type="Label" parent="SettingPopupLayer/PopupContainer/PopupFrame"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_top = 60.0
+offset_right = 330.0
+offset_bottom = 160.0
+grow_horizontal = 2
+text = "PENGATURAN"
+label_settings = SubResource("LabelSettings_popup_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnClose" type="TextureButton" parent="SettingPopupLayer/PopupContainer/PopupFrame"]
+layout_mode = 0
+offset_left = 730.0
+offset_top = 75.0
+offset_right = 855.0
+offset_bottom = 195.0
+pivot_offset = Vector2(62.5, 60)
+texture_normal = ExtResource("13_close")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelUbahNama" type="Label" parent="SettingPopupLayer/PopupContainer/PopupFrame"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 385.0
+offset_right = 450.0
+offset_bottom = 445.0
+text = "UBAH NAMA"
+label_settings = SubResource("LabelSettings_ubah_nama")
+vertical_alignment = 1
+
+[node name="InputFieldBg" type="TextureRect" parent="SettingPopupLayer/PopupContainer/PopupFrame"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 445.0
+offset_right = 795.0
+offset_bottom = 565.0
+texture = ExtResource("14_input_field")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LineEditName" type="LineEdit" parent="SettingPopupLayer/PopupContainer/PopupFrame/InputFieldBg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = 10.0
+offset_right = -115.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.6)
+theme_override_colors/caret_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("11_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxEmpty_input")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_input")
+placeholder_text = "PLACEHOLDER"
+max_length = 18
+caret_blink = true
+
+[node name="BtnSound" type="TextureButton" parent="SettingPopupLayer/PopupContainer/PopupFrame"]
+layout_mode = 0
+offset_left = 230.0
+offset_top = 716.0
+offset_right = 650.0
+offset_bottom = 1046.0
+pivot_offset = Vector2(210, 165)
+texture_normal = ExtResource("15_sound_on")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="BtnTerapkan" type="TextureButton" parent="SettingPopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -290.0
+offset_right = 280.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(280, 93)
+texture_normal = ExtResource("16_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelTerapkan" type="Label" parent="SettingPopupLayer/PopupContainer/BtnTerapkan"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Terapkan"
+label_settings = SubResource("LabelSettings_terapkan")
+horizontal_alignment = 1
+vertical_alignment = 1

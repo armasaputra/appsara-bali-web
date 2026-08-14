@@ -12,20 +12,26 @@ config_version=5
 
 config/name="AppsaraBaliWeb"
 run/main_scene="res://scenes/StartScreen.tscn"
-config/features=PackedStringArray("4.7", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://assets/AksaraTitle.png"
+
+[autoload]
+
+PlayerData="*res://scripts/PlayerData.gd"
 
 [display]
 
 window/size/viewport_width=1080
 window/size/viewport_height=1920
-window/size/resizable=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
+
+[dotnet]
+
+project/assembly_name="AppsaraBaliWeb"
 
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-renderer/rendering_method.web="gl_compatibility"

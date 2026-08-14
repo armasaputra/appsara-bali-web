@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceyi08xpr2w5v"
-path="res://.godot/imported/test_lat_crop.png-3ef2c4baab14bcffbb53ebec10a003b0.ctex"
+uid="uid://b7pvi13h4cflh"
+path="res://.godot/imported/SoundOn.png-95195eb601a3e53aa669703131ae71ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/test_lat_crop.png"
-dest_files=["res://.godot/imported/test_lat_crop.png-3ef2c4baab14bcffbb53ebec10a003b0.ctex"]
+source_file="res://assets/SoundOn.png"
+dest_files=["res://.godot/imported/SoundOn.png-95195eb601a3e53aa669703131ae71ae.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b7vy5q4v8w3lx"]
+[gd_scene load_steps=15 format=3 uid="uid://b7vy5q4v8w3lx"]
 
 [ext_resource type="Script" path="res://scripts/StartScreen.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/Background 1.png" id="2_bg"]
@@ -7,11 +7,20 @@
 [ext_resource type="Texture2D" path="res://assets/CharacterStart.png" id="5_char"]
 [ext_resource type="Texture2D" path="res://assets/AksaraTitle.png" id="6_title"]
 [ext_resource type="Texture2D" path="res://assets/TulisanAksaraBaliinTitle.png" id="7_sub"]
-[ext_resource type="Texture2D" path="res://assets/ButtonWoodLayout.png" id="8_btn"]
-[ext_resource type="FontFile" path="res://assets/fonts/Sigmar-Regular.ttf" id="9_font"]
+[ext_resource type="Texture2D" path="res://assets/NameInput.png" id="8_name_bg"]
+[ext_resource type="Texture2D" path="res://assets/WoodPopUp.png" id="9_popup_bg"]
+[ext_resource type="Texture2D" path="res://assets/ButtonWoodLayout.png" id="10_btn"]
+[ext_resource type="FontFile" path="res://assets/fonts/Sigmar-Regular.ttf" id="11_font"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_mulai"]
-font = ExtResource("9_font")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_input"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_popup"]
+font = ExtResource("11_font")
+font_size = 36
+font_color = Color(0.25098, 0.117647, 0.0901961, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_btn"]
+font = ExtResource("11_font")
 font_size = 86
 font_color = Color(1, 1, 1, 1)
 shadow_size = 6
@@ -113,7 +122,85 @@ texture = ExtResource("7_sub")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ButtonMulai" type="TextureButton" parent="."]
+[node name="NameInputPanel" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -90.0
+offset_right = 440.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(440, 146)
+texture = ExtResource("8_name_bg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LineEditName" type="LineEdit" parent="NameInputPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 72.0
+offset_top = 32.0
+offset_right = -170.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25098, 0.117647, 0.0901961, 1)
+theme_override_colors/font_placeholder_color = Color(0.25098, 0.117647, 0.0901961, 0.55)
+theme_override_colors/caret_color = Color(0.25098, 0.117647, 0.0901961, 1)
+theme_override_fonts/font = ExtResource("11_font")
+theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxEmpty_input")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_input")
+placeholder_text = "[ketik namamu di sini...]"
+alignment = 1
+max_length = 20
+caret_blink = true
+
+[node name="WoodPopUpPanel" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -90.0
+offset_right = 330.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(330, 146)
+texture = ExtResource("9_popup_bg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelPopup" type="Label" parent="WoodPopUpPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 10.0
+offset_right = -20.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "NAMA BERHASIL DIBUAT"
+label_settings = SubResource("LabelSettings_popup")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ActionButton" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -127,11 +214,11 @@ offset_bottom = -163.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(319.5, 106.5)
-texture_normal = ExtResource("8_btn")
+texture_normal = ExtResource("10_btn")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelMulai" type="Label" parent="ButtonMulai"]
+[node name="LabelAction" type="Label" parent="ActionButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -140,6 +227,6 @@ offset_top = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Mulai"
-label_settings = SubResource("LabelSettings_mulai")
+label_settings = SubResource("LabelSettings_btn")
 horizontal_alignment = 1
 vertical_alignment = 1

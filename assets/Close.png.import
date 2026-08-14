@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmuix1dtgsfll"
-path="res://.godot/imported/crop_latihan_test.png-1959175ac8ea3019acd4b8e6b8b3b65d.ctex"
+uid="uid://b0up24evnb0si"
+path="res://.godot/imported/Close.png-c39f12a286cdf38c8dd7acc12777ccdf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/crop_latihan_test.png"
-dest_files=["res://.godot/imported/crop_latihan_test.png-1959175ac8ea3019acd4b8e6b8b3b65d.ctex"]
+source_file="res://assets/Close.png"
+dest_files=["res://.godot/imported/Close.png-c39f12a286cdf38c8dd7acc12777ccdf.ctex"]
 
 [params]
 
