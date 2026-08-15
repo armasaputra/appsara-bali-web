@@ -16,3 +16,9 @@ func set_sound_muted(muted: bool) -> void:
 	if master_bus_idx != -1:
 		AudioServer.set_bus_mute(master_bus_idx, is_sound_muted)
 
+var current_materi_index: int = 1
+
+func set_current_materi(index: int) -> void:
+	current_materi_index = index
+
+

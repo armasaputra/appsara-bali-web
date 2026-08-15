@@ -41,7 +41,11 @@ func _setup_button(btn: TextureButton, callback: Callable) -> void:
 
 func _on_materi_item_pressed(index: int) -> void:
 	print("Materi %d dipilih!" % index)
+	if PlayerData:
+		PlayerData.set_current_materi(index)
+	get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
 
 func _on_kembali_pressed() -> void:
 	print("Kembali ke Main Menu...")
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+
