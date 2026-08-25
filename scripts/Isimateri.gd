@@ -484,7 +484,7 @@ func _ready() -> void:
 		_is_info_open = false
 
 	# Determine current materi ID from PlayerData autoload
-	var pd = get_node_or_null("/root/PlayerData")
+	var pd = _get_player_data()
 	if pd and "current_materi_index" in pd and pd.current_materi_index > 0:
 		current_materi_id = pd.current_materi_index
 	else:
@@ -638,7 +638,37 @@ func _render_page() -> void:
 	# Update Button States & Labels
 	_update_buttons(total_pages)
 
+func _get_player_data() -> Node:
+	var root_node = null
+	if is_inside_tree() and get_tree() and get_tree().root:
+		root_node = get_tree().root
+	else:
+		var tree = Engine.get_main_loop() as SceneTree
+		if tree and tree.root:
+			root_node = tree.root
+			
+	if root_node:
+		var pd_node = root_node.get_node_or_null("PlayerData")
+		if pd_node:
+			return pd_node
+		for child in root_node.get_children():
+			if str(child.name) == "PlayerData":
+				return child
+		for child in root_node.get_children():
+			if "from_latihan_retry" in child and child != self:
+				return child
+	return get_node_or_null("/root/PlayerData")
+
 func _update_buttons(total_pages: int) -> void:
+	_ensure_nodes()
+	var pd = _get_player_data()
+	var is_from_latihan = false
+	if pd != null and "from_latihan_retry" in pd:
+		is_from_latihan = bool(pd.from_latihan_retry)
+
+	if not label_top or not label_bottom:
+		return
+
 	if current_page_index == 0:
 		# Page 1
 		label_top.text = "Lanjut"
@@ -648,8 +678,12 @@ func _update_buttons(total_pages: int) -> void:
 		label_bottom.label_settings.font_size = 64
 	elif current_page_index >= total_pages - 1:
 		# Last Page
-		label_top.text = "Kembali"
-		label_top.label_settings.font_size = 64
+		if is_from_latihan:
+			label_top.text = "Jawab Lagi"
+			label_top.label_settings.font_size = 56
+		else:
+			label_top.text = "Kembali"
+			label_top.label_settings.font_size = 64
 		
 		label_bottom.text = "Materi sebelumnya"
 		label_bottom.label_settings.font_size = 42
@@ -666,8 +700,13 @@ func _on_btn_top_pressed() -> void:
 	var total_pages: int = pages.size()
 	
 	if current_page_index >= total_pages - 1:
-		# Last page: Top button functions as "Kembali" to Materi list
-		_go_back_to_materi()
+		# Last page
+		var pd = _get_player_data()
+		if pd and "from_latihan_retry" in pd and pd.from_latihan_retry:
+			print("Kembali ke IsiLatihan (Jawab Lagi)...")
+			get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
+		else:
+			_go_back_to_materi()
 	else:
 		# Next page
 		current_page_index += 1

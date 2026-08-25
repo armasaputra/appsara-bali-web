@@ -1,0 +1,921 @@
+[gd_scene load_steps=22 format=3 uid="uid://bsh7x2nay8q1d"]
+
+[ext_resource type="Script" path="res://scripts/IsiLatihan.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://bp11yxjecgp1k" path="res://assets/AssetSitable.png" id="3_sitable"]
+[ext_resource type="Texture2D" uid="uid://3dma7o4bfhy7" path="res://assets/TitleBoard.png" id="4_title_board"]
+[ext_resource type="FontFile" uid="uid://da4dq8uesj4ik" path="res://assets/fonts/Sigmar-Regular.ttf" id="5_font"]
+[ext_resource type="Texture2D" uid="uid://c3n77v1ywclwt" path="res://assets/SmallBoard.png" id="6_small_board"]
+[ext_resource type="Texture2D" uid="uid://c3ovkijwqmjbe" path="res://assets/MateriBox.png" id="7_materi_box"]
+[ext_resource type="Texture2D" uid="uid://ds05uvncktr42" path="res://assets/Playsound.png" id="8_playsound"]
+[ext_resource type="Texture2D" uid="uid://bxoup3rlopgcv" path="res://assets/MenuListBoard.png" id="9_opt_board"]
+[ext_resource type="Texture2D" uid="uid://bf2odjg5a44br" path="res://assets/SelectedAnswer.png" id="10_selected"]
+[ext_resource type="Texture2D" uid="uid://csjuec1nhjimq" path="res://assets/ButtonWoodLayout.png" id="11_btn_wood"]
+[ext_resource type="Texture2D" uid="uid://6u3kpt2n73cd" path="res://assets/DrawingBoard.png" id="12_drawing_board"]
+[ext_resource type="Texture2D" uid="uid://dmkb0mqancxty" path="res://assets/Clue.png" id="13_clue"]
+[ext_resource type="Texture2D" uid="uid://dox3i2k0xlmug" path="res://assets/Trash.png" id="14_trash"]
+[ext_resource type="Texture2D" uid="uid://bouibfrxqr346" path="res://assets/WoodPopUp.png" id="15_popup_bg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("5_font")
+font_size = 62
+font_color = Color(1, 1, 1, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_subtitle"]
+font = ExtResource("5_font")
+font_size = 23
+font_color = Color(1, 1, 1, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_header_board"]
+font = ExtResource("5_font")
+font_size = 44
+font_color = Color(1, 1, 1, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_prompt_header"]
+font = ExtResource("5_font")
+font_size = 28
+font_color = Color(0.18, 0.09, 0.07, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_prompt_sub"]
+font = ExtResource("5_font")
+font_size = 22
+font_color = Color(0.35, 0.16, 0.1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_prompt_kata"]
+font = ExtResource("5_font")
+font_size = 52
+font_color = Color(0.12, 0.06, 0.05, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_question_text"]
+font = ExtResource("5_font")
+font_size = 24
+font_color = Color(0.2, 0.1, 0.08, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_opt_text"]
+font = ExtResource("5_font")
+font_size = 38
+font_color = Color(0.22, 0.1, 0.08, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_btn_action"]
+font = ExtResource("5_font")
+font_size = 62
+font_color = Color(1, 1, 1, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_btn_hapus"]
+font = ExtResource("5_font")
+font_size = 52
+font_color = Color(1, 1, 1, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_popup_msg"]
+font = ExtResource("5_font")
+font_size = 36
+font_color = Color(1, 1, 1, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_popup_btn"]
+font = ExtResource("5_font")
+font_size = 48
+font_color = Color(1, 1, 1, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 3)
+
+[node name="IsiLatihan" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AssetSitable" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -860.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_sitable")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleBoard" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -440.0
+offset_top = 50.0
+offset_right = 440.0
+offset_bottom = 304.0
+grow_horizontal = 2
+texture = ExtResource("4_title_board")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelTitle" type="Label" parent="TitleBoard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 28.0
+offset_right = 380.0
+offset_bottom = 120.0
+grow_horizontal = 2
+text = "LATIHAN"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelSubtitle" type="Label" parent="TitleBoard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 120.0
+offset_right = 400.0
+offset_bottom = 180.0
+grow_horizontal = 2
+text = "Kelompok 1 : Aksara Wreastra (5 aksara)"
+label_settings = SubResource("LabelSettings_subtitle")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeaderBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -460.0
+offset_top = 310.0
+offset_right = 460.0
+offset_bottom = 425.0
+grow_horizontal = 2
+
+[node name="QuestionBoard" type="TextureRect" parent="HeaderBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -55.0
+offset_right = 200.0
+offset_bottom = 55.0
+grow_vertical = 2
+texture = ExtResource("6_small_board")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelQuestionNumber" type="Label" parent="HeaderBar/QuestionBoard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1/7"
+label_settings = SubResource("LabelSettings_header_board")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerBoard" type="TextureRect" parent="HeaderBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -55.0
+offset_bottom = 55.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("11_btn_wood")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelTimer" type="Label" parent="HeaderBar/TimerBoard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Waktu 1:35"
+label_settings = SubResource("LabelSettings_header_board")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChoiceContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MateriBox" type="TextureRect" parent="ChoiceContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -480.0
+offset_top = 430.0
+offset_right = 480.0
+offset_bottom = 1390.0
+grow_horizontal = 2
+texture = ExtResource("7_materi_box")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ContentVBox" type="VBoxContainer" parent="ChoiceContainer/MateriBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 75.0
+offset_top = 35.0
+offset_right = -75.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 0
+
+[node name="LabelPromptHeader" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+layout_mode = 2
+text = "Silahkan di Klik gambar suara berikut :"
+label_settings = SubResource("LabelSettings_prompt_header")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="LabelPromptSub" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+layout_mode = 2
+text = "Hanya sampai tiga (3) kali pengulangan suara"
+label_settings = SubResource("LabelSettings_prompt_sub")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SoundSection" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnPlaySound" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/SoundSection"]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+pivot_offset = Vector2(55, 55)
+texture_normal = ExtResource("8_playsound")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PromptKataLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+layout_mode = 2
+text = "‘Hana raka’"
+label_settings = SubResource("LabelSettings_prompt_kata")
+horizontal_alignment = 1
+
+[node name="PromptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelQuestionText" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+layout_mode = 2
+text = "Manakah penulisan Aksara Bali yang tepat?"
+label_settings = SubResource("LabelSettings_question_text")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Spacer" type="Control" parent="ChoiceContainer/MateriBox/ContentVBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="OptionsContainer" type="VBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BtnOption1" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
+custom_minimum_size = Vector2(760, 108)
+layout_mode = 2
+pivot_offset = Vector2(380, 54)
+texture_normal = ExtResource("9_opt_board")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = 8.0
+offset_right = -35.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "A. Ka"
+label_settings = SubResource("LabelSettings_opt_text")
+vertical_alignment = 1
+
+[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox"]
+custom_minimum_size = Vector2(180, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox"]
+visible = false
+custom_minimum_size = Vector2(65, 65)
+layout_mode = 2
+texture = ExtResource("10_selected")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnOption2" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
+custom_minimum_size = Vector2(760, 108)
+layout_mode = 2
+pivot_offset = Vector2(380, 54)
+texture_normal = ExtResource("9_opt_board")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = 8.0
+offset_right = -35.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "B. Ca"
+label_settings = SubResource("LabelSettings_opt_text")
+vertical_alignment = 1
+
+[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox"]
+custom_minimum_size = Vector2(180, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox"]
+visible = false
+custom_minimum_size = Vector2(65, 65)
+layout_mode = 2
+texture = ExtResource("10_selected")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnOption3" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
+custom_minimum_size = Vector2(760, 108)
+layout_mode = 2
+pivot_offset = Vector2(380, 54)
+texture_normal = ExtResource("9_opt_board")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = 8.0
+offset_right = -35.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "C. Na"
+label_settings = SubResource("LabelSettings_opt_text")
+vertical_alignment = 1
+
+[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox"]
+custom_minimum_size = Vector2(180, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox"]
+visible = false
+custom_minimum_size = Vector2(65, 65)
+layout_mode = 2
+texture = ExtResource("10_selected")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnPeriksaChoice" type="TextureButton" parent="ChoiceContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -430.0
+offset_right = 280.0
+offset_bottom = -244.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(280, 93)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelPeriksaChoice" type="Label" parent="ChoiceContainer/BtnPeriksaChoice"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Periksa"
+label_settings = SubResource("LabelSettings_btn_action")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DrawingContainer" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InstructionBoard" type="TextureRect" parent="DrawingContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -460.0
+offset_top = 440.0
+offset_right = 460.0
+offset_bottom = 570.0
+grow_horizontal = 2
+texture = ExtResource("11_btn_wood")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelInstruction" type="Label" parent="DrawingContainer/InstructionBoard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ayo, coba tulis aksara Ca"
+label_settings = SubResource("LabelSettings_opt_text")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DrawingBoard" type="TextureRect" parent="DrawingContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -460.0
+offset_top = 590.0
+offset_right = 460.0
+offset_bottom = 1320.0
+grow_horizontal = 2
+texture = ExtResource("12_drawing_board")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DrawingArea" type="Control" parent="DrawingContainer/DrawingBoard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="GhostAksara" type="TextureRect" parent="DrawingContainer/DrawingBoard/DrawingArea"]
+modulate = Color(0.2, 0.2, 0.2, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnClue" type="TextureButton" parent="DrawingContainer/DrawingBoard"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 55.0
+offset_right = -50.0
+offset_bottom = 145.0
+grow_horizontal = 0
+pivot_offset = Vector2(35, 45)
+texture_normal = ExtResource("13_clue")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="BtnHapus" type="TextureButton" parent="DrawingContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -480.0
+offset_right = 280.0
+offset_bottom = -324.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(280, 78)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBoxHapus" type="HBoxContainer" parent="DrawingContainer/BtnHapus"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="LabelHapus" type="Label" parent="DrawingContainer/BtnHapus/HBoxHapus"]
+layout_mode = 2
+text = "Hapus"
+label_settings = SubResource("LabelSettings_btn_hapus")
+vertical_alignment = 1
+
+[node name="IconTrash" type="TextureRect" parent="DrawingContainer/BtnHapus/HBoxHapus"]
+custom_minimum_size = Vector2(50, 55)
+layout_mode = 2
+texture = ExtResource("14_trash")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnPeriksaDraw" type="TextureButton" parent="DrawingContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -300.0
+offset_right = 280.0
+offset_bottom = -144.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(280, 78)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelPeriksaDraw" type="Label" parent="DrawingContainer/BtnPeriksaDraw"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Periksa"
+label_settings = SubResource("LabelSettings_btn_hapus")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WrongPopupLayer" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimOverlay" type="ColorRect" parent="WrongPopupLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="PopupContainer" type="Control" parent="WrongPopupLayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -380.0
+offset_right = 440.0
+offset_bottom = 380.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(440, 380)
+
+[node name="PopupFrame" type="TextureRect" parent="WrongPopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_popup_bg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelWrongMessage" type="Label" parent="WrongPopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 100.0
+offset_right = 340.0
+offset_bottom = 320.0
+grow_horizontal = 2
+text = "Maaf jawaban kamu masih salah"
+label_settings = SubResource("LabelSettings_popup_msg")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BtnJawabLagi" type="TextureButton" parent="WrongPopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -340.0
+offset_right = 220.0
+offset_bottom = -210.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(220, 65)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelJawabLagi" type="Label" parent="WrongPopupLayer/PopupContainer/BtnJawabLagi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Jawab lagi"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnLihatMateri" type="TextureButton" parent="WrongPopupLayer/PopupContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -180.0
+offset_right = 220.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(220, 65)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelLihatMateri" type="Label" parent="WrongPopupLayer/PopupContainer/BtnLihatMateri"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lihat Materi"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CompletePopupLayer" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimOverlay" type="ColorRect" parent="CompletePopupLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="PopupContainer" type="Control" parent="CompletePopupLayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -380.0
+offset_right = 440.0
+offset_bottom = 380.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(440, 380)
+
+[node name="PopupFrame" type="TextureRect" parent="CompletePopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_popup_bg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelCompleteTitle" type="Label" parent="CompletePopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 90.0
+offset_right = 340.0
+offset_bottom = 180.0
+grow_horizontal = 2
+text = "LATIHAN SELESAI!"
+label_settings = SubResource("LabelSettings_popup_msg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelCompleteDesc" type="Label" parent="CompletePopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 180.0
+offset_right = 340.0
+offset_bottom = 300.0
+grow_horizontal = 2
+text = "Hebat! Kamu telah menyelesaikan seluruh soal latihan."
+label_settings = SubResource("LabelSettings_prompt_header")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BtnUlangi" type="TextureButton" parent="CompletePopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -320.0
+offset_right = 220.0
+offset_bottom = -190.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(220, 65)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelUlangi" type="Label" parent="CompletePopupLayer/PopupContainer/BtnUlangi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ulangi"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnKembaliMenu" type="TextureButton" parent="CompletePopupLayer/PopupContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -160.0
+offset_right = 220.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(220, 65)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelKembaliMenu" type="Label" parent="CompletePopupLayer/PopupContainer/BtnKembaliMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Menu Latihan"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1

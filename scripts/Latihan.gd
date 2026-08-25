@@ -41,6 +41,12 @@ func _setup_button(btn: TextureButton, callback: Callable) -> void:
 
 func _on_latihan_item_pressed(index: int) -> void:
 	print("Latihan %d dipilih!" % index)
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd and pd.has_method("set_current_latihan"):
+		pd.set_current_latihan(index)
+		pd.from_latihan_retry = false
+		pd.latihan_return_question_idx = 0
+	get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
 
 func _on_kembali_pressed() -> void:
 	print("Kembali ke Main Menu...")

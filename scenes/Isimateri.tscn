@@ -10,8 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://byukhra4bm4j6" path="res://assets/Aksara/a,ha.png" id="7_ssuqd"]
 [ext_resource type="Texture2D" uid="uid://tgwvrirq2ioi" path="res://assets/Aksara/a,ha (Ha-Ha).png" id="8_4vj3x"]
 [ext_resource type="Texture2D" uid="uid://csjuec1nhjimq" path="res://assets/ButtonWoodLayout.png" id="8_btn_wood"]
-[ext_resource type="Texture2D" uid="uid://bouibfrxqr346" path="res://assets/WoodPopUp.png" id="9_popup_bg"]
 [ext_resource type="Texture2D" uid="uid://b0up24evnb0si" path="res://assets/Close.png" id="10_close"]
+[ext_resource type="Texture2D" uid="uid://6u3kpt2n73cd" path="res://assets/DrawingBoard.png" id="11_jrtw6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("5_font")
@@ -484,7 +484,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="InfoPopupLayer" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -523,7 +522,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_popup_bg")
+texture = ExtResource("11_jrtw6")
 expand_mode = 1
 stretch_mode = 5
 
@@ -532,10 +531,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -170.0
-offset_top = 75.0
-offset_right = -80.0
-offset_bottom = 165.0
+offset_left = -107.0
+offset_top = -66.0
+offset_right = -17.0
+offset_bottom = 24.0
 grow_horizontal = 0
 pivot_offset = Vector2(45, 45)
 texture_normal = ExtResource("10_close")
@@ -564,9 +563,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -350.0
-offset_top = 180.0
+offset_top = 294.0
 offset_right = 350.0
-offset_bottom = 360.0
+offset_bottom = 474.0
 grow_horizontal = 2
 text = "Fungsi Gantungan adalah untuk mematikan suara huruf agar tidak dibaca dengan akhiran 'a'. Gantungan letaknya selalu ada di bawah huruf yang dimatikan."
 label_settings = SubResource("LabelSettings_popup_desc")
@@ -593,9 +592,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -350.0
-offset_top = 675.0
+offset_top = 561.0
 offset_right = 350.0
-offset_bottom = 875.0
+offset_bottom = 761.0
 grow_horizontal = 2
 text = "Perhatikan contoh di atas! Agar huruf 'Ka' kehilangan suara 'a' (berubah menjadi huruf mati 'k'), maka kita harus menempelkan Gantungan 'Ta' tepat di bawahnya."
 label_settings = SubResource("LabelSettings_popup_note")
@@ -610,10 +609,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -180.0
-offset_top = -185.0
-offset_right = 180.0
-offset_bottom = -75.0
+offset_left = -249.0
+offset_top = -105.0
+offset_right = 249.0
+offset_bottom = 89.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(180, 55)
