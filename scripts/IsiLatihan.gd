@@ -575,6 +575,78 @@ func _get_player_data() -> Node:
 				return child
 	return get_node_or_null("/root/PlayerData")
 
+func _ensure_nodes() -> void:
+	if not label_title:
+		label_title = get_node_or_null("TitleBoard/LabelTitle")
+	if not label_subtitle:
+		label_subtitle = get_node_or_null("TitleBoard/LabelSubtitle")
+	if not label_question_number:
+		label_question_number = get_node_or_null("HeaderBar/QuestionBoard/LabelQuestionNumber")
+	if not label_timer:
+		label_timer = get_node_or_null("HeaderBar/TimerBoard/LabelTimer")
+		
+	if not choice_container:
+		choice_container = get_node_or_null("ChoiceContainer")
+	if not label_prompt_header:
+		label_prompt_header = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/LabelPromptHeader")
+	if not label_prompt_sub:
+		label_prompt_sub = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/LabelPromptSub")
+	if not sound_section:
+		sound_section = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/SoundSection")
+	if not btn_play_sound:
+		btn_play_sound = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/SoundSection/BtnPlaySound")
+	if not prompt_kata_label:
+		prompt_kata_label = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/PromptKataLabel")
+	if not prompt_image:
+		prompt_image = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/PromptImage")
+	if not label_question_text:
+		label_question_text = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/LabelQuestionText")
+	if not options_container:
+		options_container = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer")
+	if not btn_option1:
+		btn_option1 = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1")
+	if not btn_option2:
+		btn_option2 = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2")
+	if not btn_option3:
+		btn_option3 = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3")
+	if not btn_periksa_choice:
+		btn_periksa_choice = get_node_or_null("ChoiceContainer/BtnPeriksaChoice")
+		
+	if not drawing_container:
+		drawing_container = get_node_or_null("DrawingContainer")
+	if not label_instruction:
+		label_instruction = get_node_or_null("DrawingContainer/InstructionBoard/LabelInstruction")
+	if not drawing_area:
+		drawing_area = get_node_or_null("DrawingContainer/DrawingBoard/DrawingArea")
+	if not ghost_aksara:
+		ghost_aksara = get_node_or_null("DrawingContainer/DrawingBoard/DrawingArea/GhostAksara")
+	if not btn_clue:
+		btn_clue = get_node_or_null("DrawingContainer/DrawingBoard/BtnClue")
+	if not btn_hapus:
+		btn_hapus = get_node_or_null("DrawingContainer/BtnHapus")
+	if not btn_periksa_draw:
+		btn_periksa_draw = get_node_or_null("DrawingContainer/BtnPeriksaDraw")
+		
+	if not wrong_popup_layer:
+		wrong_popup_layer = get_node_or_null("WrongPopupLayer")
+	if not wrong_popup_container:
+		wrong_popup_container = get_node_or_null("WrongPopupLayer/PopupContainer")
+	if not label_wrong_message:
+		label_wrong_message = get_node_or_null("WrongPopupLayer/PopupContainer/LabelWrongMessage")
+	if not btn_jawab_lagi:
+		btn_jawab_lagi = get_node_or_null("WrongPopupLayer/PopupContainer/BtnJawabLagi")
+	if not btn_lihat_materi:
+		btn_lihat_materi = get_node_or_null("WrongPopupLayer/PopupContainer/BtnLihatMateri")
+		
+	if not complete_popup_layer:
+		complete_popup_layer = get_node_or_null("CompletePopupLayer")
+	if not complete_popup_container:
+		complete_popup_container = get_node_or_null("CompletePopupLayer/PopupContainer")
+	if not btn_ulangi:
+		btn_ulangi = get_node_or_null("CompletePopupLayer/PopupContainer/BtnUlangi")
+	if not btn_kembali_menu:
+		btn_kembali_menu = get_node_or_null("CompletePopupLayer/PopupContainer/BtnKembaliMenu")
+
 func _ready() -> void:
 	_ensure_nodes()
 	
@@ -604,24 +676,38 @@ func _ready() -> void:
 	_setup_button_effects(btn_ulangi)
 	_setup_button_effects(btn_kembali_menu)
 	
-	# Connect signals
-	btn_periksa_choice.pressed.connect(_on_periksa_choice_pressed)
-	btn_play_sound.pressed.connect(_on_play_sound_pressed)
-	btn_option1.pressed.connect(func(): _select_option(0))
-	btn_option2.pressed.connect(func(): _select_option(1))
-	btn_option3.pressed.connect(func(): _select_option(2))
-	btn_clue.pressed.connect(_on_clue_pressed)
-	btn_hapus.pressed.connect(_on_hapus_draw_pressed)
-	btn_periksa_draw.pressed.connect(_on_periksa_draw_pressed)
-	btn_jawab_lagi.pressed.connect(_close_wrong_popup)
-	btn_lihat_materi.pressed.connect(_on_lihat_materi_pressed)
-	btn_ulangi.pressed.connect(_on_ulangi_pressed)
-	btn_kembali_menu.pressed.connect(_on_kembali_menu_pressed)
+	# Connect signals safely
+	if btn_periksa_choice and not btn_periksa_choice.pressed.is_connected(_on_periksa_choice_pressed):
+		btn_periksa_choice.pressed.connect(_on_periksa_choice_pressed)
+	if btn_play_sound and not btn_play_sound.pressed.is_connected(_on_play_sound_pressed):
+		btn_play_sound.pressed.connect(_on_play_sound_pressed)
+	if btn_option1 and not btn_option1.pressed.is_connected(func(): _select_option(0)):
+		btn_option1.pressed.connect(func(): _select_option(0))
+	if btn_option2 and not btn_option2.pressed.is_connected(func(): _select_option(1)):
+		btn_option2.pressed.connect(func(): _select_option(1))
+	if btn_option3 and not btn_option3.pressed.is_connected(func(): _select_option(2)):
+		btn_option3.pressed.connect(func(): _select_option(2))
+	if btn_clue and not btn_clue.pressed.is_connected(_on_clue_pressed):
+		btn_clue.pressed.connect(_on_clue_pressed)
+	if btn_hapus and not btn_hapus.pressed.is_connected(_on_hapus_draw_pressed):
+		btn_hapus.pressed.connect(_on_hapus_draw_pressed)
+	if btn_periksa_draw and not btn_periksa_draw.pressed.is_connected(_on_periksa_draw_pressed):
+		btn_periksa_draw.pressed.connect(_on_periksa_draw_pressed)
+	if btn_jawab_lagi and not btn_jawab_lagi.pressed.is_connected(_close_wrong_popup):
+		btn_jawab_lagi.pressed.connect(_close_wrong_popup)
+	if btn_lihat_materi and not btn_lihat_materi.pressed.is_connected(_on_lihat_materi_pressed):
+		btn_lihat_materi.pressed.connect(_on_lihat_materi_pressed)
+	if btn_ulangi and not btn_ulangi.pressed.is_connected(_on_ulangi_pressed):
+		btn_ulangi.pressed.connect(_on_ulangi_pressed)
+	if btn_kembali_menu and not btn_kembali_menu.pressed.is_connected(_on_kembali_menu_pressed):
+		btn_kembali_menu.pressed.connect(_on_kembali_menu_pressed)
 	
 	# Setup Drawing Area input and draw hooks
 	if drawing_area:
-		drawing_area.gui_input.connect(_on_drawing_area_gui_input)
-		drawing_area.draw.connect(_on_drawing_area_draw)
+		if not drawing_area.gui_input.is_connected(_on_drawing_area_gui_input):
+			drawing_area.gui_input.connect(_on_drawing_area_gui_input)
+		if not drawing_area.draw.is_connected(_on_drawing_area_draw):
+			drawing_area.draw.connect(_on_drawing_area_draw)
 	
 	# Start countdown timer
 	_setup_timer()
@@ -915,7 +1001,7 @@ func _on_periksa_draw_pressed() -> void:
 
 # Stroke Matching & Anti-Scribble Algorithm
 func _evaluate_drawing_match(target_img_path: String) -> bool:
-	if drawing_lines.size() == 0:
+	if drawing_lines.is_empty():
 		return false
 		
 	var total_points = 0
@@ -931,33 +1017,73 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 	if not tex:
 		return true
 		
-	var ref_img = tex.get_image()
+	var ref_img: Image = tex.get_image()
 	if not ref_img:
 		return true
+	if ref_img.is_compressed():
+		ref_img.decompress()
 		
-	var grid_w = 48
-	var grid_h = 48
-	ref_img.resize(grid_w, grid_h, Image.INTERPOLATE_BILINEAR)
+	var grid_w = 64
+	var grid_h = 64
+	var area_size = drawing_area.size if (drawing_area and drawing_area.size.x > 0) else Vector2(840, 650)
 	
-	# Compute ref points
-	var ref_count = 0
+	# Determine ghost target box (size 440x440 centered in drawing_area)
+	var ghost_size = Vector2(440, 440)
+	if ghost_aksara and ghost_aksara.size.x > 0:
+		ghost_size = ghost_aksara.size
+	var ghost_pos = (area_size - ghost_size) / 2.0
+	
+	# Determine aspect-fit bounds of glyph inside ghost box
+	var img_orig_w = float(ref_img.get_width())
+	var img_orig_h = float(ref_img.get_height())
+	var fit_scale = min(ghost_size.x / img_orig_w, ghost_size.y / img_orig_h)
+	var dest_w = img_orig_w * fit_scale
+	var dest_h = img_orig_h * fit_scale
+	var dest_pos = ghost_pos + Vector2((ghost_size.x - dest_w) / 2.0, (ghost_size.y - dest_h) / 2.0)
+	
+	# 1. Rasterize reference image into ref_grid (64x64)
 	var ref_grid = []
 	for y in range(grid_h):
 		var row = []
 		for x in range(grid_w):
-			var col = ref_img.get_pixel(x, y)
-			if col.a > 0.3:
-				row.append(1)
-				ref_count += 1
-			else:
-				row.append(0)
+			row.append(0)
 		ref_grid.append(row)
 		
+	var ref_count = 0
+	for iy in range(int(img_orig_h)):
+		for ix in range(int(img_orig_w)):
+			var c = ref_img.get_pixel(ix, iy)
+			if c.a > 0.25:
+				var px = dest_pos.x + (float(ix) / img_orig_w) * dest_w
+				var py = dest_pos.y + (float(iy) / img_orig_h) * dest_h
+				var gx = clamp(int((px / area_size.x) * grid_w), 0, grid_w - 1)
+				var gy = clamp(int((py / area_size.y) * grid_h), 0, grid_h - 1)
+				if ref_grid[gy][gx] == 0:
+					ref_grid[gy][gx] = 1
+					ref_count += 1
+
 	if ref_count == 0:
 		return true
+
+	# 2. Build tolerance zone around reference strokes (radius 2)
+	var tolerance_grid = []
+	for y in range(grid_h):
+		var row = []
+		for x in range(grid_w):
+			row.append(0)
+		tolerance_grid.append(row)
 		
-	# Rasterize drawing onto grid
-	var area_size = drawing_area.size if drawing_area else Vector2(840, 650)
+	for y in range(grid_h):
+		for x in range(grid_w):
+			if ref_grid[y][x] == 1:
+				for dy in range(-2, 3):
+					for dx in range(-2, 3):
+						if dx * dx + dy * dy <= 5:
+							var ny = clamp(y + dy, 0, grid_h - 1)
+							var nx = clamp(x + dx, 0, grid_w - 1)
+							tolerance_grid[ny][nx] = 1
+
+	# 3. Rasterize user strokes into drawn_grid (64x64) with brush radius 1
 	var drawn_grid = []
 	for y in range(grid_h):
 		var row = []
@@ -968,39 +1094,67 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 	var drawn_count = 0
 	for line in drawing_lines:
 		for pt in line:
-			var gx = int((pt.x / area_size.x) * grid_w)
-			var gy = int((pt.y / area_size.y) * grid_h)
-			# Brush radius of 1 pixel on 48x48 grid
+			var gx = clamp(int((pt.x / area_size.x) * grid_w), 0, grid_w - 1)
+			var gy = clamp(int((pt.y / area_size.y) * grid_h), 0, grid_h - 1)
 			for dy in range(-1, 2):
 				for dx in range(-1, 2):
-					var nx = gx + dx
-					var ny = gy + dy
-					if nx >= 0 and nx < grid_w and ny >= 0 and ny < grid_h:
-						if drawn_grid[ny][nx] == 0:
-							drawn_grid[ny][nx] = 1
-							drawn_count += 1
-							
-	# Anti-cheat: Check if player just filled the board completely black
-	if drawn_count > ref_count * 1.6 or drawn_count > 1100:
-		print("Draw rejected: scribble too dense (anti-cheat). Drawn=%d, Ref=%d" % [drawn_count, ref_count])
+					var ny = clamp(gy + dy, 0, grid_h - 1)
+					var nx = clamp(gx + dx, 0, grid_w - 1)
+					if drawn_grid[ny][nx] == 0:
+						drawn_grid[ny][nx] = 1
+						drawn_count += 1
+
+	# 4. Check drawn points count
+	if drawn_count < 15:
+		print("Draw rejected: too few strokes. Drawn=%d" % drawn_count)
 		return false
 		
-	# Calculate overlap (intersection)
+	# 5. Calculate intersection and outside points
 	var intersection_count = 0
+	var outside_count = 0
 	for y in range(grid_h):
 		for x in range(grid_w):
-			if ref_grid[y][x] == 1 and drawn_grid[y][x] == 1:
-				intersection_count += 1
-				
-	var coverage = float(intersection_count) / float(ref_count)
-	var precision = float(intersection_count) / float(max(1, drawn_count))
-	
-	print("Draw Match result: coverage=%.2f, precision=%.2f (drawn=%d, ref=%d, int=%d)" % [
-		coverage, precision, drawn_count, ref_count, intersection_count
+			if drawn_grid[y][x] == 1:
+				if tolerance_grid[y][x] == 1:
+					intersection_count += 1
+				else:
+					outside_count += 1
+					
+	# Calculate matched reference points (how much of the letter was covered)
+	var matched_ref_count = 0
+	for y in range(grid_h):
+		for x in range(grid_w):
+			if ref_grid[y][x] == 1:
+				var matched = false
+				for dy in range(-2, 3):
+					if matched:
+						break
+					for dx in range(-2, 3):
+						if dx * dx + dy * dy <= 5:
+							var ny = clamp(y + dy, 0, grid_h - 1)
+							var nx = clamp(x + dx, 0, grid_w - 1)
+							if drawn_grid[ny][nx] == 1:
+								matched = true
+								break
+				if matched:
+					matched_ref_count += 1
+
+	var coverage = float(matched_ref_count) / float(ref_count)
+	var accuracy = float(intersection_count) / float(max(1, drawn_count))
+
+	print("Draw Match: coverage=%.2f, accuracy=%.2f, drawn=%d, ref=%d, outside=%d" % [
+		coverage, accuracy, drawn_count, ref_count, outside_count
 	])
-	
-	# Minimum coverage threshold 26% and precision threshold 35%
-	return (coverage >= 0.26 and precision >= 0.35)
+
+	# Anti-cheat: Check if player just filled the board completely black or drew everywhere
+	if drawn_count > ref_count * 2.5 or drawn_count > 1600 or outside_count > ref_count * 1.5:
+		print("Draw rejected: scribble too dense or too far outside (anti-cheat). Drawn=%d, Outside=%d, Ref=%d" % [
+			drawn_count, outside_count, ref_count
+		])
+		return false
+
+	# Match criteria: coverage >= 28% and accuracy >= 35%
+	return (coverage >= 0.28 and accuracy >= 0.35)
 
 func _handle_answer_correct() -> void:
 	print("Jawaban Benar!")
@@ -1022,8 +1176,14 @@ func _show_wrong_popup() -> void:
 	label_wrong_message.text = "Maaf jawaban kamu masih salah"
 	if question_fail_count >= 3:
 		btn_lihat_materi.visible = true
+		btn_jawab_lagi.offset_top = -240.0
+		btn_jawab_lagi.offset_bottom = -130.0
+		btn_lihat_materi.offset_top = -120.0
+		btn_lihat_materi.offset_bottom = -10.0
 	else:
 		btn_lihat_materi.visible = false
+		btn_jawab_lagi.offset_top = -180.0
+		btn_jawab_lagi.offset_bottom = -70.0
 		
 	wrong_popup_layer.visible = true
 	wrong_popup_layer.modulate.a = 0.0
@@ -1075,41 +1235,3 @@ func _animate_question_transition() -> void:
 	active_container.modulate.a = 0.3
 	var tween = create_tween()
 	tween.tween_property(active_container, "modulate:a", 1.0, 0.18).set_trans(Tween.TRANS_SINE)
-
-func _ensure_nodes() -> void:
-	if not label_title:
-		label_title = get_node_or_null("TitleBoard/LabelTitle")
-		label_subtitle = get_node_or_null("TitleBoard/LabelSubtitle")
-		label_question_number = get_node_or_null("HeaderBar/QuestionBoard/LabelQuestionNumber")
-		label_timer = get_node_or_null("HeaderBar/TimerBoard/LabelTimer")
-		choice_container = get_node_or_null("ChoiceContainer")
-		label_prompt_header = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/LabelPromptHeader")
-		label_prompt_sub = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/LabelPromptSub")
-		sound_section = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/SoundSection")
-		btn_play_sound = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/SoundSection/BtnPlaySound")
-		prompt_kata_label = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/PromptKataLabel")
-		prompt_image = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/PromptImage")
-		label_question_text = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/LabelQuestionText")
-		options_container = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer")
-		btn_option1 = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1")
-		btn_option2 = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2")
-		btn_option3 = get_node_or_null("ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3")
-		btn_periksa_choice = get_node_or_null("ChoiceContainer/BtnPeriksaChoice")
-		drawing_container = get_node_or_null("DrawingContainer")
-		label_instruction = get_node_or_null("DrawingContainer/InstructionBoard/LabelInstruction")
-		drawing_area = get_node_or_null("DrawingContainer/DrawingBoard/DrawingArea")
-		ghost_aksara = get_node_or_null("DrawingContainer/DrawingBoard/DrawingArea/GhostAksara")
-		btn_clue = get_node_or_null("DrawingContainer/DrawingBoard/BtnClue")
-		btn_hapus = get_node_or_null("DrawingContainer/BtnHapus")
-		btn_periksa_draw = get_node_or_null("DrawingContainer/BtnPeriksaDraw")
-		wrong_popup_layer = get_node_or_null("WrongPopupLayer")
-		if wrong_popup_layer:
-			wrong_popup_container = wrong_popup_layer.get_node_or_null("PopupContainer")
-			label_wrong_message = wrong_popup_layer.get_node_or_null("PopupContainer/LabelWrongMessage")
-			btn_jawab_lagi = wrong_popup_layer.get_node_or_null("PopupContainer/BtnJawabLagi")
-			btn_lihat_materi = wrong_popup_layer.get_node_or_null("PopupContainer/BtnLihatMateri")
-		complete_popup_layer = get_node_or_null("CompletePopupLayer")
-		if complete_popup_layer:
-			complete_popup_container = complete_popup_layer.get_node_or_null("PopupContainer")
-			btn_ulangi = complete_popup_layer.get_node_or_null("PopupContainer/BtnUlangi")
-			btn_kembali_menu = complete_popup_layer.get_node_or_null("PopupContainer/BtnKembaliMenu")

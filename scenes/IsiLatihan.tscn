@@ -1,6 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://bsh7x2nay8q1d"]
+[gd_scene load_steps=28 format=3 uid="uid://dgcpwigvdobey"]
 
-[ext_resource type="Script" path="res://scripts/IsiLatihan.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://c3dj2qxxqiucr" path="res://scripts/IsiLatihan.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://bp11yxjecgp1k" path="res://assets/AssetSitable.png" id="3_sitable"]
 [ext_resource type="Texture2D" uid="uid://3dma7o4bfhy7" path="res://assets/TitleBoard.png" id="4_title_board"]
@@ -19,7 +19,6 @@
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("5_font")
 font_size = 62
-font_color = Color(1, 1, 1, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 4)
@@ -27,7 +26,6 @@ shadow_offset = Vector2(0, 4)
 [sub_resource type="LabelSettings" id="LabelSettings_subtitle"]
 font = ExtResource("5_font")
 font_size = 23
-font_color = Color(1, 1, 1, 1)
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.4)
 shadow_offset = Vector2(0, 2)
@@ -35,7 +33,6 @@ shadow_offset = Vector2(0, 2)
 [sub_resource type="LabelSettings" id="LabelSettings_header_board"]
 font = ExtResource("5_font")
 font_size = 44
-font_color = Color(1, 1, 1, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 3)
@@ -68,7 +65,6 @@ font_color = Color(0.22, 0.1, 0.08, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_btn_action"]
 font = ExtResource("5_font")
 font_size = 62
-font_color = Color(1, 1, 1, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 4)
@@ -76,7 +72,6 @@ shadow_offset = Vector2(0, 4)
 [sub_resource type="LabelSettings" id="LabelSettings_btn_hapus"]
 font = ExtResource("5_font")
 font_size = 52
-font_color = Color(1, 1, 1, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 4)
@@ -84,7 +79,6 @@ shadow_offset = Vector2(0, 4)
 [sub_resource type="LabelSettings" id="LabelSettings_popup_msg"]
 font = ExtResource("5_font")
 font_size = 36
-font_color = Color(1, 1, 1, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.5)
 shadow_offset = Vector2(0, 3)
@@ -92,7 +86,6 @@ shadow_offset = Vector2(0, 3)
 [sub_resource type="LabelSettings" id="LabelSettings_popup_btn"]
 font = ExtResource("5_font")
 font_size = 48
-font_color = Color(1, 1, 1, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 3)
@@ -256,7 +249,7 @@ anchor_right = 0.5
 offset_left = -480.0
 offset_top = 430.0
 offset_right = 480.0
-offset_bottom = 1390.0
+offset_bottom = 1381.0
 grow_horizontal = 2
 texture = ExtResource("7_materi_box")
 expand_mode = 1
@@ -268,13 +261,12 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 75.0
-offset_top = 35.0
+offset_top = 64.0
 offset_right = -75.0
-offset_bottom = -35.0
+offset_bottom = -29.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
-alignment = 0
 
 [node name="LabelPromptHeader" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
 layout_mode = 2
@@ -297,7 +289,6 @@ alignment = 1
 [node name="BtnPlaySound" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/SoundSection"]
 custom_minimum_size = Vector2(110, 110)
 layout_mode = 2
-pivot_offset = Vector2(55, 55)
 texture_normal = ExtResource("8_playsound")
 ignore_texture_size = true
 stretch_mode = 5
@@ -332,7 +323,6 @@ theme_override_constants/separation = 14
 [node name="BtnOption1" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
 custom_minimum_size = Vector2(760, 108)
 layout_mode = 2
-pivot_offset = Vector2(380, 54)
 texture_normal = ExtResource("9_opt_board")
 ignore_texture_size = true
 stretch_mode = 5
@@ -376,7 +366,6 @@ stretch_mode = 5
 [node name="BtnOption2" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
 custom_minimum_size = Vector2(760, 108)
 layout_mode = 2
-pivot_offset = Vector2(380, 54)
 texture_normal = ExtResource("9_opt_board")
 ignore_texture_size = true
 stretch_mode = 5
@@ -420,7 +409,6 @@ stretch_mode = 5
 [node name="BtnOption3" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
 custom_minimum_size = Vector2(760, 108)
 layout_mode = 2
-pivot_offset = Vector2(380, 54)
 texture_normal = ExtResource("9_opt_board")
 ignore_texture_size = true
 stretch_mode = 5
@@ -506,10 +494,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -460.0
-offset_top = 440.0
-offset_right = 460.0
-offset_bottom = 570.0
+offset_left = -363.0
+offset_top = 431.0
+offset_right = 363.0
+offset_bottom = 579.0
 grow_horizontal = 2
 texture = ExtResource("11_btn_wood")
 expand_mode = 1
@@ -520,10 +508,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -4.0
+offset_left = 91.0
+offset_top = 7.0
+offset_right = -91.0
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Ayo, coba tulis aksara Ca"
+text = "Tulis aksara Ca"
 label_settings = SubResource("LabelSettings_opt_text")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -553,7 +544,6 @@ offset_right = -40.0
 offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 
 [node name="GhostAksara" type="TextureRect" parent="DrawingContainer/DrawingBoard/DrawingArea"]
 modulate = Color(0.2, 0.2, 0.2, 0)
@@ -686,12 +676,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -440.0
-offset_top = -380.0
+offset_top = -280.0
 offset_right = 440.0
-offset_bottom = 380.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(440, 380)
+pivot_offset = Vector2(440, 280)
 
 [node name="PopupFrame" type="TextureRect" parent="WrongPopupLayer/PopupContainer"]
 layout_mode = 1
@@ -702,17 +692,16 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("15_popup_bg")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="LabelWrongMessage" type="Label" parent="WrongPopupLayer/PopupContainer"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -340.0
-offset_top = 100.0
-offset_right = 340.0
-offset_bottom = 320.0
+offset_left = -380.0
+offset_top = 55.0
+offset_right = 380.0
+offset_bottom = 175.0
 grow_horizontal = 2
 text = "Maaf jawaban kamu masih salah"
 label_settings = SubResource("LabelSettings_popup_msg")
@@ -727,13 +716,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -340.0
-offset_right = 220.0
-offset_bottom = -210.0
+offset_left = -230.0
+offset_top = -240.0
+offset_right = 230.0
+offset_bottom = -130.0
 grow_horizontal = 2
 grow_vertical = 0
-pivot_offset = Vector2(220, 65)
+pivot_offset = Vector2(230, 55)
 texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
@@ -759,13 +748,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -180.0
-offset_right = 220.0
-offset_bottom = -50.0
+offset_left = -230.0
+offset_top = -120.0
+offset_right = 230.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
-pivot_offset = Vector2(220, 65)
+pivot_offset = Vector2(230, 55)
 texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
@@ -809,12 +798,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -440.0
-offset_top = -380.0
+offset_top = -280.0
 offset_right = 440.0
-offset_bottom = 380.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(440, 380)
+pivot_offset = Vector2(440, 280)
 
 [node name="PopupFrame" type="TextureRect" parent="CompletePopupLayer/PopupContainer"]
 layout_mode = 1
@@ -825,17 +814,16 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("15_popup_bg")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="LabelCompleteTitle" type="Label" parent="CompletePopupLayer/PopupContainer"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -340.0
-offset_top = 90.0
-offset_right = 340.0
-offset_bottom = 180.0
+offset_left = -380.0
+offset_top = 40.0
+offset_right = 380.0
+offset_bottom = 115.0
 grow_horizontal = 2
 text = "LATIHAN SELESAI!"
 label_settings = SubResource("LabelSettings_popup_msg")
@@ -847,10 +835,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -340.0
-offset_top = 180.0
-offset_right = 340.0
-offset_bottom = 300.0
+offset_left = -380.0
+offset_top = 110.0
+offset_right = 380.0
+offset_bottom = 190.0
 grow_horizontal = 2
 text = "Hebat! Kamu telah menyelesaikan seluruh soal latihan."
 label_settings = SubResource("LabelSettings_prompt_header")
@@ -865,13 +853,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -320.0
-offset_right = 220.0
-offset_bottom = -190.0
+offset_left = -230.0
+offset_top = -240.0
+offset_right = 230.0
+offset_bottom = -130.0
 grow_horizontal = 2
 grow_vertical = 0
-pivot_offset = Vector2(220, 65)
+pivot_offset = Vector2(230, 55)
 texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
@@ -896,13 +884,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -160.0
-offset_right = 220.0
-offset_bottom = -30.0
+offset_left = -230.0
+offset_top = -120.0
+offset_right = 230.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
-pivot_offset = Vector2(220, 65)
+pivot_offset = Vector2(230, 55)
 texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
@@ -912,7 +900,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Menu Latihan"
