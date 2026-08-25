@@ -76,8 +76,10 @@ func _save_name() -> void:
 	if entered_name.is_empty():
 		entered_name = "Arma"
 	
-	PlayerData.set_player_name(entered_name)
-	print("Nama pemain tersimpan:", PlayerData.player_name)
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd and pd.has_method("set_player_name"):
+		pd.set_player_name(entered_name)
+	print("Nama pemain tersimpan:", entered_name)
 	
 	current_state = State.NAME_SAVED
 	
@@ -105,5 +107,7 @@ func _animate_button_text(new_text: String) -> void:
 	tween.tween_property(label_action, "modulate:a", 1.0, 0.15)
 
 func _go_to_main_menu() -> void:
-	print("Membuka Main Menu untuk pemain:", PlayerData.player_name)
+	var pd = get_node_or_null("/root/PlayerData")
+	var p_name = pd.player_name if pd else "Arma"
+	print("Membuka Main Menu untuk pemain:", p_name)
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")

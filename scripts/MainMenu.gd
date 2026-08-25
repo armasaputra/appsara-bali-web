@@ -53,8 +53,9 @@ func _ready() -> void:
 	_start_avatar_idle()
 
 func _update_greeting() -> void:
-	if PlayerData and not PlayerData.player_name.is_empty():
-		label_greeting.text = "Haiii " + PlayerData.player_name + "."
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd and not pd.player_name.is_empty():
+		label_greeting.text = "Haiii " + pd.player_name + "."
 	else:
 		label_greeting.text = "Haiii Arma."
 
@@ -91,9 +92,10 @@ func _on_settings_pressed() -> void:
 	_is_popup_open = true
 	
 	# Load current saved settings into temporary state
-	if PlayerData:
-		line_edit_name.text = PlayerData.player_name
-		_temp_sound_muted = PlayerData.is_sound_muted
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd:
+		line_edit_name.text = pd.player_name
+		_temp_sound_muted = pd.is_sound_muted
 	else:
 		line_edit_name.text = "Arma"
 		_temp_sound_muted = false
@@ -126,10 +128,11 @@ func _on_close_pressed() -> void:
 
 func _on_terapkan_pressed() -> void:
 	# Apply changes to PlayerData
-	if PlayerData:
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd:
 		var entered_name = line_edit_name.text.strip_edges()
-		PlayerData.set_player_name(entered_name)
-		PlayerData.set_sound_muted(_temp_sound_muted)
+		pd.set_player_name(entered_name)
+		pd.set_sound_muted(_temp_sound_muted)
 	
 	_update_greeting()
 	_close_popup()
