@@ -119,7 +119,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis aksara Ca",
+				"instruction": "Tulis aksara Ca",
 				"target_image": "res://assets/Aksara/ca.png"
 			}
 		]
@@ -180,7 +180,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis aksara La",
+				"instruction": "Tulis aksara La",
 				"target_image": "res://assets/Aksara/la.png"
 			}
 		]
@@ -242,7 +242,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis aksara Nga",
+				"instruction": "Tulis aksara Nga",
 				"target_image": "res://assets/Aksara/nga.png"
 			}
 		]
@@ -303,7 +303,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis aksara Ja",
+				"instruction": "Tulis aksara Ja",
 				"target_image": "res://assets/Aksara/ja.png"
 			}
 		]
@@ -364,7 +364,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis Gantungan Ra",
+				"instruction": "Tulis Gantungan Ra",
 				"target_image": "res://assets/Aksara/ra (gantungan).png"
 			}
 		]
@@ -425,7 +425,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis Gantungan Da",
+				"instruction": "Tulis Gantungan Da",
 				"target_image": "res://assets/Aksara/da (gantungan).png"
 			}
 		]
@@ -486,7 +486,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis Gantungan Ma",
+				"instruction": "Tulis Gantungan Ma",
 				"target_image": "res://assets/Aksara/ma (gantungan) .png"
 			}
 		]
@@ -547,7 +547,7 @@ const ALL_LATIHAN_DATA = {
 			},
 			{
 				"type": "draw",
-				"instruction": "Ayo, coba tulis Gempelan Pa",
+				"instruction": "Tulis Gempelan Pa",
 				"target_image": "res://assets/Aksara/pa (gempelan).png"
 			}
 		]
@@ -1007,7 +1007,7 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 	var total_points = 0
 	for line in drawing_lines:
 		total_points += line.size()
-	if total_points < 5:
+	if total_points < 8:
 		return false
 		
 	if target_img_path.is_empty() or not ResourceLoader.exists(target_img_path):
@@ -1041,7 +1041,7 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 	var dest_h = img_orig_h * fit_scale
 	var dest_pos = ghost_pos + Vector2((ghost_size.x - dest_w) / 2.0, (ghost_size.y - dest_h) / 2.0)
 	
-	# 1. Rasterize reference image into ref_grid (64x64)
+	# 1. Rasterize reference image into ref_grid (64x64) and track bounding box
 	var ref_grid = []
 	for y in range(grid_h):
 		var row = []
@@ -1050,10 +1050,15 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 		ref_grid.append(row)
 		
 	var ref_count = 0
+	var min_gx = grid_w
+	var max_gx = 0
+	var min_gy = grid_h
+	var max_gy = 0
+	
 	for iy in range(int(img_orig_h)):
 		for ix in range(int(img_orig_w)):
 			var c = ref_img.get_pixel(ix, iy)
-			if c.a > 0.25:
+			if c.a > 0.28:
 				var px = dest_pos.x + (float(ix) / img_orig_w) * dest_w
 				var py = dest_pos.y + (float(iy) / img_orig_h) * dest_h
 				var gx = clamp(int((px / area_size.x) * grid_w), 0, grid_w - 1)
@@ -1061,11 +1066,27 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 				if ref_grid[gy][gx] == 0:
 					ref_grid[gy][gx] = 1
 					ref_count += 1
+					min_gx = min(min_gx, gx)
+					max_gx = max(max_gx, gx)
+					min_gy = min(min_gy, gy)
+					max_gy = max(max_gy, gy)
 
 	if ref_count == 0:
 		return true
 
-	# 2. Build tolerance zone around reference strokes (radius 2)
+	# Bounding box centers for quadrant evaluation
+	var mid_gx = int((min_gx + max_gx) / 2.0)
+	var mid_gy = int((min_gy + max_gy) / 2.0)
+
+	# Count reference points per quadrant: 0=TL, 1=TR, 2=BL, 3=BR
+	var ref_quads = [0, 0, 0, 0]
+	for y in range(grid_h):
+		for x in range(grid_w):
+			if ref_grid[y][x] == 1:
+				var q_idx = (0 if y <= mid_gy else 2) + (0 if x <= mid_gx else 1)
+				ref_quads[q_idx] += 1
+
+	# 2. Build tolerance zone around reference strokes (radius 1.5 -> dx*dx + dy*dy <= 3)
 	var tolerance_grid = []
 	for y in range(grid_h):
 		var row = []
@@ -1078,7 +1099,7 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 			if ref_grid[y][x] == 1:
 				for dy in range(-2, 3):
 					for dx in range(-2, 3):
-						if dx * dx + dy * dy <= 5:
+						if dx * dx + dy * dy <= 3:
 							var ny = clamp(y + dy, 0, grid_h - 1)
 							var nx = clamp(x + dx, 0, grid_w - 1)
 							tolerance_grid[ny][nx] = 1
@@ -1104,24 +1125,29 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 						drawn_grid[ny][nx] = 1
 						drawn_count += 1
 
-	# 4. Check drawn points count
-	if drawn_count < 15:
-		print("Draw rejected: too few strokes. Drawn=%d" % drawn_count)
+	# 4. Check drawn points count vs reference count
+	if drawn_count < 30 or drawn_count < ref_count * 0.35:
+		print("Draw rejected: too few strokes. Drawn=%d, Ref=%d" % [drawn_count, ref_count])
 		return false
 		
+	if drawn_count > ref_count * 2.1 or drawn_count > 1400:
+		print("Draw rejected: too dense ink (scribble anti-cheat). Drawn=%d, Ref=%d" % [drawn_count, ref_count])
+		return false
+
 	# 5. Calculate intersection and outside points
-	var intersection_count = 0
+	var inside_count = 0
 	var outside_count = 0
 	for y in range(grid_h):
 		for x in range(grid_w):
 			if drawn_grid[y][x] == 1:
 				if tolerance_grid[y][x] == 1:
-					intersection_count += 1
+					inside_count += 1
 				else:
 					outside_count += 1
 					
-	# Calculate matched reference points (how much of the letter was covered)
+	# Calculate matched reference points & quadrant matches
 	var matched_ref_count = 0
+	var matched_quads = [0, 0, 0, 0]
 	for y in range(grid_h):
 		for x in range(grid_w):
 			if ref_grid[y][x] == 1:
@@ -1130,7 +1156,7 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 					if matched:
 						break
 					for dx in range(-2, 3):
-						if dx * dx + dy * dy <= 5:
+						if dx * dx + dy * dy <= 4:
 							var ny = clamp(y + dy, 0, grid_h - 1)
 							var nx = clamp(x + dx, 0, grid_w - 1)
 							if drawn_grid[ny][nx] == 1:
@@ -1138,23 +1164,39 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 								break
 				if matched:
 					matched_ref_count += 1
+					var q_idx = (0 if y <= mid_gy else 2) + (0 if x <= mid_gx else 1)
+					matched_quads[q_idx] += 1
 
 	var coverage = float(matched_ref_count) / float(ref_count)
-	var accuracy = float(intersection_count) / float(max(1, drawn_count))
+	var accuracy = float(inside_count) / float(max(1, drawn_count))
 
 	print("Draw Match: coverage=%.2f, accuracy=%.2f, drawn=%d, ref=%d, outside=%d" % [
 		coverage, accuracy, drawn_count, ref_count, outside_count
 	])
 
-	# Anti-cheat: Check if player just filled the board completely black or drew everywhere
-	if drawn_count > ref_count * 2.5 or drawn_count > 1600 or outside_count > ref_count * 1.5:
-		print("Draw rejected: scribble too dense or too far outside (anti-cheat). Drawn=%d, Outside=%d, Ref=%d" % [
-			drawn_count, outside_count, ref_count
-		])
+	# Anti-cheat / Anti-scribble:
+	# 1. More than 48% stray ink outside the letter shape is rejected
+	if accuracy < 0.52:
+		print("Draw rejected: accuracy too low (too much stray ink outside letter). Accuracy=%.2f" % accuracy)
 		return false
 
-	# Match criteria: coverage >= 28% and accuracy >= 35%
-	return (coverage >= 0.28 and accuracy >= 0.35)
+	# 2. Overall coverage must cover at least 48% of the letter
+	if coverage < 0.48:
+		print("Draw rejected: coverage too low (incomplete letter). Coverage=%.2f" % coverage)
+		return false
+
+	# 3. Structural Quadrant Check: Every quadrant containing significant strokes must have at least 25% coverage
+	for qi in range(4):
+		if ref_quads[qi] >= 18:
+			var q_cov = float(matched_quads[qi]) / float(ref_quads[qi])
+			if q_cov < 0.25:
+				print("Draw rejected: quadrant %d missing (q_cov=%.2f, ref=%d). Random scribble detected." % [
+					qi, q_cov, ref_quads[qi]
+				])
+				return false
+
+	print("Draw Match PASSED: Valid handwriting recognized!")
+	return true
 
 func _handle_answer_correct() -> void:
 	print("Jawaban Benar!")
@@ -1176,14 +1218,8 @@ func _show_wrong_popup() -> void:
 	label_wrong_message.text = "Maaf jawaban kamu masih salah"
 	if question_fail_count >= 3:
 		btn_lihat_materi.visible = true
-		btn_jawab_lagi.offset_top = -240.0
-		btn_jawab_lagi.offset_bottom = -130.0
-		btn_lihat_materi.offset_top = -120.0
-		btn_lihat_materi.offset_bottom = -10.0
 	else:
 		btn_lihat_materi.visible = false
-		btn_jawab_lagi.offset_top = -180.0
-		btn_jawab_lagi.offset_bottom = -70.0
 		
 	wrong_popup_layer.visible = true
 	wrong_popup_layer.modulate.a = 0.0

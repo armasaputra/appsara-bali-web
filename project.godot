@@ -18,6 +18,7 @@ config/icon="res://assets/AksaraTitle.png"
 [autoload]
 
 PlayerData="*res://scripts/PlayerData.gd"
+AudioManager="*res://scripts/AudioManager.gd"
 
 [display]
 
