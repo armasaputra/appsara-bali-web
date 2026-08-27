@@ -5,6 +5,8 @@ extends Control
 @onready var label_subtitle: Label = $TitleBoard/LabelSubtitle
 @onready var label_question_number: Label = $HeaderBar/QuestionBoard/LabelQuestionNumber
 @onready var label_timer: Label = $HeaderBar/TimerBoard/LabelTimer
+@onready var star_board: TextureRect = $HeaderBar/StarBoard
+@onready var label_stars: Label = $HeaderBar/StarBoard/LabelStars
 
 # Choice Question Nodes
 @onready var choice_container: Control = $ChoiceContainer
@@ -40,8 +42,12 @@ extends Control
 # Complete Popup Layer Nodes
 @onready var complete_popup_layer: Control = $CompletePopupLayer
 @onready var complete_popup_container: Control = $CompletePopupLayer/PopupContainer
+@onready var label_complete_title: Label = $CompletePopupLayer/PopupContainer/LabelCompleteTitle
+@onready var label_complete_desc: Label = $CompletePopupLayer/PopupContainer/LabelCompleteDesc
 @onready var btn_ulangi: TextureButton = $CompletePopupLayer/PopupContainer/BtnUlangi
+@onready var label_ulangi: Label = $CompletePopupLayer/PopupContainer/BtnUlangi/LabelUlangi
 @onready var btn_kembali_menu: TextureButton = $CompletePopupLayer/PopupContainer/BtnKembaliMenu
+@onready var label_kembali_menu: Label = $CompletePopupLayer/PopupContainer/BtnKembaliMenu/LabelKembaliMenu
 
 # State
 var current_latihan_id: int = 1
@@ -554,6 +560,273 @@ const ALL_LATIHAN_DATA = {
 	}
 }
 
+# 25 Bank Soal Acak (From PDF Latihan Soal Acak 25 Soal)
+const LATIHAN_SOAL_ACAK_25 = [
+	# 1
+	{
+		"type": "choice",
+		"question": "Manakah pasangan gantungan yang tepat untuk deret Ya - Nya secara berurutan?",
+		"options": [
+			{"image": "res://assets/Aksara/ya-nya.png", "is_correct": true},
+			{"image": "res://assets/Aksara/nya-ya.png", "is_correct": false},
+			{"image": "res://assets/Aksara/ba-nya.png", "is_correct": false}
+		]
+	},
+	# 2
+	{
+		"type": "choice",
+		"question": "Jika terdapat aksara mati yang diikuti oleh bunyi Ma, gantungan manakah yang harus dipasang?",
+		"options": [
+			{"image": "res://assets/Aksara/ja (gantungan).png", "is_correct": false},
+			{"image": "res://assets/Aksara/la (gantungan).png", "is_correct": false},
+			{"image": "res://assets/Aksara/ma (gantungan) .png", "is_correct": true}
+		]
+	},
+	# 3
+	{
+		"type": "choice",
+		"prompt_header": "Perhatikan simbol berikut:",
+		"prompt_image": "res://assets/Aksara/ya (gantungan).png",
+		"question": "Gantungan ini mewakili aksara apa?",
+		"options": [
+			{"text": "Aksara Pa", "is_correct": false},
+			{"text": "Aksara Wa", "is_correct": false},
+			{"text": "Aksara Ya", "is_correct": true}
+		]
+	},
+	# 4
+	{
+		"type": "choice",
+		"prompt_header": "Perhatikan simbol berikut:",
+		"prompt_image": "res://assets/Aksara/ma (gantungan) .png",
+		"question": "Gantungan ini mewakili aksara apa?",
+		"options": [
+			{"text": "Aksara Ma", "is_correct": true},
+			{"text": "Aksara Ca", "is_correct": false},
+			{"text": "Aksara Ga", "is_correct": false}
+		]
+	},
+	# 5
+	{
+		"type": "choice",
+		"question": "Di antara aksara di bawah ini, manakah satu-satunya yang merupakan bagian dari kelompok gantungan pertama (Ha, Na, Ca, Ra, Ka)?",
+		"options": [
+			{"image": "res://assets/Aksara/la (gantungan).png", "is_correct": false},
+			{"image": "res://assets/Aksara/da (gantungan).png", "is_correct": false},
+			{"image": "res://assets/Aksara/ca (gantungan).png", "is_correct": true}
+		]
+	},
+	# 6
+	{
+		"type": "sound",
+		"sound_name": "Gempelan Sa",
+		"prompt_header": "Silahkan di Klik gambar suara berikut :",
+		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
+		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
+		"options": [
+			{"image": "res://assets/Aksara/sa (gempelan).png", "is_correct": true},
+			{"image": "res://assets/Aksara/nya (gantungan).png", "is_correct": false},
+			{"image": "res://assets/Aksara/pa (gempelan).png", "is_correct": false}
+		]
+	},
+	# 7
+	{
+		"type": "sound",
+		"sound_name": "Manda",
+		"prompt_header": "Silahkan di Klik gambar suara berikut :",
+		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
+		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
+		"options": [
+			{"image": "res://assets/Aksara/ma (padma).png", "is_correct": false},
+			{"image": "res://assets/Aksara/da (manda).png", "is_correct": true},
+			{"image": "res://assets/Aksara/nya (yadnya).png", "is_correct": false}
+		]
+	},
+	# 8
+	{
+		"type": "draw",
+		"instruction": "Tulis Aksara a/Ha",
+		"target_image": "res://assets/Aksara/a,ha.png"
+	},
+	# 9
+	{
+		"type": "draw",
+		"instruction": "Tulis gantungan a/ha",
+		"target_image": "res://assets/Aksara/a, ha (gantungan).png"
+	},
+	# 10
+	{
+		"type": "choice",
+		"prompt_header": "Bacalah deretan kelima aksara secara berurutan berikut:",
+		"prompt_image": "res://assets/Aksara/hanacaraka.png",
+		"question": "Manakah pembacaan latin yang tepat untuk deretan aksara di atas?",
+		"options": [
+			{"text": "Hanacaraka", "is_correct": true},
+			{"text": "Nacaraha", "is_correct": false},
+			{"text": "Haranaca", "is_correct": false}
+		]
+	},
+	# 11
+	{
+		"type": "choice",
+		"prompt_header": "Bacalah deretan kelima latin secara berurutan berikut:",
+		"prompt_kata": "Ma-Ga-Ba-Nga",
+		"question": "Manakah pembacaan aksara Bali yang tepat untuk deretan di atas?",
+		"options": [
+			{"image": "res://assets/Aksara/hanacaraka.png", "is_correct": false},
+			{"image": "res://assets/Aksara/magabanga.png", "is_correct": true},
+			{"image": "res://assets/Aksara/hanakata.png", "is_correct": false}
+		]
+	},
+	# 12
+	{
+		"type": "choice",
+		"question": "Saat menulis kata 'Bapaknya' dalam aksara Bali, 'k' di tengah kata akan mati. Secara visual, gantungan apa yang diletakkan di bawah aksara Ka?",
+		"options": [
+			{"text": "Gantungan Nya", "is_correct": true},
+			{"text": "Gantungan Ja", "is_correct": false},
+			{"text": "Gantungan Pa", "is_correct": false}
+		]
+	},
+	# 13
+	{
+		"type": "choice",
+		"question": "Jika aksara Ka (ka.png) dimatikan dan digabung dengan aksara La, bagaimanakah wujud susunan visual (Kla) yang tepat?",
+		"options": [
+			{"image": "res://assets/Aksara/nla.png", "is_correct": false},
+			{"image": "res://assets/Aksara/kma.png", "is_correct": false},
+			{"image": "res://assets/Aksara/kla.png", "is_correct": true}
+		]
+	},
+	# 14
+	{
+		"type": "choice",
+		"prompt_header": "Perhatikan aksara berikut:",
+		"prompt_image": "res://assets/Aksara/malplama.png",
+		"question": "Manakah bentuk bacaan yang akurat untuk aksara di atas?",
+		"options": [
+			{"text": "Maspala", "is_correct": false},
+			{"text": "Malapala", "is_correct": false},
+			{"text": "Malplama", "is_correct": true}
+		]
+	},
+	# 15
+	{
+		"type": "choice",
+		"prompt_header": "Perhatikan aksara berikut:",
+		"prompt_image": "res://assets/Aksara/panda.png",
+		"question": "Bagaimanakah pembacaan murni dari aksara di atas?",
+		"options": [
+			{"text": "Pluada", "is_correct": false},
+			{"text": "Palana", "is_correct": false},
+			{"text": "Panda", "is_correct": true}
+		]
+	},
+	# 16
+	{
+		"type": "sound",
+		"sound_name": "BaLa",
+		"prompt_header": "Silahkan di Klik gambar suara berikut :",
+		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
+		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
+		"options": [
+			{"image": "res://assets/Aksara/ba (Ba-La).png", "is_correct": true},
+			{"image": "res://assets/Aksara/RaSa.png", "is_correct": false},
+			{"image": "res://assets/Aksara/PaSa.png", "is_correct": false}
+		]
+	},
+	# 17
+	{
+		"type": "sound",
+		"sound_name": "Hana",
+		"prompt_header": "Silahkan di Klik gambar suara berikut :",
+		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
+		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
+		"options": [
+			{"image": "res://assets/Aksara/ca (Ca-Ca).png", "is_correct": false},
+			{"image": "res://assets/Aksara/ra (Ca-Ra).png", "is_correct": false},
+			{"image": "res://assets/Aksara/na (Ha-Na).png", "is_correct": true}
+		]
+	},
+	# 18
+	{
+		"type": "sound",
+		"sound_name": "Gempelan Sa",
+		"prompt_header": "Silahkan di Klik gambar suara berikut :",
+		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
+		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
+		"options": [
+			{"image": "res://assets/Aksara/la (gantungan).png", "is_correct": false},
+			{"image": "res://assets/Aksara/ca (gantungan).png", "is_correct": false},
+			{"image": "res://assets/Aksara/sa (gempelan).png", "is_correct": true}
+		]
+	},
+	# 19
+	{
+		"type": "sound",
+		"sound_name": "Raksa",
+		"prompt_header": "Silahkan di Klik gambar suara berikut :",
+		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
+		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
+		"options": [
+			{"image": "res://assets/Aksara/sa (raksa).png", "is_correct": true},
+			{"image": "res://assets/Aksara/wa (satwa).png", "is_correct": false},
+			{"image": "res://assets/Aksara/la (amla).png", "is_correct": false}
+		]
+	},
+	# 20
+	{
+		"type": "draw",
+		"instruction": "Tulis Gantungan Ma",
+		"target_image": "res://assets/Aksara/ma (gantungan) .png"
+	},
+	# 21
+	{
+		"type": "draw",
+		"instruction": "Tulis Gantungan Wa",
+		"target_image": "res://assets/Aksara/wa (gantungan).png"
+	},
+	# 22
+	{
+		"type": "draw",
+		"instruction": "Tulis Gantungan Ba",
+		"target_image": "res://assets/Aksara/ba (gantungan).png"
+	},
+	# 23
+	{
+		"type": "choice",
+		"prompt_kata": "‘Hana raka’",
+		"question": "Coba terjemahkan dua kata sederhana ini: 'Hana raka'. Manakah penulisan Aksara Bali yang tepat?",
+		"options": [
+			{"image": "res://assets/Aksara/hanaraka.png", "is_correct": true},
+			{"image": "res://assets/Aksara/haranaka.png", "is_correct": false},
+			{"image": "res://assets/Aksara/hakarana.png", "is_correct": false}
+		]
+	},
+	# 24
+	{
+		"type": "choice",
+		"prompt_kata": "‘Jaya Mala’",
+		"question": "Coba terjemahkan dua kata sederhana ini: 'Jaya Mala'. Manakah penulisan Aksara Bali yang tepat?",
+		"options": [
+			{"image": "res://assets/Aksara/jayamaya.png", "is_correct": false},
+			{"image": "res://assets/Aksara/jayamala.png", "is_correct": true},
+			{"image": "res://assets/Aksara/jayalama.png", "is_correct": false}
+		]
+	},
+	# 25
+	{
+		"type": "choice",
+		"prompt_kata": "‘Saptakanda’",
+		"question": "Coba terjemahkan dua kata sederhana ini: 'Saptakanda'. Manakah penulisan Aksara Bali yang tepat?",
+		"options": [
+			{"image": "res://assets/Aksara/saptakanda.png", "is_correct": true},
+			{"image": "res://assets/Aksara/ramayana.png", "is_correct": false},
+			{"image": "res://assets/Aksara/saptawara.png", "is_correct": false}
+		]
+	}
+]
+
 func _get_player_data() -> Node:
 	var root_node = null
 	if is_inside_tree() and get_tree() and get_tree().root:
@@ -584,6 +857,10 @@ func _ensure_nodes() -> void:
 		label_question_number = get_node_or_null("HeaderBar/QuestionBoard/LabelQuestionNumber")
 	if not label_timer:
 		label_timer = get_node_or_null("HeaderBar/TimerBoard/LabelTimer")
+	if not star_board:
+		star_board = get_node_or_null("HeaderBar/StarBoard")
+	if not label_stars:
+		label_stars = get_node_or_null("HeaderBar/StarBoard/LabelStars")
 		
 	if not choice_container:
 		choice_container = get_node_or_null("ChoiceContainer")
@@ -642,18 +919,37 @@ func _ensure_nodes() -> void:
 		complete_popup_layer = get_node_or_null("CompletePopupLayer")
 	if not complete_popup_container:
 		complete_popup_container = get_node_or_null("CompletePopupLayer/PopupContainer")
+	if not label_complete_title:
+		label_complete_title = get_node_or_null("CompletePopupLayer/PopupContainer/LabelCompleteTitle")
+	if not label_complete_desc:
+		label_complete_desc = get_node_or_null("CompletePopupLayer/PopupContainer/LabelCompleteDesc")
 	if not btn_ulangi:
 		btn_ulangi = get_node_or_null("CompletePopupLayer/PopupContainer/BtnUlangi")
+	if not label_ulangi:
+		label_ulangi = get_node_or_null("CompletePopupLayer/PopupContainer/BtnUlangi/LabelUlangi")
 	if not btn_kembali_menu:
 		btn_kembali_menu = get_node_or_null("CompletePopupLayer/PopupContainer/BtnKembaliMenu")
+	if not label_kembali_menu:
+		label_kembali_menu = get_node_or_null("CompletePopupLayer/PopupContainer/BtnKembaliMenu/LabelKembaliMenu")
+
+func _update_stars_display() -> void:
+	var pd = _get_player_data()
+	if label_stars and pd and "total_stars" in pd:
+		label_stars.text = str(pd.total_stars)
 
 func _ready() -> void:
 	_ensure_nodes()
+	_update_stars_display()
 	
 	# Determine current latihan ID from PlayerData
 	var pd = _get_player_data()
-	if pd and "current_latihan_index" in pd and pd.current_latihan_index > 0:
-		current_latihan_id = pd.current_latihan_index
+	if pd:
+		if "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+			current_latihan_id = pd.current_stage_level
+		elif "current_latihan_index" in pd and pd.current_latihan_index > 0:
+			current_latihan_id = pd.current_latihan_index
+		else:
+			current_latihan_id = 1
 	else:
 		current_latihan_id = 1
 		
@@ -762,13 +1058,61 @@ func _setup_button_effects(btn: TextureButton) -> void:
 		tween.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_SINE)
 	)
 
+func _format_random_question(raw_q: Dictionary) -> Dictionary:
+	var q = raw_q.duplicate(true)
+	if q.get("type") in ["choice", "sound"] and q.has("options"):
+		var raw_opts: Array = q["options"].duplicate(true)
+		raw_opts.shuffle()
+		var formatted_opts = []
+		var correct_idx = 0
+		for i in range(raw_opts.size()):
+			var opt = raw_opts[i]
+			var is_corr = opt.get("is_correct", false)
+			if is_corr:
+				correct_idx = i
+			var letter = ["A. ", "B. ", "C. "][i]
+			if opt.has("text"):
+				var txt = str(opt["text"])
+				if not (txt.begins_with("A. ") or txt.begins_with("B. ") or txt.begins_with("C. ")):
+					txt = letter + txt
+				else:
+					txt = letter + txt.substr(3)
+				formatted_opts.append({"text": txt})
+			elif opt.has("image"):
+				formatted_opts.append({"image": opt["image"]})
+		q["options"] = formatted_opts
+		q["correct"] = correct_idx
+	return q
+
 func load_latihan(latihan_id: int, start_q_idx: int = 0) -> void:
 	_ensure_nodes()
+	_update_stars_display()
 	current_latihan_id = latihan_id
+	
 	if ALL_LATIHAN_DATA.has(current_latihan_id):
 		current_latihan_data = ALL_LATIHAN_DATA[current_latihan_id]
 	else:
-		current_latihan_data = ALL_LATIHAN_DATA[1]
+		# Endless Stage (Stage 9+)
+		var pd = _get_player_data()
+		var q_indices: Array[int] = []
+		if pd and pd.has_method("get_next_random_question_indices"):
+			q_indices = pd.get_next_random_question_indices(4, LATIHAN_SOAL_ACAK_25.size())
+		else:
+			for i in range(4):
+				q_indices.append(randi() % LATIHAN_SOAL_ACAK_25.size())
+				
+		var generated_questions: Array = []
+		for idx in q_indices:
+			if idx >= 0 and idx < LATIHAN_SOAL_ACAK_25.size():
+				var q_item = _format_random_question(LATIHAN_SOAL_ACAK_25[idx])
+				generated_questions.append(q_item)
+				
+		current_latihan_data = {
+			"title": "STAGE %d" % current_latihan_id,
+			"subtitle": "Latihan Soal Acak (Endless)",
+			"materi_id": ((current_latihan_id - 1) % 8) + 1,
+			"questions": generated_questions
+		}
 	
 	var questions: Array = current_latihan_data.get("questions", [])
 	if start_q_idx >= 0 and start_q_idx < questions.size():
@@ -1210,12 +1554,45 @@ func _on_lihat_materi_pressed() -> void:
 	print("Membuka Materi terkait dari Latihan (3x gagal)...")
 	var pd = _get_player_data()
 	if pd:
-		pd.set_current_materi(current_latihan_id)
+		var target_m_id = current_latihan_id
+		if target_m_id > 8:
+			target_m_id = ((current_latihan_id - 1) % 8) + 1
+		pd.set_current_materi(target_m_id)
 		pd.from_latihan_retry = true
 		pd.latihan_return_question_idx = current_question_index
+		pd.set_current_latihan(current_latihan_id)
 	get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
 
 func _show_complete_popup() -> void:
+	var pd = _get_player_data()
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	
+	if is_gameplay:
+		pd.add_star(1)
+		pd.complete_stage(current_latihan_id)
+		pd.current_stage_level = current_latihan_id + 1
+		pd.save_progress()
+		_update_stars_display()
+		
+		if label_complete_title:
+			label_complete_title.text = "LEVEL SELESAI!"
+		if label_complete_desc:
+			label_complete_desc.text = "Selamat! Kamu mendapatkan 1 Bintang ⭐\ndan membuka level berikutnya."
+		if label_ulangi:
+			label_ulangi.text = "Level Selanjutnya"
+		if label_kembali_menu:
+			label_kembali_menu.text = "Peta Belajar"
+	else:
+		# Standalone Latihan mode (No stars added, Belajar Bertahap progress untouched)
+		if label_complete_title:
+			label_complete_title.text = "LATIHAN SELESAI!"
+		if label_complete_desc:
+			label_complete_desc.text = "Hebat! Kamu telah menyelesaikan seluruh soal latihan."
+		if label_ulangi:
+			label_ulangi.text = "Ulangi"
+		if label_kembali_menu:
+			label_kembali_menu.text = "Menu Latihan"
+			
 	complete_popup_layer.visible = true
 	complete_popup_layer.modulate.a = 0.0
 	complete_popup_container.scale = Vector2(0.7, 0.7)
@@ -1226,13 +1603,27 @@ func _show_complete_popup() -> void:
 
 func _on_ulangi_pressed() -> void:
 	complete_popup_layer.visible = false
-	current_question_index = 0
-	question_fail_count = 0
-	time_remaining_seconds = 95
-	_render_question()
+	var pd = _get_player_data()
+	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+		# Advance directly to the next level
+		current_latihan_id = pd.current_stage_level
+		current_question_index = 0
+		question_fail_count = 0
+		time_remaining_seconds = 95
+		load_latihan(current_latihan_id, 0)
+	else:
+		# Replay current latihan
+		current_question_index = 0
+		question_fail_count = 0
+		time_remaining_seconds = 95
+		_render_question()
 
 func _on_kembali_menu_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/Latihan.tscn")
+	var pd = _get_player_data()
+	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+		get_tree().change_scene_to_file("res://scenes/Gameplay.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/Latihan.tscn")
 
 func _animate_question_transition() -> void:
 	_render_question()

@@ -100,7 +100,7 @@ font_color = Color(0.2, 0.1, 0.08, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_popup_note"]
 font = ExtResource("5_font")
-font_size = 22
+font_size = 24
 font_color = Color(0.35, 0.15, 0.1, 1)
 
 [node name="Isimateri" type="Control"]
@@ -484,7 +484,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="InfoPopupLayer" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -564,9 +563,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -350.0
-offset_top = 258.0
+offset_top = 255.0
 offset_right = 350.0
-offset_bottom = 438.0
+offset_bottom = 435.0
 grow_horizontal = 2
 text = "Fungsi Gantungan adalah untuk mematikan suara huruf agar tidak dibaca dengan akhiran 'a'. Gantungan letaknya selalu ada di bawah huruf yang dimatikan."
 label_settings = SubResource("LabelSettings_popup_desc")
@@ -593,9 +592,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -350.0
-offset_top = 624.0
+offset_top = 642.0
 offset_right = 350.0
-offset_bottom = 824.0
+offset_bottom = 842.0
 grow_horizontal = 2
 text = "Perhatikan contoh di atas! Agar huruf 'Ka' kehilangan suara 'a' (berubah menjadi huruf mati 'k'), maka kita harus menempelkan Gantungan 'Ta' tepat di bawahnya."
 label_settings = SubResource("LabelSettings_popup_note")

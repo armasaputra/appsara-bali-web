@@ -153,6 +153,10 @@ func _close_popup() -> void:
 
 func _on_belajar_pressed() -> void:
 	print("Menu Belajar Bertahap dipilih!")
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd:
+		pd.is_gameplay_mode = true
+	get_tree().change_scene_to_file("res://scenes/Gameplay.tscn")
 
 func _on_materi_pressed() -> void:
 	print("Menu DAFTAR MATERI dipilih!")

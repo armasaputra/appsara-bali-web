@@ -1,16 +1,16 @@
 [gd_scene load_steps=15 format=3 uid="uid://b7vy5q4v8w3lx"]
 
-[ext_resource type="Script" path="res://scripts/StartScreen.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/Background 1.png" id="2_bg"]
-[ext_resource type="Texture2D" path="res://assets/Gapura.png" id="3_gapura"]
-[ext_resource type="Texture2D" path="res://assets/AssetSitable.png" id="4_sitable"]
-[ext_resource type="Texture2D" path="res://assets/CharacterStart.png" id="5_char"]
-[ext_resource type="Texture2D" path="res://assets/AksaraTitle.png" id="6_title"]
-[ext_resource type="Texture2D" path="res://assets/TulisanAksaraBaliinTitle.png" id="7_sub"]
-[ext_resource type="Texture2D" path="res://assets/NameInput.png" id="8_name_bg"]
-[ext_resource type="Texture2D" path="res://assets/WoodPopUp.png" id="9_popup_bg"]
-[ext_resource type="Texture2D" path="res://assets/ButtonWoodLayout.png" id="10_btn"]
-[ext_resource type="FontFile" path="res://assets/fonts/Sigmar-Regular.ttf" id="11_font"]
+[ext_resource type="Script" uid="uid://bt2hwu70janyi" path="res://scripts/StartScreen.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://bl07dqepu7hj0" path="res://assets/Gapura.png" id="3_gapura"]
+[ext_resource type="Texture2D" uid="uid://bp11yxjecgp1k" path="res://assets/AssetSitable.png" id="4_sitable"]
+[ext_resource type="Texture2D" uid="uid://dbfuovmhoj3jt" path="res://assets/CharacterStart.png" id="5_char"]
+[ext_resource type="Texture2D" uid="uid://b0h34yj7121h0" path="res://assets/AksaraTitle.png" id="6_title"]
+[ext_resource type="Texture2D" uid="uid://dyvoromnb0ar3" path="res://assets/TulisanAksaraBaliinTitle.png" id="7_sub"]
+[ext_resource type="Texture2D" uid="uid://cjrd2xhhqyi2g" path="res://assets/NameInput.png" id="8_name_bg"]
+[ext_resource type="Texture2D" uid="uid://bouibfrxqr346" path="res://assets/WoodPopUp.png" id="9_popup_bg"]
+[ext_resource type="Texture2D" uid="uid://csjuec1nhjimq" path="res://assets/ButtonWoodLayout.png" id="10_btn"]
+[ext_resource type="FontFile" uid="uid://da4dq8uesj4ik" path="res://assets/fonts/Sigmar-Regular.ttf" id="11_font"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_input"]
 
@@ -22,7 +22,6 @@ font_color = Color(0.25098, 0.117647, 0.0901961, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_btn"]
 font = ExtResource("11_font")
 font_size = 86
-font_color = Color(1, 1, 1, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 4)

@@ -1,0 +1,217 @@
+[gd_scene load_steps=11 format=3 uid="uid://huw27ytsxlwx"]
+
+[ext_resource type="Script" uid="uid://bl26hfae0h31o" path="res://scripts/Gameplay.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://bp11yxjecgp1k" path="res://assets/AssetSitable.png" id="3_sitable"]
+[ext_resource type="Texture2D" uid="uid://3dma7o4bfhy7" path="res://assets/TitleBoard.png" id="4_title_board"]
+[ext_resource type="FontFile" uid="uid://da4dq8uesj4ik" path="res://assets/fonts/Sigmar-Regular.ttf" id="5_font"]
+[ext_resource type="Texture2D" uid="uid://n0t7odsdmkhc" path="res://assets/StarBoard.png" id="6_star_board"]
+[ext_resource type="Texture2D" uid="uid://csjuec1nhjimq" path="res://assets/ButtonWoodLayout.png" id="7_btn_wood"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("5_font")
+font_size = 54
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_stars"]
+font = ExtResource("5_font")
+font_size = 44
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_action_btn"]
+font = ExtResource("5_font")
+font_size = 54
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 4)
+
+[node name="Gameplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+stage_local_offsets = Array[Vector2]([Vector2(377, 870), Vector2(600, 690), Vector2(920, 450), Vector2(225, 390), Vector2(560, 100)])
+platform_size = Vector2(220, 220)
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AssetSitable" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -860.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("3_sitable")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+
+[node name="MapContent" type="Control" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HeaderLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 320.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="TitleBoard" type="TextureRect" parent="HeaderLayer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -440.0
+offset_top = 35.0
+offset_right = 440.0
+offset_bottom = 289.0
+grow_horizontal = 2
+texture = ExtResource("4_title_board")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelTitle" type="Label" parent="HeaderLayer/TitleBoard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 35.0
+offset_right = -40.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "BELAJAR
+BERTAHAP"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StarBoard" type="TextureRect" parent="HeaderLayer"]
+layout_mode = 1
+offset_left = 55.0
+offset_top = 317.0
+offset_right = 295.0
+offset_bottom = 437.0
+texture = ExtResource("6_star_board")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelStars" type="Label" parent="HeaderLayer/StarBoard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 85.0
+offset_top = -4.0
+offset_right = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_stars")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FooterLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -380.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BtnMulai" type="TextureButton" parent="FooterLayer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -399.0
+offset_right = 260.0
+offset_bottom = -249.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(260, 75)
+texture_normal = ExtResource("7_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelMulai" type="Label" parent="FooterLayer/BtnMulai"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mulai"
+label_settings = SubResource("LabelSettings_action_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnKembali" type="TextureButton" parent="FooterLayer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -204.0
+offset_right = 260.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(260, 70)
+texture_normal = ExtResource("7_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelKembali" type="Label" parent="FooterLayer/BtnKembali"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Kembali"
+label_settings = SubResource("LabelSettings_action_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
