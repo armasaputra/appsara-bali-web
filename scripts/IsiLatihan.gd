@@ -999,7 +999,7 @@ func _on_periksa_draw_pressed() -> void:
 	else:
 		_handle_answer_wrong()
 
-# Stroke Matching & Anti-Scribble Algorithm
+# Two-Way Masked Pixel Comparison Drawing Assessment
 func _evaluate_drawing_match(target_img_path: String) -> bool:
 	if drawing_lines.is_empty():
 		return false
@@ -1007,7 +1007,7 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 	var total_points = 0
 	for line in drawing_lines:
 		total_points += line.size()
-	if total_points < 8:
+	if total_points < 4:
 		return false
 		
 	if target_img_path.is_empty() or not ResourceLoader.exists(target_img_path):
@@ -1033,170 +1033,139 @@ func _evaluate_drawing_match(target_img_path: String) -> bool:
 		ghost_size = ghost_aksara.size
 	var ghost_pos = (area_size - ghost_size) / 2.0
 	
-	# Determine aspect-fit bounds of glyph inside ghost box
+	# Determine aspect-fit bounds of glyph inside ghost box (TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
 	var img_orig_w = float(ref_img.get_width())
 	var img_orig_h = float(ref_img.get_height())
+	if img_orig_w <= 0.0 or img_orig_h <= 0.0:
+		return true
+		
 	var fit_scale = min(ghost_size.x / img_orig_w, ghost_size.y / img_orig_h)
 	var dest_w = img_orig_w * fit_scale
 	var dest_h = img_orig_h * fit_scale
 	var dest_pos = ghost_pos + Vector2((ghost_size.x - dest_w) / 2.0, (ghost_size.y - dest_h) / 2.0)
 	
-	# 1. Rasterize reference image into ref_grid (64x64) and track bounding box
-	var ref_grid = []
+	# 1. Rasterize target reference image into target_core_mask
+	var target_core_mask = []
 	for y in range(grid_h):
 		var row = []
-		for x in range(grid_w):
-			row.append(0)
-		ref_grid.append(row)
+		row.resize(grid_w)
+		row.fill(false)
+		target_core_mask.append(row)
 		
-	var ref_count = 0
-	var min_gx = grid_w
-	var max_gx = 0
-	var min_gy = grid_h
-	var max_gy = 0
-	
+	var target_core_count = 0
 	for iy in range(int(img_orig_h)):
 		for ix in range(int(img_orig_w)):
 			var c = ref_img.get_pixel(ix, iy)
-			if c.a > 0.28:
+			if c.a > 0.25:
 				var px = dest_pos.x + (float(ix) / img_orig_w) * dest_w
 				var py = dest_pos.y + (float(iy) / img_orig_h) * dest_h
 				var gx = clamp(int((px / area_size.x) * grid_w), 0, grid_w - 1)
 				var gy = clamp(int((py / area_size.y) * grid_h), 0, grid_h - 1)
-				if ref_grid[gy][gx] == 0:
-					ref_grid[gy][gx] = 1
-					ref_count += 1
-					min_gx = min(min_gx, gx)
-					max_gx = max(max_gx, gx)
-					min_gy = min(min_gy, gy)
-					max_gy = max(max_gy, gy)
+				if not target_core_mask[gy][gx]:
+					target_core_mask[gy][gx] = true
+					target_core_count += 1
 
-	if ref_count == 0:
+	if target_core_count == 0:
 		return true
 
-	# Bounding box centers for quadrant evaluation
-	var mid_gx = int((min_gx + max_gx) / 2.0)
-	var mid_gy = int((min_gy + max_gy) / 2.0)
-
-	# Count reference points per quadrant: 0=TL, 1=TR, 2=BL, 3=BR
-	var ref_quads = [0, 0, 0, 0]
-	for y in range(grid_h):
-		for x in range(grid_w):
-			if ref_grid[y][x] == 1:
-				var q_idx = (0 if y <= mid_gy else 2) + (0 if x <= mid_gx else 1)
-				ref_quads[q_idx] += 1
-
-	# 2. Build tolerance zone around reference strokes (radius 1.5 -> dx*dx + dy*dy <= 3)
-	var tolerance_grid = []
+	# 2. Build target silhouette mask with small stroke tolerance zone (radius ~2 cells)
+	# This defines the valid stroke corridor so natural handwriting variance along the letter
+	# is not penalized as outside stray ink.
+	var target_silhouette_mask = []
 	for y in range(grid_h):
 		var row = []
-		for x in range(grid_w):
-			row.append(0)
-		tolerance_grid.append(row)
+		row.resize(grid_w)
+		row.fill(false)
+		target_silhouette_mask.append(row)
 		
 	for y in range(grid_h):
 		for x in range(grid_w):
-			if ref_grid[y][x] == 1:
+			if target_core_mask[y][x]:
 				for dy in range(-2, 3):
-					for dx in range(-2, 3):
-						if dx * dx + dy * dy <= 3:
-							var ny = clamp(y + dy, 0, grid_h - 1)
-							var nx = clamp(x + dx, 0, grid_w - 1)
-							tolerance_grid[ny][nx] = 1
-
-	# 3. Rasterize user strokes into drawn_grid (64x64) with brush radius 1
-	var drawn_grid = []
-	for y in range(grid_h):
-		var row = []
-		for x in range(grid_w):
-			row.append(0)
-		drawn_grid.append(row)
-		
-	var drawn_count = 0
-	for line in drawing_lines:
-		for pt in line:
-			var gx = clamp(int((pt.x / area_size.x) * grid_w), 0, grid_w - 1)
-			var gy = clamp(int((pt.y / area_size.y) * grid_h), 0, grid_h - 1)
-			for dy in range(-1, 2):
-				for dx in range(-1, 2):
-					var ny = clamp(gy + dy, 0, grid_h - 1)
-					var nx = clamp(gx + dx, 0, grid_w - 1)
-					if drawn_grid[ny][nx] == 0:
-						drawn_grid[ny][nx] = 1
-						drawn_count += 1
-
-	# 4. Check drawn points count vs reference count
-	if drawn_count < 30 or drawn_count < ref_count * 0.35:
-		print("Draw rejected: too few strokes. Drawn=%d, Ref=%d" % [drawn_count, ref_count])
-		return false
-		
-	if drawn_count > ref_count * 2.1 or drawn_count > 1400:
-		print("Draw rejected: too dense ink (scribble anti-cheat). Drawn=%d, Ref=%d" % [drawn_count, ref_count])
-		return false
-
-	# 5. Calculate intersection and outside points
-	var inside_count = 0
-	var outside_count = 0
-	for y in range(grid_h):
-		for x in range(grid_w):
-			if drawn_grid[y][x] == 1:
-				if tolerance_grid[y][x] == 1:
-					inside_count += 1
-				else:
-					outside_count += 1
-					
-	# Calculate matched reference points & quadrant matches
-	var matched_ref_count = 0
-	var matched_quads = [0, 0, 0, 0]
-	for y in range(grid_h):
-		for x in range(grid_w):
-			if ref_grid[y][x] == 1:
-				var matched = false
-				for dy in range(-2, 3):
-					if matched:
-						break
 					for dx in range(-2, 3):
 						if dx * dx + dy * dy <= 4:
 							var ny = clamp(y + dy, 0, grid_h - 1)
 							var nx = clamp(x + dx, 0, grid_w - 1)
-							if drawn_grid[ny][nx] == 1:
-								matched = true
-								break
-				if matched:
-					matched_ref_count += 1
-					var q_idx = (0 if y <= mid_gy else 2) + (0 if x <= mid_gx else 1)
-					matched_quads[q_idx] += 1
+							target_silhouette_mask[ny][nx] = true
 
-	var coverage = float(matched_ref_count) / float(ref_count)
-	var accuracy = float(inside_count) / float(max(1, drawn_count))
+	# 3. Rasterize user strokes into drawn_mask (interpolating points to avoid gaps on fast swipes)
+	var drawn_mask = []
+	for y in range(grid_h):
+		var row = []
+		row.resize(grid_w)
+		row.fill(false)
+		drawn_mask.append(row)
+		
+	for line in drawing_lines:
+		if line.size() == 1:
+			_stamp_drawn_point(drawn_mask, line[0], area_size, grid_w, grid_h)
+		elif line.size() >= 2:
+			for i in range(line.size() - 1):
+				var p1 = line[i]
+				var p2 = line[i + 1]
+				var dist = p1.distance_to(p2)
+				var steps = max(1, int(dist / 4.0))
+				for s in range(steps + 1):
+					var t = float(s) / float(steps)
+					var pt = p1.lerp(p2, t)
+					_stamp_drawn_point(drawn_mask, pt, area_size, grid_w, grid_h)
 
-	print("Draw Match: coverage=%.2f, accuracy=%.2f, drawn=%d, ref=%d, outside=%d" % [
-		coverage, accuracy, drawn_count, ref_count, outside_count
+	# 4. Count True Positives (inside target silhouette) and Outside Pixels (in empty space)
+	var true_positive_count = 0
+	var total_drawn_count = 0
+	var outside_drawn_count = 0
+	
+	for y in range(grid_h):
+		for x in range(grid_w):
+			if drawn_mask[y][x]:
+				total_drawn_count += 1
+				if target_silhouette_mask[y][x]:
+					pass # Inside valid silhouette
+				else:
+					outside_drawn_count += 1
+					
+			if target_core_mask[y][x] and drawn_mask[y][x]:
+				true_positive_count += 1
+
+	if total_drawn_count == 0:
+		return false
+
+	# 5. Calculate Two-Way Masked Ratios
+	# True Positive Ratio: proportion of target silhouette core covered
+	var true_positive_ratio = float(true_positive_count) / float(target_core_count)
+	
+	# Outside Penalty Ratio: proportion of drawn pixels falling into empty space outside silhouette
+	var outside_penalty_ratio = float(outside_drawn_count) / float(total_drawn_count)
+	
+	# Final Score: percentage between 0% and 100%
+	var raw_score = true_positive_ratio - outside_penalty_ratio
+	var final_score = clampf(raw_score, 0.0, 1.0) * 100.0
+	
+	# Win condition: 60% or higher is a win
+	var is_win = final_score >= 60.0
+
+	print("Drawing Assessment: Score=%.1f%% (TPR=%.1f%%, Penalty=%.1f%%, TP=%d/%d, Outside=%d/%d) -> %s" % [
+		final_score,
+		true_positive_ratio * 100.0,
+		outside_penalty_ratio * 100.0,
+		true_positive_count,
+		target_core_count,
+		outside_drawn_count,
+		total_drawn_count,
+		"WIN" if is_win else "FAIL"
 	])
 
-	# Anti-cheat / Anti-scribble:
-	# 1. More than 48% stray ink outside the letter shape is rejected
-	if accuracy < 0.52:
-		print("Draw rejected: accuracy too low (too much stray ink outside letter). Accuracy=%.2f" % accuracy)
-		return false
+	return is_win
 
-	# 2. Overall coverage must cover at least 48% of the letter
-	if coverage < 0.48:
-		print("Draw rejected: coverage too low (incomplete letter). Coverage=%.2f" % coverage)
-		return false
-
-	# 3. Structural Quadrant Check: Every quadrant containing significant strokes must have at least 25% coverage
-	for qi in range(4):
-		if ref_quads[qi] >= 18:
-			var q_cov = float(matched_quads[qi]) / float(ref_quads[qi])
-			if q_cov < 0.25:
-				print("Draw rejected: quadrant %d missing (q_cov=%.2f, ref=%d). Random scribble detected." % [
-					qi, q_cov, ref_quads[qi]
-				])
-				return false
-
-	print("Draw Match PASSED: Valid handwriting recognized!")
-	return true
+func _stamp_drawn_point(mask: Array, pt: Vector2, area_size: Vector2, grid_w: int, grid_h: int) -> void:
+	var gx = clamp(int((pt.x / area_size.x) * grid_w), 0, grid_w - 1)
+	var gy = clamp(int((pt.y / area_size.y) * grid_h), 0, grid_h - 1)
+	# Brush radius footprint (3x3 on 64x64 grid corresponds to ~18px brush width on 840x650 canvas)
+	for dy in range(-1, 2):
+		for dx in range(-1, 2):
+			var ny = clamp(gy + dy, 0, grid_h - 1)
+			var nx = clamp(gx + dx, 0, grid_w - 1)
+			mask[ny][nx] = true
 
 func _handle_answer_correct() -> void:
 	print("Jawaban Benar!")
