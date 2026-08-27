@@ -45,7 +45,11 @@ func _on_action_button_up() -> void:
 func _on_action_button_pressed() -> void:
 	match current_state:
 		State.MULAI:
-			_show_name_input()
+			var pd = get_node_or_null("/root/PlayerData")
+			if pd and pd.is_profile_registered:
+				_go_to_main_menu()
+			else:
+				_show_name_input()
 		State.INPUT_NAME:
 			_save_name()
 		State.NAME_SAVED:

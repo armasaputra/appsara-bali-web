@@ -28,8 +28,9 @@ function doGet(e) {
     var sheet = getLeaderboardSheet();
     var data = sheet.getDataRange().getValues();
     
-    // Check if score update or player rename was requested
-    if (e && e.parameter && (e.parameter.name || e.parameter.old_name)) {
+    // Check if score update, rename, or deletion was requested
+    if (e && e.parameter) {
+      var action = e.parameter.action ? String(e.parameter.action).trim().toLowerCase() : "";
       var newName = e.parameter.name ? String(e.parameter.name).trim() : "";
       var oldName = e.parameter.old_name ? String(e.parameter.old_name).trim() : "";
       var playerStars = e.parameter.stars !== undefined ? (Number(e.parameter.stars) || 0) : null;
@@ -57,26 +58,32 @@ function doGet(e) {
         }
       }
       
-      if (foundRowIndex > 0) {
-        // Rename row if name changed
-        if (newName !== "") {
-          sheet.getRange(foundRowIndex, 1).setValue(newName);
-        }
-        // Update star count
-        if (playerStars !== null) {
-          var currentStars = Number(data[foundRowIndex - 1][1]) || 0;
-          if (playerStars >= currentStars || oldName !== "") {
-            sheet.getRange(foundRowIndex, 2).setValue(playerStars);
-            sheet.getRange(foundRowIndex, 3).setValue(new Date().toISOString());
+      // Handle Delete Action (Hapus Progress)
+      if (action === "delete" && foundRowIndex > 0) {
+        sheet.deleteRow(foundRowIndex);
+        data = sheet.getDataRange().getValues();
+      } else if (action !== "delete") {
+        if (foundRowIndex > 0) {
+          // Rename row if name changed
+          if (newName !== "") {
+            sheet.getRange(foundRowIndex, 1).setValue(newName);
           }
+          // Update star count
+          if (playerStars !== null) {
+            var currentStars = Number(data[foundRowIndex - 1][1]) || 0;
+            if (playerStars >= currentStars || oldName !== "") {
+              sheet.getRange(foundRowIndex, 2).setValue(playerStars);
+              sheet.getRange(foundRowIndex, 3).setValue(new Date().toISOString());
+            }
+          }
+        } else if (newName !== "") {
+          // Append new player record
+          sheet.appendRow([newName, playerStars !== null ? playerStars : 0, new Date().toISOString()]);
         }
-      } else if (newName !== "") {
-        // Append new player record
-        sheet.appendRow([newName, playerStars !== null ? playerStars : 0, new Date().toISOString()]);
+        
+        // Refresh data array after modification
+        data = sheet.getDataRange().getValues();
       }
-      
-      // Refresh data array after modification
-      data = sheet.getDataRange().getValues();
     }
     
     var leaderboard = [];

@@ -17,6 +17,7 @@ extends Control
 @onready var line_edit_name: LineEdit = $SettingPopupLayer/PopupContainer/PopupFrame/InputFieldBg/LineEditName
 @onready var btn_sound: TextureButton = $SettingPopupLayer/PopupContainer/PopupFrame/BtnSound
 @onready var btn_terapkan: TextureButton = $SettingPopupLayer/PopupContainer/BtnTerapkan
+@onready var btn_hapus_progress: TextureButton = $SettingPopupLayer/PopupContainer/BtnHapusProgress
 
 # Textures
 const TEX_SOUND_ON = preload("res://assets/SoundOn.png")
@@ -45,6 +46,7 @@ func _ready() -> void:
 	_setup_button(btn_close, _on_close_pressed)
 	_setup_button(btn_sound, _on_sound_pressed)
 	_setup_button(btn_terapkan, _on_terapkan_pressed)
+	_setup_button(btn_hapus_progress, _on_hapus_progress_pressed)
 	
 	# LineEdit enter key submits/applies
 	line_edit_name.text_submitted.connect(func(_text): _on_terapkan_pressed())
@@ -136,6 +138,13 @@ func _on_terapkan_pressed() -> void:
 	
 	_update_greeting()
 	_close_popup()
+
+func _on_hapus_progress_pressed() -> void:
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd and pd.has_method("reset_all_progress"):
+		pd.reset_all_progress()
+	_close_popup()
+	get_tree().change_scene_to_file("res://scenes/StartScreen.tscn")
 
 func _close_popup() -> void:
 	_is_popup_open = false

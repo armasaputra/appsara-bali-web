@@ -4,6 +4,7 @@ const SAVE_FILE_PATH = "user://player_progress.json"
 const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbzRUlJcvnjKqHNKmLmIwXj03vQGfacKX4ZwIrItm81CzVZMVVek01Q3BNBzvOBphWQhOg/exec"
 
 var player_name: String = ""
+var is_profile_registered: bool = false
 var is_sound_muted: bool = false
 
 var current_materi_index: int = 1
@@ -54,6 +55,7 @@ func set_player_name(new_name: String) -> void:
 	else:
 		if player_name.is_empty():
 			player_name = _generate_default_player_name()
+	is_profile_registered = true
 	save_progress()
 	sync_score_to_sheets(old_name)
 
@@ -115,6 +117,26 @@ func sync_score_to_sheets(old_name: String = "") -> void:
 	var headers = ["Accept: application/json"]
 	_http_sync_node.request(url, headers, HTTPClient.METHOD_GET)
 
+func reset_all_progress() -> void:
+	# 1. Delete player from Google Sheets
+	if _http_sync_node and not GOOGLE_SHEETS_API_URL.is_empty() and not player_name.is_empty():
+		var delete_url = GOOGLE_SHEETS_API_URL
+		var sep = "&" if "?" in delete_url else "?"
+		delete_url += "%saction=delete&name=%s" % [sep, player_name.uri_encode()]
+		var headers = ["Accept: application/json"]
+		_http_sync_node.request(delete_url, headers, HTTPClient.METHOD_GET)
+		
+	# 2. Reset in-memory state
+	total_stars = 0
+	current_stage_level = 1
+	max_unlocked_stage = 1
+	cleared_stages.clear()
+	is_profile_registered = false
+	player_name = _generate_default_player_name()
+	
+	# 3. Save clean state to disk/browser
+	save_progress()
+
 func _on_sync_completed(_result: int, _response_code: int, _headers: PackedStringArray, _body: PackedByteArray) -> void:
 	pass # Background sync finished silently
 
@@ -125,6 +147,7 @@ func save_progress() -> void:
 		
 	var data = {
 		"player_name": player_name,
+		"is_profile_registered": is_profile_registered,
 		"is_sound_muted": is_sound_muted,
 		"total_stars": total_stars,
 		"current_stage_level": current_stage_level,
@@ -150,6 +173,7 @@ func load_progress() -> void:
 		var data = json.get_data()
 		if data is Dictionary:
 			player_name = str(data.get("player_name", "")).strip_edges()
+			is_profile_registered = bool(data.get("is_profile_registered", false))
 			is_sound_muted = data.get("is_sound_muted", false)
 			total_stars = int(data.get("total_stars", 0))
 			current_stage_level = int(data.get("current_stage_level", 1))

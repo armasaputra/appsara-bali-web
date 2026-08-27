@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b7vy5q4v8w3lx"]
+[gd_scene format=3 uid="uid://b7vy5q4v8w3lx"]
 
 [ext_resource type="Script" uid="uid://bt2hwu70janyi" path="res://scripts/StartScreen.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
@@ -26,7 +26,7 @@ shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 4)
 
-[node name="StartScreen" type="Control"]
+[node name="StartScreen" type="Control" unique_id=553308556]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=429313125]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,7 +46,7 @@ texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Gapura" type="TextureRect" parent="."]
+[node name="Gapura" type="TextureRect" parent="." unique_id=1102476839]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,7 +63,7 @@ texture = ExtResource("3_gapura")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AssetSitable" type="TextureRect" parent="."]
+[node name="AssetSitable" type="TextureRect" parent="." unique_id=1453941638]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -76,7 +76,7 @@ texture = ExtResource("4_sitable")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Character" type="TextureRect" parent="."]
+[node name="Character" type="TextureRect" parent="." unique_id=115776531]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -93,7 +93,7 @@ texture = ExtResource("5_char")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AksaraTitle" type="TextureRect" parent="."]
+[node name="AksaraTitle" type="TextureRect" parent="." unique_id=420016221]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -107,7 +107,7 @@ texture = ExtResource("6_title")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TulisanAksaraBali" type="TextureRect" parent="."]
+[node name="TulisanAksaraBali" type="TextureRect" parent="." unique_id=327034559]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -121,7 +121,7 @@ texture = ExtResource("7_sub")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NameInputPanel" type="TextureRect" parent="."]
+[node name="NameInputPanel" type="TextureRect" parent="." unique_id=130259453]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -140,7 +140,7 @@ texture = ExtResource("8_name_bg")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LineEditName" type="LineEdit" parent="NameInputPanel"]
+[node name="LineEditName" type="LineEdit" parent="NameInputPanel" unique_id=136766489]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -163,7 +163,7 @@ alignment = 1
 max_length = 20
 caret_blink = true
 
-[node name="WoodPopUpPanel" type="TextureRect" parent="."]
+[node name="WoodPopUpPanel" type="TextureRect" parent="." unique_id=45749501]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -182,7 +182,7 @@ texture = ExtResource("9_popup_bg")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelPopup" type="Label" parent="WoodPopUpPanel"]
+[node name="LabelPopup" type="Label" parent="WoodPopUpPanel" unique_id=1859710966]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -199,7 +199,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="ActionButton" type="TextureButton" parent="."]
+[node name="ActionButton" type="TextureButton" parent="." unique_id=910391863]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -217,7 +217,7 @@ texture_normal = ExtResource("10_btn")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelAction" type="Label" parent="ActionButton"]
+[node name="LabelAction" type="Label" parent="ActionButton" unique_id=227939746]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
