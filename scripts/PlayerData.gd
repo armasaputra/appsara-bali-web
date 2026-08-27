@@ -59,6 +59,24 @@ func set_player_name(new_name: String) -> void:
 	save_progress()
 	sync_score_to_sheets(old_name)
 
+func is_mobile_web() -> bool:
+	if OS.has_feature("web"):
+		var is_touch = JavaScriptBridge.eval("Boolean((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) || ('ontouchstart' in window && window.innerWidth <= 1024))")
+		return bool(is_touch)
+	return false
+
+func prompt_web_input(prompt_title: String, default_value: String = "") -> String:
+	if OS.has_feature("web"):
+		var safe_prompt = prompt_title.c_escape()
+		var safe_val = default_value.c_escape()
+		var js_expr = "prompt('%s', '%s')" % [safe_prompt, safe_val]
+		var res = JavaScriptBridge.eval(js_expr)
+		if res != null and typeof(res) == TYPE_STRING:
+			var trimmed = str(res).strip_edges()
+			if not trimmed.is_empty():
+				return trimmed
+	return default_value
+
 func set_sound_muted(muted: bool) -> void:
 	is_sound_muted = muted
 	var master_bus_idx = AudioServer.get_bus_index("Master")

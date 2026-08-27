@@ -14,6 +14,7 @@ extends Control
 @onready var setting_popup_layer: Control = $SettingPopupLayer
 @onready var popup_container: Control = $SettingPopupLayer/PopupContainer
 @onready var btn_close: TextureButton = $SettingPopupLayer/PopupContainer/PopupFrame/BtnClose
+@onready var input_field_bg: TextureRect = $SettingPopupLayer/PopupContainer/PopupFrame/InputFieldBg
 @onready var line_edit_name: LineEdit = $SettingPopupLayer/PopupContainer/PopupFrame/InputFieldBg/LineEditName
 @onready var btn_sound: TextureButton = $SettingPopupLayer/PopupContainer/PopupFrame/BtnSound
 @onready var btn_terapkan: TextureButton = $SettingPopupLayer/PopupContainer/BtnTerapkan
@@ -51,8 +52,24 @@ func _ready() -> void:
 	# LineEdit enter key submits/applies
 	line_edit_name.text_submitted.connect(func(_text): _on_terapkan_pressed())
 	
+	# Mobile Web input handlers (iOS & Android)
+	line_edit_name.gui_input.connect(_on_line_edit_gui_input)
+	input_field_bg.gui_input.connect(_on_line_edit_gui_input)
+	
 	# Gentle idle breathing animation for avatar
 	_start_avatar_idle()
+
+func _on_line_edit_gui_input(event: InputEvent) -> void:
+	if (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):
+		_handle_mobile_name_input()
+
+func _handle_mobile_name_input() -> void:
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd and pd.has_method("is_mobile_web") and pd.is_mobile_web():
+		var result = pd.prompt_web_input("Ubah Nama Pemain:", line_edit_name.text)
+		if not result.is_empty():
+			line_edit_name.text = result
+		line_edit_name.release_focus()
 
 func _update_greeting() -> void:
 	var pd = get_node_or_null("/root/PlayerData")

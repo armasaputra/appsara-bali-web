@@ -24,6 +24,10 @@ func _ready() -> void:
 	action_button.button_up.connect(_on_action_button_up)
 	line_edit_name.text_submitted.connect(_on_name_submitted)
 	
+	# Mobile Web input handlers (iOS & Android)
+	line_edit_name.gui_input.connect(_on_name_input_gui_input)
+	name_input_panel.gui_input.connect(_on_name_input_gui_input)
+	
 	# Initial UI state setup
 	name_input_panel.visible = false
 	wood_popup_panel.visible = false
@@ -55,6 +59,18 @@ func _on_action_button_pressed() -> void:
 		State.NAME_SAVED:
 			_go_to_main_menu()
 
+func _on_name_input_gui_input(event: InputEvent) -> void:
+	if (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):
+		_handle_mobile_name_input()
+
+func _handle_mobile_name_input() -> void:
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd and pd.has_method("is_mobile_web") and pd.is_mobile_web():
+		var result = pd.prompt_web_input("Masukkan nama pemain:", line_edit_name.text)
+		if not result.is_empty():
+			line_edit_name.text = result
+		line_edit_name.release_focus()
+
 func _show_name_input() -> void:
 	current_state = State.INPUT_NAME
 	
@@ -69,7 +85,11 @@ func _show_name_input() -> void:
 	tween.tween_property(name_input_panel, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	
 	await get_tree().create_timer(0.35).timeout
-	line_edit_name.grab_focus()
+	var pd = get_node_or_null("/root/PlayerData")
+	if pd and pd.has_method("is_mobile_web") and pd.is_mobile_web():
+		_handle_mobile_name_input()
+	else:
+		line_edit_name.grab_focus()
 
 func _on_name_submitted(_new_text: String) -> void:
 	if current_state == State.INPUT_NAME:
