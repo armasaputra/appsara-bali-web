@@ -73,10 +73,14 @@ func _on_name_submitted(_new_text: String) -> void:
 
 func _save_name() -> void:
 	var entered_name = line_edit_name.text.strip_edges()
-	if entered_name.is_empty():
-		entered_name = "Arma"
-	
 	var pd = get_node_or_null("/root/PlayerData")
+	
+	if entered_name.is_empty():
+		if pd and not pd.player_name.is_empty():
+			entered_name = pd.player_name
+		else:
+			entered_name = "Name0000"
+	
 	if pd and pd.has_method("set_player_name"):
 		pd.set_player_name(entered_name)
 	print("Nama pemain tersimpan:", entered_name)

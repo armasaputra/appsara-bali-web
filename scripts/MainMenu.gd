@@ -57,7 +57,7 @@ func _update_greeting() -> void:
 	if pd and not pd.player_name.is_empty():
 		label_greeting.text = "Haiii " + pd.player_name + "."
 	else:
-		label_greeting.text = "Haiii Arma."
+		label_greeting.text = "Haiii Pemain."
 
 func _setup_button(btn: TextureButton, callback: Callable) -> void:
 	btn.pressed.connect(callback)
@@ -97,7 +97,7 @@ func _on_settings_pressed() -> void:
 		line_edit_name.text = pd.player_name
 		_temp_sound_muted = pd.is_sound_muted
 	else:
-		line_edit_name.text = "Arma"
+		line_edit_name.text = "Name0000"
 		_temp_sound_muted = false
 	
 	_update_sound_icon()
@@ -168,4 +168,5 @@ func _on_latihan_pressed() -> void:
 
 func _on_peringkat_pressed() -> void:
 	print("Menu Papan Peringkat dipilih!")
+	get_tree().change_scene_to_file("res://scenes/Leaderboard.tscn")
 
