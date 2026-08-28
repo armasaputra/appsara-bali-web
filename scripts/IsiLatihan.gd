@@ -855,6 +855,24 @@ func _get_player_data() -> Node:
 				return child
 	return get_node_or_null("/root/PlayerData")
 
+func _get_audio_manager() -> Node:
+	var root_node = null
+	if is_inside_tree() and get_tree() and get_tree().root:
+		root_node = get_tree().root
+	else:
+		var tree = Engine.get_main_loop() as SceneTree
+		if tree and tree.root:
+			root_node = tree.root
+			
+	if root_node:
+		var am_node = root_node.get_node_or_null("AudioManager")
+		if am_node:
+			return am_node
+		for child in root_node.get_children():
+			if str(child.name) == "AudioManager":
+				return child
+	return get_node_or_null("/root/AudioManager")
+
 func _ensure_nodes() -> void:
 	if not label_title:
 		label_title = get_node_or_null("TitleBoard/LabelTitle")
@@ -1542,6 +1560,12 @@ func _stamp_drawn_point(mask: Array, pt: Vector2, area_size: Vector2, grid_w: in
 
 func _handle_answer_correct() -> void:
 	print("Jawaban Benar!")
+	var am = _get_audio_manager()
+	if am and am.has_method("play_correct"):
+		am.play_correct()
+	elif AudioManager and AudioManager.has_method("play_correct"):
+		AudioManager.play_correct()
+		
 	question_fail_count = 0
 	current_question_index += 1
 	
@@ -1553,6 +1577,12 @@ func _handle_answer_correct() -> void:
 
 func _handle_answer_wrong() -> void:
 	print("Jawaban Salah!")
+	var am = _get_audio_manager()
+	if am and am.has_method("play_wrong"):
+		am.play_wrong()
+	elif AudioManager and AudioManager.has_method("play_wrong"):
+		AudioManager.play_wrong()
+		
 	question_fail_count += 1
 	_show_wrong_popup()
 
@@ -1593,6 +1623,12 @@ func _on_lihat_materi_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
 
 func _show_complete_popup() -> void:
+	var am = _get_audio_manager()
+	if am and am.has_method("play_stage_complete"):
+		am.play_stage_complete()
+	elif AudioManager and AudioManager.has_method("play_stage_complete"):
+		AudioManager.play_stage_complete()
+		
 	var pd = _get_player_data()
 	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
 	
