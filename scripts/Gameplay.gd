@@ -243,6 +243,12 @@ func _on_mulai_pressed() -> void:
 		pd.is_gameplay_mode = true
 		pd.current_stage_level = current_active_stage_num
 		pd.set_current_latihan(current_active_stage_num)
+		pd.from_latihan_retry = false
+		pd.latihan_return_question_idx = 0
+		if current_active_stage_num <= 8:
+			pd.set_current_materi(current_active_stage_num)
+			get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
+			return
 	get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
 
 func _on_kembali_pressed() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cjqs8hflgynbt"]
+[gd_scene format=3 uid="uid://cjqs8hflgynbt"]
 
 [ext_resource type="Script" uid="uid://crgiyi08mdyjl" path="res://scripts/Isimateri.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
@@ -103,7 +103,7 @@ font = ExtResource("5_font")
 font_size = 24
 font_color = Color(0.35, 0.15, 0.1, 1)
 
-[node name="Isimateri" type="Control"]
+[node name="Isimateri" type="Control" unique_id=1130150763]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,7 +112,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=171545959]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,7 +123,7 @@ texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="AssetSitable" type="TextureRect" parent="."]
+[node name="AssetSitable" type="TextureRect" parent="." unique_id=826113833]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -136,7 +136,7 @@ texture = ExtResource("3_sitable")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TitleBoard" type="TextureRect" parent="."]
+[node name="TitleBoard" type="TextureRect" parent="." unique_id=1330062182]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -150,7 +150,7 @@ texture = ExtResource("4_title_board")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelTitle" type="Label" parent="TitleBoard"]
+[node name="LabelTitle" type="Label" parent="TitleBoard" unique_id=1528586138]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -165,7 +165,7 @@ label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LabelSubtitle" type="Label" parent="TitleBoard"]
+[node name="LabelSubtitle" type="Label" parent="TitleBoard" unique_id=1178625667]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -180,7 +180,7 @@ label_settings = SubResource("LabelSettings_subtitle")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnInfo" type="TextureButton" parent="."]
+[node name="BtnInfo" type="TextureButton" parent="." unique_id=1680460541]
 visible = false
 layout_mode = 1
 anchors_preset = 5
@@ -196,7 +196,7 @@ texture_normal = ExtResource("8_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelBtnInfo" type="Label" parent="BtnInfo"]
+[node name="LabelBtnInfo" type="Label" parent="BtnInfo" unique_id=2131007260]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,7 +209,7 @@ label_settings = SubResource("LabelSettings_info_btn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MateriBox" type="TextureRect" parent="."]
+[node name="MateriBox" type="TextureRect" parent="." unique_id=351737894]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -223,7 +223,7 @@ texture = ExtResource("7_materi_box")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ContentContainer" type="Control" parent="MateriBox"]
+[node name="ContentContainer" type="Control" parent="MateriBox" unique_id=1997191776]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -235,7 +235,7 @@ offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SingleCharContainer" type="Control" parent="MateriBox/ContentContainer"]
+[node name="SingleCharContainer" type="Control" parent="MateriBox/ContentContainer" unique_id=434785554]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -246,7 +246,7 @@ offset_right = 300.0
 offset_bottom = 272.0
 grow_horizontal = 2
 
-[node name="AksaraCharImage" type="TextureRect" parent="MateriBox/ContentContainer/SingleCharContainer"]
+[node name="AksaraCharImage" type="TextureRect" parent="MateriBox/ContentContainer/SingleCharContainer" unique_id=1380245961]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -263,7 +263,7 @@ texture = ExtResource("7_ssuqd")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DualCharContainer" type="HBoxContainer" parent="MateriBox/ContentContainer"]
+[node name="DualCharContainer" type="HBoxContainer" parent="MateriBox/ContentContainer" unique_id=1419939133]
 visible = false
 layout_mode = 1
 anchors_preset = 5
@@ -277,56 +277,56 @@ grow_horizontal = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="LeftBox" type="VBoxContainer" parent="MateriBox/ContentContainer/DualCharContainer"]
+[node name="LeftBox" type="VBoxContainer" parent="MateriBox/ContentContainer/DualCharContainer" unique_id=829822443]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 alignment = 1
 
-[node name="LabelBaseTitle" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/LeftBox"]
+[node name="LabelBaseTitle" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/LeftBox" unique_id=1801001569]
 layout_mode = 2
 text = "Aksara Wreastra"
 label_settings = SubResource("LabelSettings_dual_title")
 horizontal_alignment = 1
 
-[node name="BaseCharImage" type="TextureRect" parent="MateriBox/ContentContainer/DualCharContainer/LeftBox"]
+[node name="BaseCharImage" type="TextureRect" parent="MateriBox/ContentContainer/DualCharContainer/LeftBox" unique_id=673876]
 custom_minimum_size = Vector2(0, 130)
 layout_mode = 2
 texture = ExtResource("7_ssuqd")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelBaseName" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/LeftBox"]
+[node name="LabelBaseName" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/LeftBox" unique_id=1017421216]
 layout_mode = 2
 text = "‘Ha’"
 label_settings = SubResource("LabelSettings_dual_name")
 horizontal_alignment = 1
 
-[node name="RightBox" type="VBoxContainer" parent="MateriBox/ContentContainer/DualCharContainer"]
+[node name="RightBox" type="VBoxContainer" parent="MateriBox/ContentContainer/DualCharContainer" unique_id=948676837]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 alignment = 1
 
-[node name="LabelGantunganTitle" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/RightBox"]
+[node name="LabelGantunganTitle" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/RightBox" unique_id=1723475728]
 layout_mode = 2
 text = "Wujud Gantungan"
 label_settings = SubResource("LabelSettings_dual_title")
 horizontal_alignment = 1
 
-[node name="GantunganCharImage" type="TextureRect" parent="MateriBox/ContentContainer/DualCharContainer/RightBox"]
+[node name="GantunganCharImage" type="TextureRect" parent="MateriBox/ContentContainer/DualCharContainer/RightBox" unique_id=796948714]
 custom_minimum_size = Vector2(0, 130)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelGantunganName" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/RightBox"]
+[node name="LabelGantunganName" type="Label" parent="MateriBox/ContentContainer/DualCharContainer/RightBox" unique_id=1682757651]
 layout_mode = 2
 text = "‘Gantungan Ha’"
 label_settings = SubResource("LabelSettings_dual_name")
 horizontal_alignment = 1
 
-[node name="DibacaContainer" type="HBoxContainer" parent="MateriBox/ContentContainer"]
+[node name="DibacaContainer" type="HBoxContainer" parent="MateriBox/ContentContainer" unique_id=413550936]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -338,19 +338,19 @@ offset_bottom = 344.0
 grow_horizontal = 2
 alignment = 1
 
-[node name="LabelPrefix" type="Label" parent="MateriBox/ContentContainer/DibacaContainer"]
+[node name="LabelPrefix" type="Label" parent="MateriBox/ContentContainer/DibacaContainer" unique_id=475655631]
 layout_mode = 2
 text = "Dibaca : "
 label_settings = SubResource("LabelSettings_content_dark")
 vertical_alignment = 1
 
-[node name="LabelHighlight" type="Label" parent="MateriBox/ContentContainer/DibacaContainer"]
+[node name="LabelHighlight" type="Label" parent="MateriBox/ContentContainer/DibacaContainer" unique_id=1966882163]
 layout_mode = 2
 text = "Ha"
 label_settings = SubResource("LabelSettings_content_highlight")
 vertical_alignment = 1
 
-[node name="LabelKeterangan" type="Label" parent="MateriBox/ContentContainer"]
+[node name="LabelKeterangan" type="Label" parent="MateriBox/ContentContainer" unique_id=1817038183]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -365,7 +365,7 @@ label_settings = SubResource("LabelSettings_content_keterangan")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LabelKata" type="Label" parent="MateriBox/ContentContainer"]
+[node name="LabelKata" type="Label" parent="MateriBox/ContentContainer" unique_id=1111847456]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -380,7 +380,7 @@ label_settings = SubResource("LabelSettings_content_kata")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AksaraKataImage" type="TextureRect" parent="MateriBox/ContentContainer"]
+[node name="AksaraKataImage" type="TextureRect" parent="MateriBox/ContentContainer" unique_id=163603021]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -394,7 +394,7 @@ texture = ExtResource("8_4vj3x")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SmallBoard" type="TextureRect" parent="."]
+[node name="SmallBoard" type="TextureRect" parent="." unique_id=359725038]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -408,7 +408,7 @@ texture = ExtResource("6_small_board")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelPage" type="Label" parent="SmallBoard"]
+[node name="LabelPage" type="Label" parent="SmallBoard" unique_id=10318281]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -421,7 +421,7 @@ label_settings = SubResource("LabelSettings_page")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnTop" type="TextureButton" parent="."]
+[node name="BtnTop" type="TextureButton" parent="." unique_id=1109353059]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -439,7 +439,7 @@ texture_normal = ExtResource("8_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelTop" type="Label" parent="BtnTop"]
+[node name="LabelTop" type="Label" parent="BtnTop" unique_id=1739559615]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -452,7 +452,7 @@ label_settings = SubResource("LabelSettings_btn_top")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnBottom" type="TextureButton" parent="."]
+[node name="BtnBottom" type="TextureButton" parent="." unique_id=770908915]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -470,7 +470,7 @@ texture_normal = ExtResource("8_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelBottom" type="Label" parent="BtnBottom"]
+[node name="LabelBottom" type="Label" parent="BtnBottom" unique_id=1520235617]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -483,7 +483,8 @@ label_settings = SubResource("LabelSettings_btn_bottom")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="InfoPopupLayer" type="Control" parent="."]
+[node name="InfoPopupLayer" type="Control" parent="." unique_id=1000901730]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -491,7 +492,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DimOverlay" type="ColorRect" parent="InfoPopupLayer"]
+[node name="DimOverlay" type="ColorRect" parent="InfoPopupLayer" unique_id=943103072]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -500,7 +501,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.6)
 
-[node name="PopupContainer" type="Control" parent="InfoPopupLayer"]
+[node name="PopupContainer" type="Control" parent="InfoPopupLayer" unique_id=1009319620]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -515,7 +516,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(480, 540)
 
-[node name="PopupFrame" type="TextureRect" parent="InfoPopupLayer/PopupContainer"]
+[node name="PopupFrame" type="TextureRect" parent="InfoPopupLayer/PopupContainer" unique_id=1818524812]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -526,7 +527,7 @@ texture = ExtResource("11_jrtw6")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BtnCloseInfo" type="TextureButton" parent="InfoPopupLayer/PopupContainer/PopupFrame"]
+[node name="BtnCloseInfo" type="TextureButton" parent="InfoPopupLayer/PopupContainer/PopupFrame" unique_id=1355599832]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -541,7 +542,7 @@ texture_normal = ExtResource("10_close")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelInfoTitle" type="Label" parent="InfoPopupLayer/PopupContainer/PopupFrame"]
+[node name="LabelInfoTitle" type="Label" parent="InfoPopupLayer/PopupContainer/PopupFrame" unique_id=870822536]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -557,7 +558,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="LabelInfoDesc" type="Label" parent="InfoPopupLayer/PopupContainer/PopupFrame"]
+[node name="LabelInfoDesc" type="Label" parent="InfoPopupLayer/PopupContainer/PopupFrame" unique_id=1755534961]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -573,7 +574,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="InfoImage" type="TextureRect" parent="InfoPopupLayer/PopupContainer/PopupFrame"]
+[node name="InfoImage" type="TextureRect" parent="InfoPopupLayer/PopupContainer/PopupFrame" unique_id=1195942049]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -586,7 +587,7 @@ grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelInfoNote" type="Label" parent="InfoPopupLayer/PopupContainer/PopupFrame"]
+[node name="LabelInfoNote" type="Label" parent="InfoPopupLayer/PopupContainer/PopupFrame" unique_id=1202820210]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -602,7 +603,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BtnTutupInfo" type="TextureButton" parent="InfoPopupLayer/PopupContainer"]
+[node name="BtnTutupInfo" type="TextureButton" parent="InfoPopupLayer/PopupContainer" unique_id=1997163646]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -620,7 +621,7 @@ texture_normal = ExtResource("8_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelTutupInfo" type="Label" parent="InfoPopupLayer/PopupContainer/BtnTutupInfo"]
+[node name="LabelTutupInfo" type="Label" parent="InfoPopupLayer/PopupContainer/BtnTutupInfo" unique_id=1204463182]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

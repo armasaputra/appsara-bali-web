@@ -49,6 +49,13 @@ extends Control
 @onready var btn_kembali_menu: TextureButton = $CompletePopupLayer/PopupContainer/BtnKembaliMenu
 @onready var label_kembali_menu: Label = $CompletePopupLayer/PopupContainer/BtnKembaliMenu/LabelKembaliMenu
 
+# Back Menu & Pause Popup Nodes
+@onready var btn_back_menu: TextureButton = $BtnBackMenu
+@onready var pause_popup_layer: Control = $PausePopupLayer
+@onready var pause_popup_container: Control = $PausePopupLayer/PopupContainer
+@onready var btn_lanjutkan: TextureButton = $PausePopupLayer/PopupContainer/BtnLanjutkan
+@onready var btn_kembali_pause: TextureButton = $PausePopupLayer/PopupContainer/BtnKembali
+
 # State
 var current_latihan_id: int = 1
 var current_question_index: int = 0
@@ -243,7 +250,7 @@ const ALL_LATIHAN_DATA = {
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
-				"options": [{"image": "res://assets/Aksara/RaSa.png"}, {"image": "res://assets/Aksara/GaMa.png"}, {"image": "res://assets/Aksara/SaTa.png"}],
+				"options": [{"image": "res://assets/Aksara/RaSa.png"}, {"image": "res://assets/Aksara/ga (Ga-Ma).png"}, {"image": "res://assets/Aksara/SaTa.png"}],
 				"correct": 1
 			},
 			{
@@ -931,6 +938,17 @@ func _ensure_nodes() -> void:
 		btn_kembali_menu = get_node_or_null("CompletePopupLayer/PopupContainer/BtnKembaliMenu")
 	if not label_kembali_menu:
 		label_kembali_menu = get_node_or_null("CompletePopupLayer/PopupContainer/BtnKembaliMenu/LabelKembaliMenu")
+		
+	if not btn_back_menu:
+		btn_back_menu = get_node_or_null("BtnBackMenu")
+	if not pause_popup_layer:
+		pause_popup_layer = get_node_or_null("PausePopupLayer")
+	if not pause_popup_container:
+		pause_popup_container = get_node_or_null("PausePopupLayer/PopupContainer")
+	if not btn_lanjutkan:
+		btn_lanjutkan = get_node_or_null("PausePopupLayer/PopupContainer/BtnLanjutkan")
+	if not btn_kembali_pause:
+		btn_kembali_pause = get_node_or_null("PausePopupLayer/PopupContainer/BtnKembali")
 
 func _update_stars_display() -> void:
 	var pd = _get_player_data()
@@ -971,6 +989,9 @@ func _ready() -> void:
 	_setup_button_effects(btn_lihat_materi)
 	_setup_button_effects(btn_ulangi)
 	_setup_button_effects(btn_kembali_menu)
+	_setup_button_effects(btn_back_menu)
+	_setup_button_effects(btn_lanjutkan)
+	_setup_button_effects(btn_kembali_pause)
 	
 	# Connect signals safely
 	if btn_periksa_choice and not btn_periksa_choice.pressed.is_connected(_on_periksa_choice_pressed):
@@ -997,6 +1018,12 @@ func _ready() -> void:
 		btn_ulangi.pressed.connect(_on_ulangi_pressed)
 	if btn_kembali_menu and not btn_kembali_menu.pressed.is_connected(_on_kembali_menu_pressed):
 		btn_kembali_menu.pressed.connect(_on_kembali_menu_pressed)
+	if btn_back_menu and not btn_back_menu.pressed.is_connected(_on_back_menu_pressed):
+		btn_back_menu.pressed.connect(_on_back_menu_pressed)
+	if btn_lanjutkan and not btn_lanjutkan.pressed.is_connected(_on_lanjutkan_pressed):
+		btn_lanjutkan.pressed.connect(_on_lanjutkan_pressed)
+	if btn_kembali_pause and not btn_kembali_pause.pressed.is_connected(_on_kembali_pause_pressed):
+		btn_kembali_pause.pressed.connect(_on_kembali_pause_pressed)
 	
 	# Setup Drawing Area input and draw hooks
 	if drawing_area:
@@ -1013,6 +1040,8 @@ func _ready() -> void:
 		wrong_popup_layer.visible = false
 	if complete_popup_layer:
 		complete_popup_layer.visible = false
+	if pause_popup_layer:
+		pause_popup_layer.visible = false
 	
 	# Load latihan
 	load_latihan(current_latihan_id, start_q)
@@ -1605,12 +1634,18 @@ func _on_ulangi_pressed() -> void:
 	complete_popup_layer.visible = false
 	var pd = _get_player_data()
 	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
-		# Advance directly to the next level
+		# Advance to the next level
 		current_latihan_id = pd.current_stage_level
 		current_question_index = 0
 		question_fail_count = 0
 		time_remaining_seconds = 95
-		load_latihan(current_latihan_id, 0)
+		if current_latihan_id <= 8:
+			pd.set_current_materi(current_latihan_id)
+			pd.from_latihan_retry = false
+			pd.latihan_return_question_idx = 0
+			get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
+		else:
+			load_latihan(current_latihan_id, 0)
 	else:
 		# Replay current latihan
 		current_question_index = 0
@@ -1631,3 +1666,41 @@ func _animate_question_transition() -> void:
 	active_container.modulate.a = 0.3
 	var tween = create_tween()
 	tween.tween_property(active_container, "modulate:a", 1.0, 0.18).set_trans(Tween.TRANS_SINE)
+
+func _on_back_menu_pressed() -> void:
+	if _timer_node:
+		_timer_node.paused = true
+	_show_pause_popup()
+
+func _show_pause_popup() -> void:
+	is_currently_drawing = false
+	if not pause_popup_layer or not pause_popup_container:
+		return
+	pause_popup_layer.visible = true
+	pause_popup_layer.modulate.a = 0.0
+	pause_popup_container.scale = Vector2(0.7, 0.7)
+	
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(pause_popup_layer, "modulate:a", 1.0, 0.22)
+	tween.tween_property(pause_popup_container, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _on_lanjutkan_pressed() -> void:
+	if _timer_node:
+		_timer_node.paused = false
+	_close_pause_popup()
+
+func _close_pause_popup() -> void:
+	if not pause_popup_layer or not pause_popup_container:
+		return
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(pause_popup_layer, "modulate:a", 0.0, 0.18)
+	tween.tween_property(pause_popup_container, "scale", Vector2(0.75, 0.75), 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.chain().tween_callback(func():
+		pause_popup_layer.visible = false
+	)
+
+func _on_kembali_pause_pressed() -> void:
+	if _timer_node:
+		_timer_node.paused = false
+	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+

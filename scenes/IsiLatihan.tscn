@@ -1,9 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://dgcpwigvdobey"]
+[gd_scene format=3 uid="uid://dgcpwigvdobey"]
 
 [ext_resource type="Script" uid="uid://c3dj2qxxqiucr" path="res://scripts/IsiLatihan.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b0q2dxj2cai1x" path="res://assets/Background 1.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://bp11yxjecgp1k" path="res://assets/AssetSitable.png" id="3_sitable"]
 [ext_resource type="Texture2D" uid="uid://3dma7o4bfhy7" path="res://assets/TitleBoard.png" id="4_title_board"]
+[ext_resource type="Texture2D" uid="uid://b0up24evnb0si" path="res://assets/Close.png" id="4_xfmy5"]
 [ext_resource type="FontFile" uid="uid://da4dq8uesj4ik" path="res://assets/fonts/Sigmar-Regular.ttf" id="5_font"]
 [ext_resource type="Texture2D" uid="uid://c3n77v1ywclwt" path="res://assets/SmallBoard.png" id="6_small_board"]
 [ext_resource type="Texture2D" uid="uid://c3ovkijwqmjbe" path="res://assets/MateriBox.png" id="7_materi_box"]
@@ -91,7 +92,7 @@ shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 3)
 
-[node name="IsiLatihan" type="Control"]
+[node name="IsiLatihan" type="Control" unique_id=131895976]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -100,7 +101,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=833984583]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -111,7 +112,7 @@ texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="AssetSitable" type="TextureRect" parent="."]
+[node name="AssetSitable" type="TextureRect" parent="." unique_id=1912939965]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -124,7 +125,7 @@ texture = ExtResource("3_sitable")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TitleBoard" type="TextureRect" parent="."]
+[node name="TitleBoard" type="TextureRect" parent="." unique_id=1863530833]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -138,7 +139,7 @@ texture = ExtResource("4_title_board")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelTitle" type="Label" parent="TitleBoard"]
+[node name="LabelTitle" type="Label" parent="TitleBoard" unique_id=1506628173]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -153,7 +154,7 @@ label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LabelSubtitle" type="Label" parent="TitleBoard"]
+[node name="LabelSubtitle" type="Label" parent="TitleBoard" unique_id=2036988973]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -168,7 +169,7 @@ label_settings = SubResource("LabelSettings_subtitle")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HeaderBar" type="Control" parent="."]
+[node name="HeaderBar" type="Control" parent="." unique_id=1356066649]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -179,7 +180,7 @@ offset_right = 460.0
 offset_bottom = 425.0
 grow_horizontal = 2
 
-[node name="QuestionBoard" type="TextureRect" parent="HeaderBar"]
+[node name="QuestionBoard" type="TextureRect" parent="HeaderBar" unique_id=1089415617]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -192,7 +193,7 @@ texture = ExtResource("6_small_board")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelQuestionNumber" type="Label" parent="HeaderBar/QuestionBoard"]
+[node name="LabelQuestionNumber" type="Label" parent="HeaderBar/QuestionBoard" unique_id=1763427257]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -205,7 +206,7 @@ label_settings = SubResource("LabelSettings_header_board")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimerBoard" type="TextureRect" parent="HeaderBar"]
+[node name="TimerBoard" type="TextureRect" parent="HeaderBar" unique_id=221367728]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -219,7 +220,7 @@ texture = ExtResource("11_btn_wood")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelTimer" type="Label" parent="HeaderBar/TimerBoard"]
+[node name="LabelTimer" type="Label" parent="HeaderBar/TimerBoard" unique_id=585265858]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -232,7 +233,7 @@ label_settings = SubResource("LabelSettings_header_board")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StarBoard" type="TextureRect" parent="HeaderBar"]
+[node name="StarBoard" type="TextureRect" parent="HeaderBar" unique_id=375309782]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -248,7 +249,7 @@ texture = ExtResource("16_star_board")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelStars" type="Label" parent="HeaderBar/StarBoard"]
+[node name="LabelStars" type="Label" parent="HeaderBar/StarBoard" unique_id=958788109]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -263,7 +264,7 @@ label_settings = SubResource("LabelSettings_header_board")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ChoiceContainer" type="Control" parent="."]
+[node name="ChoiceContainer" type="Control" parent="." unique_id=1415798090]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -271,7 +272,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MateriBox" type="TextureRect" parent="ChoiceContainer"]
+[node name="MateriBox" type="TextureRect" parent="ChoiceContainer" unique_id=364462868]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -285,7 +286,7 @@ texture = ExtResource("7_materi_box")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ContentVBox" type="VBoxContainer" parent="ChoiceContainer/MateriBox"]
+[node name="ContentVBox" type="VBoxContainer" parent="ChoiceContainer/MateriBox" unique_id=164396321]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -298,66 +299,66 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="LabelPromptHeader" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="LabelPromptHeader" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=575630184]
 layout_mode = 2
 text = "Silahkan di Klik gambar suara berikut :"
 label_settings = SubResource("LabelSettings_prompt_header")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="LabelPromptSub" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="LabelPromptSub" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=539894369]
 layout_mode = 2
 text = "Hanya sampai tiga (3) kali pengulangan suara"
 label_settings = SubResource("LabelSettings_prompt_sub")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="SoundSection" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="SoundSection" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=124211991]
 layout_mode = 2
 alignment = 1
 
-[node name="BtnPlaySound" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/SoundSection"]
+[node name="BtnPlaySound" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/SoundSection" unique_id=1395813771]
 custom_minimum_size = Vector2(110, 110)
 layout_mode = 2
 texture_normal = ExtResource("8_playsound")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="PromptKataLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="PromptKataLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=494586766]
 layout_mode = 2
 text = "‘Hana raka’"
 label_settings = SubResource("LabelSettings_prompt_kata")
 horizontal_alignment = 1
 
-[node name="PromptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="PromptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=600505970]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelQuestionText" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="LabelQuestionText" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=461232428]
 layout_mode = 2
 text = "Manakah penulisan Aksara Bali yang tepat?"
 label_settings = SubResource("LabelSettings_question_text")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Spacer" type="Control" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="Spacer" type="Control" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=610621695]
 custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
 
-[node name="OptionsContainer" type="VBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox"]
+[node name="OptionsContainer" type="VBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox" unique_id=1907153045]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="BtnOption1" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
+[node name="BtnOption1" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer" unique_id=55322052]
 custom_minimum_size = Vector2(760, 108)
 layout_mode = 2
 texture_normal = ExtResource("9_opt_board")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1"]
+[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1" unique_id=1344340075]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -371,21 +372,21 @@ grow_vertical = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox"]
+[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox" unique_id=1310091279]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "A. Ka"
 label_settings = SubResource("LabelSettings_opt_text")
 vertical_alignment = 1
 
-[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox"]
+[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox" unique_id=548850210]
 custom_minimum_size = Vector2(180, 75)
 layout_mode = 2
 size_flags_horizontal = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox"]
+[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption1/HBox" unique_id=981092276]
 visible = false
 custom_minimum_size = Vector2(65, 65)
 layout_mode = 2
@@ -393,14 +394,14 @@ texture = ExtResource("10_selected")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BtnOption2" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
+[node name="BtnOption2" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer" unique_id=1785845078]
 custom_minimum_size = Vector2(760, 108)
 layout_mode = 2
 texture_normal = ExtResource("9_opt_board")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2"]
+[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2" unique_id=162305584]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -414,21 +415,21 @@ grow_vertical = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox"]
+[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox" unique_id=1202764932]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "B. Ca"
 label_settings = SubResource("LabelSettings_opt_text")
 vertical_alignment = 1
 
-[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox"]
+[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox" unique_id=788493237]
 custom_minimum_size = Vector2(180, 75)
 layout_mode = 2
 size_flags_horizontal = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox"]
+[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption2/HBox" unique_id=1317244933]
 visible = false
 custom_minimum_size = Vector2(65, 65)
 layout_mode = 2
@@ -436,14 +437,14 @@ texture = ExtResource("10_selected")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BtnOption3" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer"]
+[node name="BtnOption3" type="TextureButton" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer" unique_id=330631450]
 custom_minimum_size = Vector2(760, 108)
 layout_mode = 2
 texture_normal = ExtResource("9_opt_board")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3"]
+[node name="HBox" type="HBoxContainer" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3" unique_id=241005520]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -457,21 +458,21 @@ grow_vertical = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox"]
+[node name="OptLabel" type="Label" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox" unique_id=1054030213]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "C. Na"
 label_settings = SubResource("LabelSettings_opt_text")
 vertical_alignment = 1
 
-[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox"]
+[node name="OptImage" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox" unique_id=210878030]
 custom_minimum_size = Vector2(180, 75)
 layout_mode = 2
 size_flags_horizontal = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox"]
+[node name="SelectedIcon" type="TextureRect" parent="ChoiceContainer/MateriBox/ContentVBox/OptionsContainer/BtnOption3/HBox" unique_id=1117528143]
 visible = false
 custom_minimum_size = Vector2(65, 65)
 layout_mode = 2
@@ -479,7 +480,7 @@ texture = ExtResource("10_selected")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BtnPeriksaChoice" type="TextureButton" parent="ChoiceContainer"]
+[node name="BtnPeriksaChoice" type="TextureButton" parent="ChoiceContainer" unique_id=1719487689]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -497,7 +498,7 @@ texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelPeriksaChoice" type="Label" parent="ChoiceContainer/BtnPeriksaChoice"]
+[node name="LabelPeriksaChoice" type="Label" parent="ChoiceContainer/BtnPeriksaChoice" unique_id=1168884522]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -510,7 +511,7 @@ label_settings = SubResource("LabelSettings_btn_action")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DrawingContainer" type="Control" parent="."]
+[node name="DrawingContainer" type="Control" parent="." unique_id=952493355]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -519,7 +520,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="InstructionBoard" type="TextureRect" parent="DrawingContainer"]
+[node name="InstructionBoard" type="TextureRect" parent="DrawingContainer" unique_id=788503061]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -533,7 +534,7 @@ texture = ExtResource("11_btn_wood")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelInstruction" type="Label" parent="DrawingContainer/InstructionBoard"]
+[node name="LabelInstruction" type="Label" parent="DrawingContainer/InstructionBoard" unique_id=1899658232]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -549,7 +550,7 @@ label_settings = SubResource("LabelSettings_opt_text")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DrawingBoard" type="TextureRect" parent="DrawingContainer"]
+[node name="DrawingBoard" type="TextureRect" parent="DrawingContainer" unique_id=1417418694]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -563,7 +564,7 @@ texture = ExtResource("12_drawing_board")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DrawingArea" type="Control" parent="DrawingContainer/DrawingBoard"]
+[node name="DrawingArea" type="Control" parent="DrawingContainer/DrawingBoard" unique_id=218287025]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -575,7 +576,7 @@ offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GhostAksara" type="TextureRect" parent="DrawingContainer/DrawingBoard/DrawingArea"]
+[node name="GhostAksara" type="TextureRect" parent="DrawingContainer/DrawingBoard/DrawingArea" unique_id=761738511]
 modulate = Color(0.2, 0.2, 0.2, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -593,7 +594,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BtnClue" type="TextureButton" parent="DrawingContainer/DrawingBoard"]
+[node name="BtnClue" type="TextureButton" parent="DrawingContainer/DrawingBoard" unique_id=1342412083]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -608,7 +609,7 @@ texture_normal = ExtResource("13_clue")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="BtnHapus" type="TextureButton" parent="DrawingContainer"]
+[node name="BtnHapus" type="TextureButton" parent="DrawingContainer" unique_id=1331888660]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -626,7 +627,7 @@ texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HBoxHapus" type="HBoxContainer" parent="DrawingContainer/BtnHapus"]
+[node name="HBoxHapus" type="HBoxContainer" parent="DrawingContainer/BtnHapus" unique_id=1359586803]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -636,20 +637,20 @@ grow_vertical = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="LabelHapus" type="Label" parent="DrawingContainer/BtnHapus/HBoxHapus"]
+[node name="LabelHapus" type="Label" parent="DrawingContainer/BtnHapus/HBoxHapus" unique_id=1059293586]
 layout_mode = 2
 text = "Hapus"
 label_settings = SubResource("LabelSettings_btn_hapus")
 vertical_alignment = 1
 
-[node name="IconTrash" type="TextureRect" parent="DrawingContainer/BtnHapus/HBoxHapus"]
+[node name="IconTrash" type="TextureRect" parent="DrawingContainer/BtnHapus/HBoxHapus" unique_id=301313676]
 custom_minimum_size = Vector2(50, 55)
 layout_mode = 2
 texture = ExtResource("14_trash")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BtnPeriksaDraw" type="TextureButton" parent="DrawingContainer"]
+[node name="BtnPeriksaDraw" type="TextureButton" parent="DrawingContainer" unique_id=383828152]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -667,7 +668,7 @@ texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelPeriksaDraw" type="Label" parent="DrawingContainer/BtnPeriksaDraw"]
+[node name="LabelPeriksaDraw" type="Label" parent="DrawingContainer/BtnPeriksaDraw" unique_id=98812662]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -680,7 +681,7 @@ label_settings = SubResource("LabelSettings_btn_hapus")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WrongPopupLayer" type="Control" parent="."]
+[node name="WrongPopupLayer" type="Control" parent="." unique_id=1000887027]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -689,7 +690,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DimOverlay" type="ColorRect" parent="WrongPopupLayer"]
+[node name="DimOverlay" type="ColorRect" parent="WrongPopupLayer" unique_id=1122612606]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -698,7 +699,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.65)
 
-[node name="PopupContainer" type="Control" parent="WrongPopupLayer"]
+[node name="PopupContainer" type="Control" parent="WrongPopupLayer" unique_id=1584683802]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -713,7 +714,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(440, 280)
 
-[node name="PopupFrame" type="TextureRect" parent="WrongPopupLayer/PopupContainer"]
+[node name="PopupFrame" type="TextureRect" parent="WrongPopupLayer/PopupContainer" unique_id=1282989103]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -723,7 +724,7 @@ grow_vertical = 2
 texture = ExtResource("15_popup_bg")
 expand_mode = 1
 
-[node name="LabelWrongMessage" type="Label" parent="WrongPopupLayer/PopupContainer"]
+[node name="LabelWrongMessage" type="Label" parent="WrongPopupLayer/PopupContainer" unique_id=1855090025]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -739,7 +740,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BtnJawabLagi" type="TextureButton" parent="WrongPopupLayer/PopupContainer"]
+[node name="BtnJawabLagi" type="TextureButton" parent="WrongPopupLayer/PopupContainer" unique_id=1526081694]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -757,7 +758,7 @@ texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelJawabLagi" type="Label" parent="WrongPopupLayer/PopupContainer/BtnJawabLagi"]
+[node name="LabelJawabLagi" type="Label" parent="WrongPopupLayer/PopupContainer/BtnJawabLagi" unique_id=1509285667]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -770,7 +771,7 @@ label_settings = SubResource("LabelSettings_popup_btn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnLihatMateri" type="TextureButton" parent="WrongPopupLayer/PopupContainer"]
+[node name="BtnLihatMateri" type="TextureButton" parent="WrongPopupLayer/PopupContainer" unique_id=1208645574]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -788,7 +789,7 @@ texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelLihatMateri" type="Label" parent="WrongPopupLayer/PopupContainer/BtnLihatMateri"]
+[node name="LabelLihatMateri" type="Label" parent="WrongPopupLayer/PopupContainer/BtnLihatMateri" unique_id=1278157980]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -801,7 +802,7 @@ label_settings = SubResource("LabelSettings_popup_btn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CompletePopupLayer" type="Control" parent="."]
+[node name="CompletePopupLayer" type="Control" parent="." unique_id=1339792684]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -810,7 +811,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DimOverlay" type="ColorRect" parent="CompletePopupLayer"]
+[node name="DimOverlay" type="ColorRect" parent="CompletePopupLayer" unique_id=812243368]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -819,7 +820,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.65)
 
-[node name="PopupContainer" type="Control" parent="CompletePopupLayer"]
+[node name="PopupContainer" type="Control" parent="CompletePopupLayer" unique_id=81770834]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -834,7 +835,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(440, 280)
 
-[node name="PopupFrame" type="TextureRect" parent="CompletePopupLayer/PopupContainer"]
+[node name="PopupFrame" type="TextureRect" parent="CompletePopupLayer/PopupContainer" unique_id=295125476]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -844,7 +845,7 @@ grow_vertical = 2
 texture = ExtResource("15_popup_bg")
 expand_mode = 1
 
-[node name="LabelCompleteTitle" type="Label" parent="CompletePopupLayer/PopupContainer"]
+[node name="LabelCompleteTitle" type="Label" parent="CompletePopupLayer/PopupContainer" unique_id=1721354859]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -859,7 +860,7 @@ label_settings = SubResource("LabelSettings_popup_msg")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LabelCompleteDesc" type="Label" parent="CompletePopupLayer/PopupContainer"]
+[node name="LabelCompleteDesc" type="Label" parent="CompletePopupLayer/PopupContainer" unique_id=1583894415]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -875,7 +876,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BtnUlangi" type="TextureButton" parent="CompletePopupLayer/PopupContainer"]
+[node name="BtnUlangi" type="TextureButton" parent="CompletePopupLayer/PopupContainer" unique_id=1648246853]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -893,7 +894,7 @@ texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelUlangi" type="Label" parent="CompletePopupLayer/PopupContainer/BtnUlangi"]
+[node name="LabelUlangi" type="Label" parent="CompletePopupLayer/PopupContainer/BtnUlangi" unique_id=2146160062]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -906,7 +907,7 @@ label_settings = SubResource("LabelSettings_popup_btn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnKembaliMenu" type="TextureButton" parent="CompletePopupLayer/PopupContainer"]
+[node name="BtnKembaliMenu" type="TextureButton" parent="CompletePopupLayer/PopupContainer" unique_id=114474438]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -924,14 +925,163 @@ texture_normal = ExtResource("11_btn_wood")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LabelKembaliMenu" type="Label" parent="CompletePopupLayer/PopupContainer/BtnKembaliMenu"]
+[node name="LabelKembaliMenu" type="Label" parent="CompletePopupLayer/PopupContainer/BtnKembaliMenu" unique_id=1608261185]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Menu Latihan"
 label_settings = SubResource("LabelSettings_popup_btn")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PausePopupLayer" type="Control" parent="." unique_id=493890645]
+visible = false
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimOverlay" type="ColorRect" parent="PausePopupLayer" unique_id=125764432]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="PopupContainer" type="Control" parent="PausePopupLayer" unique_id=1664035382]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -280.0
+offset_right = 440.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(440, 280)
+
+[node name="PopupFrame" type="TextureRect" parent="PausePopupLayer/PopupContainer" unique_id=522400058]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_popup_bg")
+expand_mode = 1
+
+[node name="LabelPauseTitle" type="Label" parent="PausePopupLayer/PopupContainer" unique_id=1320219675]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 185.0
+offset_right = 380.0
+offset_bottom = 260.0
+grow_horizontal = 2
+text = "LATIHAN DIJEDA"
+label_settings = SubResource("LabelSettings_popup_msg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelPauseDesc" type="Label" parent="PausePopupLayer/PopupContainer" unique_id=683602662]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 255.0
+offset_right = 380.0
+offset_bottom = 352.0
+grow_horizontal = 2
+text = "Apakah kamu ingin melanjutkan latihan atau kembali ke menu utama?"
+label_settings = SubResource("LabelSettings_prompt_header")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BtnLanjutkan" type="TextureButton" parent="PausePopupLayer/PopupContainer" unique_id=1555283738]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -3.0
+offset_right = 230.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(230, 55)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelLanjutkan" type="Label" parent="PausePopupLayer/PopupContainer/BtnLanjutkan" unique_id=1723730562]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lanjutkan"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnKembali" type="TextureButton" parent="PausePopupLayer/PopupContainer" unique_id=393649380]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = 176.0
+offset_right = 250.0
+offset_bottom = 328.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(230, 55)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelKembali" type="Label" parent="PausePopupLayer/PopupContainer/BtnKembali" unique_id=928654061]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Kembali"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnBackMenu" type="TextureButton" parent="." unique_id=1801795242]
+layout_mode = 0
+offset_left = 932.0
+offset_top = 12.0
+offset_right = 1057.0
+offset_bottom = 132.0
+pivot_offset = Vector2(62.5, 60)
+texture_normal = ExtResource("4_xfmy5")
+ignore_texture_size = true
+stretch_mode = 5

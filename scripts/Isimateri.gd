@@ -663,8 +663,12 @@ func _update_buttons(total_pages: int) -> void:
 	_ensure_nodes()
 	var pd = _get_player_data()
 	var is_from_latihan = false
-	if pd != null and "from_latihan_retry" in pd:
-		is_from_latihan = bool(pd.from_latihan_retry)
+	var is_gameplay = false
+	if pd != null:
+		if "from_latihan_retry" in pd:
+			is_from_latihan = bool(pd.from_latihan_retry)
+		if "is_gameplay_mode" in pd:
+			is_gameplay = bool(pd.is_gameplay_mode)
 
 	if not label_top or not label_bottom:
 		return
@@ -681,6 +685,9 @@ func _update_buttons(total_pages: int) -> void:
 		if is_from_latihan:
 			label_top.text = "Jawab Lagi"
 			label_top.label_settings.font_size = 56
+		elif is_gameplay:
+			label_top.text = "Coba Latihan"
+			label_top.label_settings.font_size = 52
 		else:
 			label_top.text = "Kembali"
 			label_top.label_settings.font_size = 64
@@ -705,6 +712,12 @@ func _on_btn_top_pressed() -> void:
 		if pd and "from_latihan_retry" in pd and pd.from_latihan_retry:
 			print("Kembali ke IsiLatihan (Jawab Lagi)...")
 			get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
+		elif pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+			print("Memulai Latihan dari Materi (Coba Latihan)...")
+			pd.set_current_latihan(current_materi_id)
+			pd.from_latihan_retry = false
+			pd.latihan_return_question_idx = 0
+			get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
 		else:
 			_go_back_to_materi()
 	else:
@@ -714,7 +727,7 @@ func _on_btn_top_pressed() -> void:
 
 func _on_btn_bottom_pressed() -> void:
 	if current_page_index == 0:
-		# Page 1: Bottom button functions as "Kembali" to Materi list
+		# Page 1: Bottom button functions as "Kembali"
 		_go_back_to_materi()
 	else:
 		# Previous page
@@ -728,8 +741,15 @@ func _animate_page_transition() -> void:
 	tween.tween_property(content_container, "modulate:a", 1.0, 0.15).set_trans(Tween.TRANS_SINE)
 
 func _go_back_to_materi() -> void:
-	print("Kembali ke daftar Materi...")
-	get_tree().change_scene_to_file("res://scenes/Materi.tscn")
+	var pd = _get_player_data()
+	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+		if "from_latihan_retry" in pd and pd.from_latihan_retry:
+			get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
+		else:
+			get_tree().change_scene_to_file("res://scenes/Gameplay.tscn")
+	else:
+		print("Kembali ke daftar Materi...")
+		get_tree().change_scene_to_file("res://scenes/Materi.tscn")
 
 # ==========================================
 # INFO / PEMBUKAAN POPUP LOGIC
