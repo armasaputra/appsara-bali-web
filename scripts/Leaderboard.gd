@@ -43,6 +43,14 @@ func _get_player_data() -> Node:
 				return child
 	return get_node_or_null("/root/PlayerData")
 
+# Drag-to-scroll state
+var _is_dragging: bool = false
+var _is_pointer_down: bool = false
+var _drag_start_pos: Vector2 = Vector2.ZERO
+var _last_drag_pos: Vector2 = Vector2.ZERO
+var _scroll_velocity: float = 0.0
+var _drag_threshold: float = 12.0
+
 func _ready() -> void:
 	# Load assets
 	TEX_PLANK = load("res://assets/LeaderBoard.png")
@@ -57,11 +65,12 @@ func _ready() -> void:
 	if btn_kembali and not btn_kembali.pressed.is_connected(_on_kembali_pressed):
 		btn_kembali.pressed.connect(_on_kembali_pressed)
 		
-	# Hide scrollbar for clean UI
+	# Hide scrollbar for clean UI and hook drag input
 	if scroll_container:
 		var v_scroll = scroll_container.get_v_scroll_bar()
 		if v_scroll:
 			v_scroll.modulate.a = 0.0
+		scroll_container.gui_input.connect(_on_scroll_gui_input)
 			
 	# Connect HTTP signals
 	if http_request_get:
@@ -284,6 +293,64 @@ func _render_leaderboard_rows(entries: Array) -> void:
 	var my_row_node = _create_leaderboard_row(my_rank_str, current_player_name, current_player_stars, true)
 	my_rank_container.add_child(my_row_node)
 
+func _process(delta: float) -> void:
+	if not _is_pointer_down and abs(_scroll_velocity) > 10.0 and scroll_container:
+		scroll_container.scroll_vertical += int(_scroll_velocity * delta)
+		_scroll_velocity = lerp(_scroll_velocity, 0.0, 8.0 * delta)
+	elif not _is_pointer_down:
+		_scroll_velocity = 0.0
+
+func _on_scroll_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				_is_pointer_down = true
+				_is_dragging = false
+				_drag_start_pos = event.global_position
+				_last_drag_pos = event.global_position
+				_scroll_velocity = 0.0
+			else:
+				_is_pointer_down = false
+				_is_dragging = false
+	elif event is InputEventMouseMotion:
+		if _is_pointer_down:
+			var current_pos = event.global_position
+			var total_delta = current_pos - _drag_start_pos
+			if not _is_dragging and total_delta.length() > _drag_threshold:
+				_is_dragging = true
+			if _is_dragging and scroll_container:
+				var move_delta_y = current_pos.y - _last_drag_pos.y
+				_scroll_velocity = -move_delta_y * 45.0
+				scroll_container.scroll_vertical -= int(move_delta_y)
+				_last_drag_pos = current_pos
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			_is_pointer_down = true
+			_is_dragging = false
+			_drag_start_pos = event.position
+			_last_drag_pos = event.position
+			_scroll_velocity = 0.0
+		else:
+			_is_pointer_down = false
+			_is_dragging = false
+	elif event is InputEventScreenDrag:
+		if _is_pointer_down:
+			var current_pos = event.position
+			var total_delta = current_pos - _drag_start_pos
+			if not _is_dragging and total_delta.length() > _drag_threshold:
+				_is_dragging = true
+			if _is_dragging and scroll_container:
+				var move_delta_y = event.relative.y
+				_scroll_velocity = -move_delta_y * 45.0
+				scroll_container.scroll_vertical -= int(move_delta_y)
+				_last_drag_pos = current_pos
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if _is_pointer_down:
+			_is_pointer_down = false
+			_is_dragging = false
+
 func _on_kembali_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
@@ -306,3 +373,4 @@ func _setup_button_effects(btn: TextureButton) -> void:
 		var tween = create_tween()
 		tween.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_SINE)
 	)
+
