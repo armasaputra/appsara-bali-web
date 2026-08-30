@@ -65,6 +65,7 @@ var question_fail_count: int = 0
 var sound_play_count: int = 0
 var is_clue_active: bool = false
 var time_remaining_seconds: int = 95 # 1:35 default
+var is_timeout: bool = false
 
 # Drawing State
 var drawing_lines: Array[PackedVector2Array] = []
@@ -1204,9 +1205,54 @@ func _setup_timer() -> void:
 	_update_timer_display()
 
 func _on_timer_tick() -> void:
+	if is_timeout:
+		return
 	if time_remaining_seconds > 0:
 		time_remaining_seconds -= 1
 		_update_timer_display()
+		if time_remaining_seconds <= 0:
+			_handle_timeout()
+
+func _handle_timeout() -> void:
+	if is_timeout:
+		return
+	is_timeout = true
+	
+	if _timer_node:
+		_timer_node.paused = true
+		
+	_stop_sound_clip()
+	
+	# Close other popups if open
+	if wrong_popup_layer:
+		wrong_popup_layer.visible = false
+	if pause_popup_layer:
+		pause_popup_layer.visible = false
+		
+	# Play wrong/alert SFX
+	var am = _get_audio_manager()
+	if am and am.has_method("play_wrong"):
+		am.play_wrong()
+	elif AudioManager and AudioManager.has_method("play_wrong"):
+		AudioManager.play_wrong()
+		
+	# Setup popup as "Waktu Habis!"
+	if label_complete_title:
+		label_complete_title.text = "Waktu Habis!"
+	if label_complete_desc:
+		label_complete_desc.text = "Waktu pengerjaan latihan telah habis.\nAyo coba lagi!"
+	if label_ulangi:
+		label_ulangi.text = "Ulang"
+	if label_kembali_menu:
+		label_kembali_menu.text = "Kembali"
+		
+	complete_popup_layer.visible = true
+	complete_popup_layer.modulate.a = 0.0
+	complete_popup_container.scale = Vector2(0.7, 0.7)
+	
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(complete_popup_layer, "modulate:a", 1.0, 0.25)
+	tween.tween_property(complete_popup_container, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _update_timer_display() -> void:
 	var mins = time_remaining_seconds / 60
@@ -1297,6 +1343,11 @@ func load_latihan(latihan_id: int, start_q_idx: int = 0) -> void:
 		current_question_index = 0
 		
 	question_fail_count = 0
+	is_timeout = false
+	time_remaining_seconds = 95
+	_update_timer_display()
+	if _timer_node:
+		_timer_node.paused = false
 	_render_question()
 
 func _render_question() -> void:
@@ -1788,6 +1839,10 @@ func _on_lihat_materi_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
 
 func _show_complete_popup() -> void:
+	is_timeout = false
+	if _timer_node:
+		_timer_node.paused = true
+		
 	_stop_sound_clip()
 	var am = _get_audio_manager()
 	if am and am.has_method("play_stage_complete"):
@@ -1836,12 +1891,29 @@ func _on_ulangi_pressed() -> void:
 	_stop_sound_clip()
 	complete_popup_layer.visible = false
 	var pd = _get_player_data()
-	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	
+	if is_timeout:
+		# Replay current level/latihan after timeout
+		is_timeout = false
+		current_question_index = 0
+		question_fail_count = 0
+		time_remaining_seconds = 95
+		_update_timer_display()
+		if _timer_node:
+			_timer_node.paused = false
+		load_latihan(current_latihan_id, 0)
+		return
+		
+	if is_gameplay:
 		# Advance to the next level
 		current_latihan_id = pd.current_stage_level
 		current_question_index = 0
 		question_fail_count = 0
 		time_remaining_seconds = 95
+		_update_timer_display()
+		if _timer_node:
+			_timer_node.paused = false
 		if current_latihan_id <= 8:
 			pd.set_current_materi(current_latihan_id)
 			pd.from_latihan_retry = false
@@ -1854,10 +1926,14 @@ func _on_ulangi_pressed() -> void:
 		current_question_index = 0
 		question_fail_count = 0
 		time_remaining_seconds = 95
+		_update_timer_display()
+		if _timer_node:
+			_timer_node.paused = false
 		_render_question()
 
 func _on_kembali_menu_pressed() -> void:
 	_stop_sound_clip()
+	is_timeout = false
 	var pd = _get_player_data()
 	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
 		get_tree().change_scene_to_file("res://scenes/Gameplay.tscn")
@@ -1890,7 +1966,7 @@ func _show_pause_popup() -> void:
 	tween.tween_property(pause_popup_container, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_lanjutkan_pressed() -> void:
-	if _timer_node:
+	if _timer_node and not is_timeout:
 		_timer_node.paused = false
 	_close_pause_popup()
 
