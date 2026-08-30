@@ -216,5 +216,3 @@ func _scan_and_hook_buttons(node: Node) -> void:
 		_hook_button(node)
 	for child in node.get_children():
 		_scan_and_hook_buttons(child)
-
-
