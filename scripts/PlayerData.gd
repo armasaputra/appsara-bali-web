@@ -79,9 +79,15 @@ func prompt_web_input(prompt_title: String, default_value: String = "") -> Strin
 
 func set_sound_muted(muted: bool) -> void:
 	is_sound_muted = muted
+	# Never mute Master Bus globally so Quiz Audio remains audible
 	var master_bus_idx = AudioServer.get_bus_index("Master")
 	if master_bus_idx != -1:
-		AudioServer.set_bus_mute(master_bus_idx, is_sound_muted)
+		AudioServer.set_bus_mute(master_bus_idx, false)
+		
+	var am = get_node_or_null("/root/AudioManager")
+	if am and am.has_method("set_sound_muted"):
+		am.set_sound_muted(is_sound_muted)
+		
 	save_progress()
 
 func set_current_materi(index: int) -> void:
@@ -204,7 +210,11 @@ func load_progress() -> void:
 					cleared_stages[str(stage)] = true
 					cleared_stages[int(stage)] = true
 			
-			# Apply sound state to audio server
+			# Ensure Master Bus is unmuted and sync with AudioManager
 			var master_bus_idx = AudioServer.get_bus_index("Master")
 			if master_bus_idx != -1:
-				AudioServer.set_bus_mute(master_bus_idx, is_sound_muted)
+				AudioServer.set_bus_mute(master_bus_idx, false)
+				
+			var am = get_node_or_null("/root/AudioManager")
+			if am and am.has_method("set_sound_muted"):
+				am.set_sound_muted(is_sound_muted)

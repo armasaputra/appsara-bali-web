@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ccofx1ob7tbxl"
+path="res://.godot/imported/ka (gantungan).mp3-005b9ea8d29d93803109de5f97a75922.mp3str"
+
+[deps]
+
+source_file="res://assets/DubSound/ka (gantungan).mp3"
+dest_files=["res://.godot/imported/ka (gantungan).mp3-005b9ea8d29d93803109de5f97a75922.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

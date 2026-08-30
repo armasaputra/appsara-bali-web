@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dmip7c6pl5c77"
+path="res://.godot/imported/nya (gantungan).mp3-7f7c3c2e53e3b5ef8fc13acd1ab8a2f8.mp3str"
+
+[deps]
+
+source_file="res://assets/DubSound/nya (gantungan).mp3"
+dest_files=["res://.godot/imported/nya (gantungan).mp3-7f7c3c2e53e3b5ef8fc13acd1ab8a2f8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

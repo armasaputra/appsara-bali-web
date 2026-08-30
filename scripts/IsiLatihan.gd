@@ -106,6 +106,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Ha",
+				"sound_path": "res://assets/DubSound/ha.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -115,6 +116,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Ra",
+				"sound_path": "res://assets/DubSound/ra.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -124,6 +126,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Cara",
+				"sound_path": "res://assets/DubSound/cara.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -167,6 +170,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Da",
+				"sound_path": "res://assets/DubSound/da.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -176,6 +180,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Wa",
+				"sound_path": "res://assets/DubSound/wa.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -185,6 +190,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Rasa",
+				"sound_path": "res://assets/DubSound/rasa.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -229,6 +235,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Ma",
+				"sound_path": "res://assets/DubSound/ma.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -238,6 +245,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Nga",
+				"sound_path": "res://assets/DubSound/nga.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -247,6 +255,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gama",
+				"sound_path": "res://assets/DubSound/gama.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -290,6 +299,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Ya",
+				"sound_path": "res://assets/DubSound/ya.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -299,6 +309,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Pasa",
+				"sound_path": "res://assets/DubSound/pasa.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -308,6 +319,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "JaBa",
+				"sound_path": "res://assets/DubSound/jaba.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -351,6 +363,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gantungan Ka",
+				"sound_path": "res://assets/DubSound/ka (gantungan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -360,6 +373,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gantungan Na",
+				"sound_path": "res://assets/DubSound/na (gantungan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -369,6 +383,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Cakra",
+				"sound_path": "res://assets/DubSound/cakra.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -412,6 +427,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gantungan Wa",
+				"sound_path": "res://assets/DubSound/wa (gantungan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -421,6 +437,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gantungan La",
+				"sound_path": "res://assets/DubSound/la (gantungan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -430,6 +447,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Satwa",
+				"sound_path": "res://assets/DubSound/satwa.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -473,6 +491,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gantungan Ga",
+				"sound_path": "res://assets/DubSound/ga (gantungan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -482,6 +501,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gantungan Nga",
+				"sound_path": "res://assets/DubSound/nga (gantungan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -491,6 +511,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Padma",
+				"sound_path": "res://assets/DubSound/padma.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -534,6 +555,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gempelan Pa",
+				"sound_path": "res://assets/DubSound/pa (gempelan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -543,6 +565,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Gantungan Nya",
+				"sound_path": "res://assets/DubSound/nya (gantungan).mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -552,6 +575,7 @@ const ALL_LATIHAN_DATA = {
 			{
 				"type": "sound",
 				"sound_name": "Nampa",
+				"sound_path": "res://assets/DubSound/nampa.mp3",
 				"prompt_header": "Silahkan di Klik gambar suara berikut :",
 				"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 				"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -627,6 +651,7 @@ const LATIHAN_SOAL_ACAK_25 = [
 	{
 		"type": "sound",
 		"sound_name": "Gempelan Sa",
+		"sound_path": "res://assets/DubSound/sa (gempelan).mp3",
 		"prompt_header": "Silahkan di Klik gambar suara berikut :",
 		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -640,6 +665,7 @@ const LATIHAN_SOAL_ACAK_25 = [
 	{
 		"type": "sound",
 		"sound_name": "Manda",
+		"sound_path": "res://assets/DubSound/manda.mp3",
 		"prompt_header": "Silahkan di Klik gambar suara berikut :",
 		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -733,6 +759,7 @@ const LATIHAN_SOAL_ACAK_25 = [
 	{
 		"type": "sound",
 		"sound_name": "BaLa",
+		"sound_path": "res://assets/DubSound/bala.mp3",
 		"prompt_header": "Silahkan di Klik gambar suara berikut :",
 		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -746,6 +773,7 @@ const LATIHAN_SOAL_ACAK_25 = [
 	{
 		"type": "sound",
 		"sound_name": "Hana",
+		"sound_path": "res://assets/DubSound/hana.mp3",
 		"prompt_header": "Silahkan di Klik gambar suara berikut :",
 		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -759,6 +787,7 @@ const LATIHAN_SOAL_ACAK_25 = [
 	{
 		"type": "sound",
 		"sound_name": "Gempelan Sa",
+		"sound_path": "res://assets/DubSound/sa (gempelan).mp3",
 		"prompt_header": "Silahkan di Klik gambar suara berikut :",
 		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -772,6 +801,7 @@ const LATIHAN_SOAL_ACAK_25 = [
 	{
 		"type": "sound",
 		"sound_name": "Raksa",
+		"sound_path": "res://assets/DubSound/raksa.mp3",
 		"prompt_header": "Silahkan di Klik gambar suara berikut :",
 		"prompt_sub": "Hanya sampai tiga (3) kali pengulangan suara",
 		"question": "Manakah aksara yang sesuai dengan suara tersebut?",
@@ -833,6 +863,105 @@ const LATIHAN_SOAL_ACAK_25 = [
 		]
 	}
 ]
+
+# Mapping of all DubSound files for quick resolution
+const SOUND_NAME_MAP = {
+	"ha": "res://assets/DubSound/ha.mp3",
+	"ra": "res://assets/DubSound/ra.mp3",
+	"cara": "res://assets/DubSound/cara.mp3",
+	"da": "res://assets/DubSound/da.mp3",
+	"wa": "res://assets/DubSound/wa.mp3",
+	"rasa": "res://assets/DubSound/rasa.mp3",
+	"ma": "res://assets/DubSound/ma.mp3",
+	"nga": "res://assets/DubSound/nga.mp3",
+	"gama": "res://assets/DubSound/gama.mp3",
+	"ya": "res://assets/DubSound/ya.mp3",
+	"pasa": "res://assets/DubSound/pasa.mp3",
+	"jaba": "res://assets/DubSound/jaba.mp3",
+	"gantungan ka": "res://assets/DubSound/ka (gantungan).mp3",
+	"ka (gantungan)": "res://assets/DubSound/ka (gantungan).mp3",
+	"gantungan na": "res://assets/DubSound/na (gantungan).mp3",
+	"na (gantungan)": "res://assets/DubSound/na (gantungan).mp3",
+	"cakra": "res://assets/DubSound/cakra.mp3",
+	"gantungan wa": "res://assets/DubSound/wa (gantungan).mp3",
+	"wa (gantungan)": "res://assets/DubSound/wa (gantungan).mp3",
+	"gantungan la": "res://assets/DubSound/la (gantungan).mp3",
+	"la (gantungan)": "res://assets/DubSound/la (gantungan).mp3",
+	"satwa": "res://assets/DubSound/satwa.mp3",
+	"gantungan ga": "res://assets/DubSound/ga (gantungan).mp3",
+	"ga (gantungan)": "res://assets/DubSound/ga (gantungan).mp3",
+	"gantungan nga": "res://assets/DubSound/nga (gantungan).mp3",
+	"nga (gantungan)": "res://assets/DubSound/nga (gantungan).mp3",
+	"padma": "res://assets/DubSound/padma.mp3",
+	"gempelan pa": "res://assets/DubSound/pa (gempelan).mp3",
+	"pa (gempelan)": "res://assets/DubSound/pa (gempelan).mp3",
+	"gantungan nya": "res://assets/DubSound/nya (gantungan).mp3",
+	"nya (gantungan)": "res://assets/DubSound/nya (gantungan).mp3",
+	"nampa": "res://assets/DubSound/nampa.mp3",
+	"gempelan sa": "res://assets/DubSound/sa (gempelan).mp3",
+	"sa (gempelan)": "res://assets/DubSound/sa (gempelan).mp3",
+	"manda": "res://assets/DubSound/manda.mp3",
+	"bala": "res://assets/DubSound/bala.mp3",
+	"hana": "res://assets/DubSound/hana.mp3",
+	"raksa": "res://assets/DubSound/raksa.mp3",
+}
+
+var _local_dub_player: AudioStreamPlayer = null
+
+func _resolve_sound_path(q_data: Dictionary) -> String:
+	var s_path = q_data.get("sound_path", "")
+	if not s_path.is_empty() and ResourceLoader.exists(s_path):
+		return s_path
+		
+	var s_name = str(q_data.get("sound_name", "")).strip_edges().to_lower()
+	if SOUND_NAME_MAP.has(s_name):
+		var mapped_path = SOUND_NAME_MAP[s_name]
+		if ResourceLoader.exists(mapped_path):
+			return mapped_path
+			
+	var direct_path = "res://assets/DubSound/%s.mp3" % s_name
+	if ResourceLoader.exists(direct_path):
+		return direct_path
+		
+	return ""
+
+func _play_sound_clip(s_path: String) -> void:
+	# Ensure Master bus is active and unmuted so quiz sound is always audible
+	var master_bus_idx = AudioServer.get_bus_index("Master")
+	if master_bus_idx != -1 and AudioServer.is_bus_mute(master_bus_idx):
+		AudioServer.set_bus_mute(master_bus_idx, false)
+		
+	var am = _get_audio_manager()
+	if am and am.has_method("play_dub"):
+		am.play_dub(s_path)
+		return
+	if AudioManager and AudioManager.has_method("play_dub"):
+		AudioManager.play_dub(s_path)
+		return
+		
+	# Fallback if AudioManager is not present
+	if not _local_dub_player:
+		_local_dub_player = AudioStreamPlayer.new()
+		_local_dub_player.name = "LocalDubPlayer"
+		add_child(_local_dub_player)
+	if _local_dub_player.playing:
+		_local_dub_player.stop()
+	if ResourceLoader.exists(s_path):
+		var stream = load(s_path)
+		if stream is AudioStreamMP3:
+			stream.loop = false
+		_local_dub_player.stream = stream
+		_local_dub_player.volume_db = 0.0
+		_local_dub_player.play()
+
+func _stop_sound_clip() -> void:
+	var am = _get_audio_manager()
+	if am and am.has_method("stop_dub"):
+		am.stop_dub()
+	elif AudioManager and AudioManager.has_method("stop_dub"):
+		AudioManager.stop_dub()
+	if _local_dub_player and _local_dub_player.playing:
+		_local_dub_player.stop()
 
 func _get_player_data() -> Node:
 	var root_node = null
@@ -1195,6 +1324,10 @@ func _render_question() -> void:
 	drawing_lines.clear()
 	if drawing_area:
 		drawing_area.queue_redraw()
+	_stop_sound_clip()
+	
+	if btn_play_sound:
+		btn_play_sound.modulate = Color.WHITE
 	
 	if q_type == "draw":
 		choice_container.visible = false
@@ -1230,6 +1363,9 @@ func _render_question() -> void:
 		
 		if q_type == "sound":
 			sound_section.visible = true
+			if p_sub.is_empty():
+				label_prompt_sub.visible = true
+				label_prompt_sub.text = "Hanya sampai tiga (3) kali pengulangan suara"
 		else:
 			sound_section.visible = false
 			
@@ -1293,16 +1429,41 @@ func _select_option(index: int) -> void:
 			sel_icon.visible = (i == index)
 
 func _on_play_sound_pressed() -> void:
+	var questions: Array = current_latihan_data.get("questions", [])
+	if current_question_index < 0 or current_question_index >= questions.size():
+		return
+	var q_data: Dictionary = questions[current_question_index]
+	if q_data.get("type") != "sound":
+		return
+		
 	if sound_play_count < 3:
 		sound_play_count += 1
-		print("Playing question sound (placeholder). Count: %d/3" % sound_play_count)
+		var s_path = _resolve_sound_path(q_data)
+		print("Playing question sound [%s] (%s). Count: %d/3" % [q_data.get("sound_name", ""), s_path, sound_play_count])
+		
+		if not s_path.is_empty():
+			_play_sound_clip(s_path)
+		else:
+			print("Warning: sound file not found for question sound_name: %s" % q_data.get("sound_name", ""))
+			
 		var tween = create_tween()
-		tween.tween_property(btn_play_sound, "scale", Vector2(1.15, 1.15), 0.1)
-		tween.tween_property(btn_play_sound, "scale", Vector2.ONE, 0.12)
+		tween.tween_property(btn_play_sound, "scale", Vector2(1.18, 1.18), 0.09).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(btn_play_sound, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		
 		if sound_play_count >= 3:
 			label_prompt_sub.text = "Pengulangan suara habis (3/3 kali)"
+			btn_play_sound.modulate = Color(0.65, 0.65, 0.65, 0.6)
 		else:
 			label_prompt_sub.text = "Pengulangan suara: %d/3 kali" % sound_play_count
+	else:
+		# Limit reached (already 3 times) - gentle shake feedback
+		print("Sound play limit reached (3/3).")
+		var original_x = btn_play_sound.position.x
+		var shake_tween = create_tween()
+		shake_tween.tween_property(btn_play_sound, "position:x", original_x - 6.0, 0.04)
+		shake_tween.tween_property(btn_play_sound, "position:x", original_x + 6.0, 0.04)
+		shake_tween.tween_property(btn_play_sound, "position:x", original_x, 0.04)
+
 
 func _on_periksa_choice_pressed() -> void:
 	if selected_option_index == -1:
@@ -1559,6 +1720,7 @@ func _stamp_drawn_point(mask: Array, pt: Vector2, area_size: Vector2, grid_w: in
 			mask[ny][nx] = true
 
 func _handle_answer_correct() -> void:
+	_stop_sound_clip()
 	print("Jawaban Benar!")
 	var am = _get_audio_manager()
 	if am and am.has_method("play_correct"):
@@ -1576,6 +1738,7 @@ func _handle_answer_correct() -> void:
 		_animate_question_transition()
 
 func _handle_answer_wrong() -> void:
+	_stop_sound_clip()
 	print("Jawaban Salah!")
 	var am = _get_audio_manager()
 	if am and am.has_method("play_wrong"):
@@ -1587,6 +1750,7 @@ func _handle_answer_wrong() -> void:
 	_show_wrong_popup()
 
 func _show_wrong_popup() -> void:
+	_stop_sound_clip()
 	label_wrong_message.text = "Maaf jawaban kamu masih salah"
 	if question_fail_count >= 3:
 		btn_lihat_materi.visible = true
@@ -1610,6 +1774,7 @@ func _close_wrong_popup() -> void:
 	)
 
 func _on_lihat_materi_pressed() -> void:
+	_stop_sound_clip()
 	print("Membuka Materi terkait dari Latihan (3x gagal)...")
 	var pd = _get_player_data()
 	if pd:
@@ -1623,6 +1788,7 @@ func _on_lihat_materi_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
 
 func _show_complete_popup() -> void:
+	_stop_sound_clip()
 	var am = _get_audio_manager()
 	if am and am.has_method("play_stage_complete"):
 		am.play_stage_complete()
@@ -1667,6 +1833,7 @@ func _show_complete_popup() -> void:
 	tween.tween_property(complete_popup_container, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_ulangi_pressed() -> void:
+	_stop_sound_clip()
 	complete_popup_layer.visible = false
 	var pd = _get_player_data()
 	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
@@ -1690,6 +1857,7 @@ func _on_ulangi_pressed() -> void:
 		_render_question()
 
 func _on_kembali_menu_pressed() -> void:
+	_stop_sound_clip()
 	var pd = _get_player_data()
 	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
 		get_tree().change_scene_to_file("res://scenes/Gameplay.tscn")
@@ -1704,6 +1872,7 @@ func _animate_question_transition() -> void:
 	tween.tween_property(active_container, "modulate:a", 1.0, 0.18).set_trans(Tween.TRANS_SINE)
 
 func _on_back_menu_pressed() -> void:
+	_stop_sound_clip()
 	if _timer_node:
 		_timer_node.paused = true
 	_show_pause_popup()

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dbnire6p3dqt2"
+path="res://.godot/imported/sa (gempelan).mp3-a2918bd537abe91d7a7c311253d44a6d.mp3str"
+
+[deps]
+
+source_file="res://assets/DubSound/sa (gempelan).mp3"
+dest_files=["res://.godot/imported/sa (gempelan).mp3-a2918bd537abe91d7a7c311253d44a6d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

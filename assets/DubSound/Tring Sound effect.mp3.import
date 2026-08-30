@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dedfo0vc0aml8"
+path="res://.godot/imported/Tring Sound effect.mp3-f317aed02380062424e9eab2594b86a1.mp3str"
+
+[deps]
+
+source_file="res://assets/DubSound/Tring Sound effect.mp3"
+dest_files=["res://.godot/imported/Tring Sound effect.mp3-f317aed02380062424e9eab2594b86a1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
