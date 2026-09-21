@@ -39,6 +39,12 @@ extends Control
 @onready var btn_jawab_lagi: TextureButton = $WrongPopupLayer/PopupContainer/BtnJawabLagi
 @onready var btn_lihat_materi: TextureButton = $WrongPopupLayer/PopupContainer/BtnLihatMateri
 
+# Correct Popup Layer Nodes
+@onready var correct_popup_layer: Control = $CorrectPopupLayer
+@onready var correct_popup_container: Control = $CorrectPopupLayer/PopupContainer
+@onready var label_correct_message: Label = $CorrectPopupLayer/PopupContainer/LabelCorrectMessage
+@onready var btn_lanjut_correct: TextureButton = $CorrectPopupLayer/PopupContainer/BtnLanjutCorrect
+
 # Complete Popup Layer Nodes
 @onready var complete_popup_layer: Control = $CompletePopupLayer
 @onready var complete_popup_container: Control = $CompletePopupLayer/PopupContainer
@@ -49,12 +55,24 @@ extends Control
 @onready var btn_kembali_menu: TextureButton = $CompletePopupLayer/PopupContainer/BtnKembaliMenu
 @onready var label_kembali_menu: Label = $CompletePopupLayer/PopupContainer/BtnKembaliMenu/LabelKembaliMenu
 
+# Review Navigation Nodes
+@onready var review_nav: Control = $ReviewNav
+@onready var btn_review_top: TextureButton = $ReviewNav/BtnReviewTop
+@onready var label_review_top: Label = $ReviewNav/BtnReviewTop/LabelTop
+@onready var btn_review_bottom: TextureButton = $ReviewNav/BtnReviewBottom
+@onready var label_review_bottom: Label = $ReviewNav/BtnReviewBottom/LabelBottom
+
 # Back Menu & Pause Popup Nodes
 @onready var btn_back_menu: TextureButton = $BtnBackMenu
 @onready var pause_popup_layer: Control = $PausePopupLayer
 @onready var pause_popup_container: Control = $PausePopupLayer/PopupContainer
 @onready var btn_lanjutkan: TextureButton = $PausePopupLayer/PopupContainer/BtnLanjutkan
 @onready var btn_kembali_pause: TextureButton = $PausePopupLayer/PopupContainer/BtnKembali
+
+# Selection and Review Icons
+const ICON_RED = preload("res://assets/SelectedAnswer.png")
+const ICON_GREEN = preload("res://assets/SelectedAnswer_Green.png")
+const ICON_GRAY = preload("res://assets/SelectedAnswer_Gray.png")
 
 # State
 var current_latihan_id: int = 1
@@ -66,6 +84,8 @@ var sound_play_count: int = 0
 var is_clue_active: bool = false
 var time_remaining_seconds: int = 95 # 1:35 default
 var is_timeout: bool = false
+var is_review_mode: bool = false
+var review_question_index: int = 0
 
 # Drawing State
 var drawing_lines: Array[PackedVector2Array] = []
@@ -1070,6 +1090,15 @@ func _ensure_nodes() -> void:
 	if not btn_lihat_materi:
 		btn_lihat_materi = get_node_or_null("WrongPopupLayer/PopupContainer/BtnLihatMateri")
 		
+	if not correct_popup_layer:
+		correct_popup_layer = get_node_or_null("CorrectPopupLayer")
+	if not correct_popup_container:
+		correct_popup_container = get_node_or_null("CorrectPopupLayer/PopupContainer")
+	if not label_correct_message:
+		label_correct_message = get_node_or_null("CorrectPopupLayer/PopupContainer/LabelCorrectMessage")
+	if not btn_lanjut_correct:
+		btn_lanjut_correct = get_node_or_null("CorrectPopupLayer/PopupContainer/BtnLanjutCorrect")
+		
 	if not complete_popup_layer:
 		complete_popup_layer = get_node_or_null("CompletePopupLayer")
 	if not complete_popup_container:
@@ -1098,6 +1127,18 @@ func _ensure_nodes() -> void:
 	if not btn_kembali_pause:
 		btn_kembali_pause = get_node_or_null("PausePopupLayer/PopupContainer/BtnKembali")
 
+	if not review_nav:
+		review_nav = get_node_or_null("ReviewNav")
+	if review_nav:
+		if not btn_review_top:
+			btn_review_top = review_nav.get_node_or_null("BtnReviewTop")
+		if btn_review_top and not label_review_top:
+			label_review_top = btn_review_top.get_node_or_null("LabelTop")
+		if not btn_review_bottom:
+			btn_review_bottom = review_nav.get_node_or_null("BtnReviewBottom")
+		if btn_review_bottom and not label_review_bottom:
+			label_review_bottom = btn_review_bottom.get_node_or_null("LabelBottom")
+
 func _update_stars_display() -> void:
 	var pd = _get_player_data()
 	if label_stars and pd and "total_stars" in pd:
@@ -1106,6 +1147,9 @@ func _update_stars_display() -> void:
 func _ready() -> void:
 	_ensure_nodes()
 	_update_stars_display()
+	
+	if review_nav:
+		review_nav.visible = false
 	
 	# Determine current latihan ID from PlayerData
 	var pd = _get_player_data()
@@ -1137,11 +1181,14 @@ func _ready() -> void:
 	_setup_button_effects(btn_periksa_draw)
 	_setup_button_effects(btn_jawab_lagi)
 	_setup_button_effects(btn_lihat_materi)
+	_setup_button_effects(btn_lanjut_correct)
 	_setup_button_effects(btn_ulangi)
 	_setup_button_effects(btn_kembali_menu)
 	_setup_button_effects(btn_back_menu)
 	_setup_button_effects(btn_lanjutkan)
 	_setup_button_effects(btn_kembali_pause)
+	_setup_button_effects(btn_review_top)
+	_setup_button_effects(btn_review_bottom)
 	
 	# Connect signals safely
 	if btn_periksa_choice and not btn_periksa_choice.pressed.is_connected(_on_periksa_choice_pressed):
@@ -1164,6 +1211,8 @@ func _ready() -> void:
 		btn_jawab_lagi.pressed.connect(_on_btn_lanjut_wrong_pressed)
 	if btn_lihat_materi and not btn_lihat_materi.pressed.is_connected(_on_lihat_materi_pressed):
 		btn_lihat_materi.pressed.connect(_on_lihat_materi_pressed)
+	if btn_lanjut_correct and not btn_lanjut_correct.pressed.is_connected(_on_btn_lanjut_correct_pressed):
+		btn_lanjut_correct.pressed.connect(_on_btn_lanjut_correct_pressed)
 	if btn_ulangi and not btn_ulangi.pressed.is_connected(_on_ulangi_pressed):
 		btn_ulangi.pressed.connect(_on_ulangi_pressed)
 	if btn_kembali_menu and not btn_kembali_menu.pressed.is_connected(_on_kembali_menu_pressed):
@@ -1174,6 +1223,10 @@ func _ready() -> void:
 		btn_lanjutkan.pressed.connect(_on_lanjutkan_pressed)
 	if btn_kembali_pause and not btn_kembali_pause.pressed.is_connected(_on_kembali_pause_pressed):
 		btn_kembali_pause.pressed.connect(_on_kembali_pause_pressed)
+	if btn_review_top and not btn_review_top.pressed.is_connected(_on_btn_review_top_pressed):
+		btn_review_top.pressed.connect(_on_btn_review_top_pressed)
+	if btn_review_bottom and not btn_review_bottom.pressed.is_connected(_on_btn_review_bottom_pressed):
+		btn_review_bottom.pressed.connect(_on_btn_review_bottom_pressed)
 	
 	# Setup Drawing Area input and draw hooks
 	if drawing_area:
@@ -1188,6 +1241,8 @@ func _ready() -> void:
 	# Hide popups initially
 	if wrong_popup_layer:
 		wrong_popup_layer.visible = false
+	if correct_popup_layer:
+		correct_popup_layer.visible = false
 	if complete_popup_layer:
 		complete_popup_layer.visible = false
 	if pause_popup_layer:
@@ -1231,6 +1286,8 @@ func _handle_timeout() -> void:
 	# Close other popups if open
 	if wrong_popup_layer:
 		wrong_popup_layer.visible = false
+	if correct_popup_layer:
+		correct_popup_layer.visible = false
 	if pause_popup_layer:
 		pause_popup_layer.visible = false
 		
@@ -1259,7 +1316,7 @@ func _handle_timeout() -> void:
 		if label_ulangi:
 			label_ulangi.text = "Level Selanjutnya"
 		if label_kembali_menu:
-			label_kembali_menu.text = "Peta Belajar"
+			label_kembali_menu.text = "Lihat hasil"
 	else:
 		var am = _get_audio_manager()
 		if am and am.has_method("play_wrong"):
@@ -1374,6 +1431,15 @@ func load_latihan(latihan_id: int, start_q_idx: int = 0) -> void:
 	else:
 		current_question_index = 0
 		
+	is_review_mode = false
+	if review_nav:
+		review_nav.visible = false
+	if start_q_idx == 0:
+		var pd_init = _get_player_data()
+		if pd_init and "current_stage_user_answers" in pd_init:
+			pd_init.current_stage_user_answers.clear()
+			pd_init.save_progress()
+		
 	is_timeout = false
 	var pd = _get_player_data()
 	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
@@ -1416,6 +1482,10 @@ func _render_question() -> void:
 	if drawing_area:
 		drawing_area.queue_redraw()
 	_stop_sound_clip()
+	if wrong_popup_layer:
+		wrong_popup_layer.visible = false
+	if correct_popup_layer:
+		correct_popup_layer.visible = false
 	
 	if btn_play_sound:
 		btn_play_sound.modulate = Color.WHITE
@@ -1482,12 +1552,15 @@ func _render_question() -> void:
 			var btn = opt_buttons[i]
 			if i < options.size():
 				btn.visible = true
+				btn.mouse_filter = Control.MOUSE_FILTER_STOP
 				var opt = options[i]
 				var opt_lbl = btn.get_node_or_null("HBox/OptLabel")
 				var opt_img = btn.get_node_or_null("HBox/OptImage")
 				var sel_icon = btn.get_node_or_null("HBox/SelectedIcon")
 				
 				if sel_icon:
+					sel_icon.texture = ICON_RED
+					sel_icon.modulate = Color.WHITE
 					sel_icon.visible = false
 				
 				if opt.has("text"):
@@ -1512,11 +1585,15 @@ func _render_question() -> void:
 				btn.visible = false
 
 func _select_option(index: int) -> void:
+	if is_review_mode:
+		return
 	selected_option_index = index
 	var opt_buttons = [btn_option1, btn_option2, btn_option3]
 	for i in range(opt_buttons.size()):
 		var sel_icon = opt_buttons[i].get_node_or_null("HBox/SelectedIcon")
 		if sel_icon:
+			sel_icon.texture = ICON_RED
+			sel_icon.modulate = Color.WHITE
 			sel_icon.visible = (i == index)
 
 func _on_play_sound_pressed() -> void:
@@ -1557,15 +1634,26 @@ func _on_play_sound_pressed() -> void:
 
 
 func _on_periksa_choice_pressed() -> void:
-	if selected_option_index == -1:
-		# Nothing selected
+	if selected_option_index == -1 or is_review_mode:
+		# Nothing selected or in review
 		return
 		
 	var questions: Array = current_latihan_data.get("questions", [])
 	var q_data: Dictionary = questions[current_question_index]
 	var correct_idx = q_data.get("correct", 0)
+	var is_correct = (selected_option_index == correct_idx)
 	
-	if selected_option_index == correct_idx:
+	# Record answer for Review Mode
+	var pd = _get_player_data()
+	if pd and "current_stage_user_answers" in pd:
+		pd.current_stage_user_answers[current_question_index] = {
+			"user_choice": selected_option_index,
+			"correct": correct_idx,
+			"is_correct": is_correct
+		}
+		pd.save_progress()
+	
+	if is_correct:
 		_handle_answer_correct()
 	else:
 		_handle_answer_wrong()
@@ -1632,11 +1720,23 @@ func _on_drawing_area_draw() -> void:
 			drawing_area.draw_circle(line[0], 9.0, ink_color)
 
 func _on_periksa_draw_pressed() -> void:
+	if is_review_mode:
+		return
 	var questions: Array = current_latihan_data.get("questions", [])
 	var q_data: Dictionary = questions[current_question_index]
 	var target_img_path = q_data.get("target_image", "")
 	
 	var is_match = _evaluate_drawing_match(target_img_path)
+	
+	# Record drawing answer for Review Mode
+	var pd = _get_player_data()
+	if pd and "current_stage_user_answers" in pd:
+		pd.current_stage_user_answers[current_question_index] = {
+			"user_choice": -1,
+			"is_correct": is_match
+		}
+		pd.save_progress()
+		
 	if is_match:
 		_handle_answer_correct()
 	else:
@@ -1826,9 +1926,43 @@ func _handle_answer_correct() -> void:
 		_update_stars_display()
 		
 	question_fail_count = 0
+	_show_correct_popup()
+
+func _show_correct_popup() -> void:
+	_stop_sound_clip()
+	var pd = _get_player_data()
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	if label_correct_message:
+		if is_gameplay:
+			label_correct_message.text = "Jawaban Benar!\n+1 Bintang ⭐"
+		else:
+			label_correct_message.text = "Jawaban Benar!"
+		
+	correct_popup_layer.visible = true
+	correct_popup_layer.modulate.a = 0.0
+	correct_popup_container.scale = Vector2(0.7, 0.7)
+	
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(correct_popup_layer, "modulate:a", 1.0, 0.22)
+	tween.tween_property(correct_popup_container, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _close_correct_popup() -> void:
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(correct_popup_layer, "modulate:a", 0.0, 0.18)
+	tween.tween_property(correct_popup_container, "scale", Vector2(0.75, 0.75), 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.chain().tween_callback(func():
+		correct_popup_layer.visible = false
+	)
+
+func _on_btn_lanjut_correct_pressed() -> void:
+	_stop_sound_clip()
+	_close_correct_popup()
+	question_fail_count = 0
 	current_question_index += 1
 	
-	if is_gameplay:
+	var pd = _get_player_data()
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	if is_gameplay and pd:
 		pd.current_stage_question_idx = current_question_index
 		pd.current_stage_timer_seconds = time_remaining_seconds
 		pd.save_progress()
@@ -1954,7 +2088,7 @@ func _show_complete_popup() -> void:
 		if label_ulangi:
 			label_ulangi.text = "Level Selanjutnya"
 		if label_kembali_menu:
-			label_kembali_menu.text = "Peta Belajar"
+			label_kembali_menu.text = "Lihat hasil"
 	else:
 		# Standalone Latihan mode (No stars added, Belajar Bertahap progress untouched)
 		if label_complete_title:
@@ -2012,11 +2146,12 @@ func _on_ulangi_pressed() -> void:
 
 func _on_kembali_menu_pressed() -> void:
 	_stop_sound_clip()
-	is_timeout = false
 	var pd = _get_player_data()
-	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
-		get_tree().change_scene_to_file("res://scenes/Gameplay.tscn")
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	if is_gameplay:
+		_start_review_mode()
 	else:
+		is_timeout = false
 		get_tree().change_scene_to_file("res://scenes/Latihan.tscn")
 
 func _animate_question_transition() -> void:
@@ -2028,12 +2163,19 @@ func _animate_question_transition() -> void:
 
 func _on_back_menu_pressed() -> void:
 	_stop_sound_clip()
+	if is_review_mode:
+		_return_from_review_to_gameplay()
+		return
 	if _timer_node:
 		_timer_node.paused = true
 	_show_pause_popup()
 
 func _show_pause_popup() -> void:
 	is_currently_drawing = false
+	if wrong_popup_layer:
+		wrong_popup_layer.visible = false
+	if correct_popup_layer:
+		correct_popup_layer.visible = false
 	if not pause_popup_layer or not pause_popup_container:
 		return
 	pause_popup_layer.visible = true
@@ -2068,4 +2210,237 @@ func _on_kembali_pause_pressed() -> void:
 		pd.current_stage_timer_seconds = time_remaining_seconds
 		pd.save_progress()
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+
+# ==========================================
+# REVIEW MODE (LIHAT HASIL)
+# ==========================================
+
+func _start_review_mode() -> void:
+	_stop_sound_clip()
+	is_review_mode = true
+	review_question_index = 0
+	
+	if complete_popup_layer:
+		complete_popup_layer.visible = false
+	if wrong_popup_layer:
+		wrong_popup_layer.visible = false
+	if correct_popup_layer:
+		correct_popup_layer.visible = false
+	if pause_popup_layer:
+		pause_popup_layer.visible = false
+		
+	if _timer_node:
+		_timer_node.paused = true
+		
+	if btn_periksa_choice:
+		btn_periksa_choice.visible = false
+	if btn_clue:
+		btn_clue.visible = false
+	if btn_hapus:
+		btn_hapus.visible = false
+	if btn_periksa_draw:
+		btn_periksa_draw.visible = false
+		
+	if review_nav:
+		review_nav.visible = true
+		
+	_render_review_question()
+
+func _render_review_question() -> void:
+	var questions: Array = current_latihan_data.get("questions", [])
+	var total_questions: int = questions.size()
+	if total_questions == 0:
+		return
+		
+	if review_question_index < 0:
+		review_question_index = 0
+	elif review_question_index >= total_questions:
+		review_question_index = total_questions - 1
+		
+	var q_data: Dictionary = questions[review_question_index]
+	var q_type: String = q_data.get("type", "choice")
+	
+	# Update Titles
+	label_title.text = "HASIL JAWABAN"
+	label_subtitle.text = current_latihan_data.get("title", "LATIHAN %d" % current_latihan_id)
+	label_question_number.text = "%d/%d" % [review_question_index + 1, total_questions]
+	if label_timer:
+		label_timer.text = "Review Hasil"
+		
+	# Retrieve user answer record for this question
+	var pd = _get_player_data()
+	var user_rec: Dictionary = {}
+	if pd and "current_stage_user_answers" in pd:
+		if pd.current_stage_user_answers.has(review_question_index):
+			user_rec = pd.current_stage_user_answers[review_question_index]
+		elif pd.current_stage_user_answers.has(str(review_question_index)):
+			user_rec = pd.current_stage_user_answers[str(review_question_index)]
+			
+	var user_choice: int = user_rec.get("user_choice", -1)
+	var is_user_correct: bool = user_rec.get("is_correct", false)
+	
+	# Update Review Navigation Buttons
+	_update_review_nav_buttons(total_questions)
+	
+	if q_type == "draw":
+		choice_container.visible = false
+		drawing_container.visible = true
+		if btn_clue:
+			btn_clue.visible = false
+		if btn_hapus:
+			btn_hapus.visible = false
+		if btn_periksa_draw:
+			btn_periksa_draw.visible = false
+		if drawing_area:
+			drawing_area.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			
+		var status_str = " (Status: Benar! ✓)" if is_user_correct else " (Kunci Jawaban Visual)"
+		label_instruction.text = q_data.get("instruction", "Tulis aksara") + status_str
+		var target_img = q_data.get("target_image", "")
+		if not target_img.is_empty() and ResourceLoader.exists(target_img):
+			ghost_aksara.texture = load(target_img)
+		ghost_aksara.modulate.a = 1.0 # Fully visible target reference in review
+	else:
+		choice_container.visible = true
+		drawing_container.visible = false
+		if btn_periksa_choice:
+			btn_periksa_choice.visible = false
+			
+		# Headers
+		var p_header = q_data.get("prompt_header", "")
+		var p_sub = q_data.get("prompt_sub", "")
+		var p_kata = q_data.get("prompt_kata", "")
+		var p_img = q_data.get("prompt_image", "")
+		var q_text = q_data.get("question", "")
+		
+		if p_header.is_empty():
+			label_prompt_header.visible = false
+		else:
+			label_prompt_header.visible = true
+			label_prompt_header.text = p_header
+			
+		# Status explanation in prompt_sub
+		label_prompt_sub.visible = true
+		if user_choice == -1:
+			label_prompt_sub.text = "Status: Tidak dijawab (Waktu habis). Hijau: Kunci Jawaban."
+		elif is_user_correct:
+			label_prompt_sub.text = "Status: Jawaban Benar! (Hijau: Pilihan Tepat)"
+		else:
+			label_prompt_sub.text = "Status: Jawaban Salah (Abu-abu: Pilihanmu, Hijau: Kunci Jawaban)"
+			
+		if q_type == "sound":
+			sound_section.visible = true
+			if btn_play_sound:
+				btn_play_sound.modulate = Color.WHITE
+		else:
+			sound_section.visible = false
+			
+		if p_kata.is_empty():
+			prompt_kata_label.visible = false
+		else:
+			prompt_kata_label.visible = true
+			prompt_kata_label.text = p_kata
+			
+		if not p_img.is_empty() and ResourceLoader.exists(p_img):
+			prompt_image.texture = load(p_img)
+			prompt_image.visible = true
+		else:
+			prompt_image.visible = false
+			
+		label_question_text.text = q_text
+		
+		# Setup options with Green and Gray icons
+		var options: Array = q_data.get("options", [])
+		var correct_idx: int = q_data.get("correct", 0)
+		var opt_buttons = [btn_option1, btn_option2, btn_option3]
+		
+		for i in range(opt_buttons.size()):
+			var btn = opt_buttons[i]
+			if i < options.size():
+				btn.visible = true
+				btn.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				var opt = options[i]
+				var opt_lbl = btn.get_node_or_null("HBox/OptLabel")
+				var opt_img = btn.get_node_or_null("HBox/OptImage")
+				var sel_icon = btn.get_node_or_null("HBox/SelectedIcon")
+				
+				if opt.has("text"):
+					if opt_lbl:
+						opt_lbl.text = opt["text"]
+						opt_lbl.visible = true
+					if opt_img:
+						opt_img.visible = false
+				elif opt.has("image"):
+					if opt_lbl:
+						var letter_prefix = ["A. ", "B. ", "C. "][i]
+						opt_lbl.text = letter_prefix
+						opt_lbl.visible = true
+					if opt_img:
+						var img_path = opt["image"]
+						if ResourceLoader.exists(img_path):
+							opt_img.texture = load(img_path)
+							opt_img.visible = true
+						else:
+							opt_img.visible = false
+				
+				if sel_icon:
+					sel_icon.modulate = Color.WHITE
+					if i == correct_idx:
+						# Correct Answer -> Green
+						sel_icon.texture = ICON_GREEN
+						sel_icon.visible = true
+					elif i == user_choice and user_choice != correct_idx:
+						# Player's Wrong Answer -> Gray
+						sel_icon.texture = ICON_GRAY
+						sel_icon.visible = true
+					else:
+						sel_icon.visible = false
+			else:
+				btn.visible = false
+
+func _update_review_nav_buttons(total_questions: int) -> void:
+	if not btn_review_top or not btn_review_bottom:
+		return
+	if review_question_index == 0:
+		label_review_top.text = "Lanjut"
+		label_review_bottom.text = "Kembali ke Peta"
+	elif review_question_index >= total_questions - 1:
+		label_review_top.text = "Selesai"
+		label_review_bottom.text = "Sebelumnya"
+	else:
+		label_review_top.text = "Lanjut"
+		label_review_bottom.text = "Sebelumnya"
+
+func _on_btn_review_top_pressed() -> void:
+	var questions: Array = current_latihan_data.get("questions", [])
+	var total_questions: int = questions.size()
+	if review_question_index >= total_questions - 1:
+		_return_from_review_to_gameplay()
+	else:
+		review_question_index += 1
+		_animate_review_transition()
+
+func _on_btn_review_bottom_pressed() -> void:
+	if review_question_index == 0:
+		_return_from_review_to_gameplay()
+	else:
+		review_question_index -= 1
+		_animate_review_transition()
+
+func _animate_review_transition() -> void:
+	_render_review_question()
+	var active_container = drawing_container if drawing_container.visible else choice_container
+	active_container.modulate.a = 0.3
+	var tween = create_tween()
+	tween.tween_property(active_container, "modulate:a", 1.0, 0.15).set_trans(Tween.TRANS_SINE)
+
+func _return_from_review_to_gameplay() -> void:
+	_stop_sound_clip()
+	is_review_mode = false
+	var pd = _get_player_data()
+	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+		get_tree().change_scene_to_file("res://scenes/Gameplay.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/Latihan.tscn")
+
 

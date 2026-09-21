@@ -78,18 +78,18 @@ shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="LabelSettings" id="LabelSettings_popup_msg"]
-font = ExtResource("5_font")
-font_size = 36
-shadow_size = 5
-shadow_color = Color(0, 0, 0, 0.5)
-shadow_offset = Vector2(0, 3)
-
 [sub_resource type="LabelSettings" id="LabelSettings_popup_btn"]
 font = ExtResource("5_font")
 font_size = 48
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_popup_msg"]
+font = ExtResource("5_font")
+font_size = 36
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.5)
 shadow_offset = Vector2(0, 3)
 
 [node name="IsiLatihan" type="Control" unique_id=131895976]
@@ -681,6 +681,78 @@ label_settings = SubResource("LabelSettings_btn_hapus")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ReviewNav" type="Control" parent="." unique_id=198822001]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BtnReviewTop" type="TextureButton" parent="ReviewNav" unique_id=198822002]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -520.0
+offset_right = 280.0
+offset_bottom = -334.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(280, 93)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelTop" type="Label" parent="ReviewNav/BtnReviewTop" unique_id=198822003]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lanjut"
+label_settings = SubResource("LabelSettings_btn_action")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnReviewBottom" type="TextureButton" parent="ReviewNav" unique_id=198822004]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -310.0
+offset_right = 280.0
+offset_bottom = -124.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(280, 93)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelBottom" type="Label" parent="ReviewNav/BtnReviewBottom" unique_id=198822005]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sebelumnya"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="WrongPopupLayer" type="Control" parent="." unique_id=1000887027]
 visible = false
 layout_mode = 1
@@ -798,6 +870,96 @@ offset_top = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Lihat Materi"
+label_settings = SubResource("LabelSettings_popup_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CorrectPopupLayer" type="Control" parent="." unique_id=1000887999]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimOverlay" type="ColorRect" parent="CorrectPopupLayer" unique_id=1122612999]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="PopupContainer" type="Control" parent="CorrectPopupLayer" unique_id=1584683999]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -280.0
+offset_right = 440.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(440, 280)
+
+[node name="PopupFrame" type="TextureRect" parent="CorrectPopupLayer/PopupContainer" unique_id=1282989999]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_popup_bg")
+expand_mode = 1
+
+[node name="LabelCorrectMessage" type="Label" parent="CorrectPopupLayer/PopupContainer" unique_id=1855090999]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 223.0
+offset_right = 380.0
+offset_bottom = 343.0
+grow_horizontal = 2
+text = "Jawaban Benar!"
+label_settings = SubResource("LabelSettings_popup_msg")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BtnLanjutCorrect" type="TextureButton" parent="CorrectPopupLayer/PopupContainer" unique_id=1526081999]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = 50.0
+offset_right = 240.0
+offset_bottom = 208.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(230, 55)
+texture_normal = ExtResource("11_btn_wood")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LabelLanjutCorrect" type="Label" parent="CorrectPopupLayer/PopupContainer/BtnLanjutCorrect" unique_id=1509285999]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lanjut"
 label_settings = SubResource("LabelSettings_popup_btn")
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -18,6 +18,7 @@ var current_stage_question_idx: int = 0
 var current_stage_timer_seconds: int = 95
 var max_unlocked_stage: int = 1
 var cleared_stages: Dictionary = {} # stage_number -> true
+var current_stage_user_answers: Dictionary = {} # question_idx -> { user_choice, correct, is_correct }
 
 # Latihan retry & back flow state
 var from_latihan_retry: bool = false
@@ -159,6 +160,7 @@ func reset_all_progress() -> void:
 	current_stage_timer_seconds = 95
 	max_unlocked_stage = 1
 	cleared_stages.clear()
+	current_stage_user_answers.clear()
 	is_profile_registered = false
 	player_name = _generate_default_player_name()
 	
@@ -182,7 +184,8 @@ func save_progress() -> void:
 		"current_stage_question_idx": current_stage_question_idx,
 		"current_stage_timer_seconds": current_stage_timer_seconds,
 		"max_unlocked_stage": max_unlocked_stage,
-		"cleared_stages": cleared_keys
+		"cleared_stages": cleared_keys,
+		"current_stage_user_answers": current_stage_user_answers
 	}
 	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
 	if file:
@@ -210,6 +213,12 @@ func load_progress() -> void:
 			current_stage_question_idx = int(data.get("current_stage_question_idx", 0))
 			current_stage_timer_seconds = int(data.get("current_stage_timer_seconds", 95))
 			max_unlocked_stage = int(data.get("max_unlocked_stage", 1))
+			
+			var ans = data.get("current_stage_user_answers", {})
+			if ans is Dictionary:
+				current_stage_user_answers = ans
+			else:
+				current_stage_user_answers = {}
 			
 			var cl = data.get("cleared_stages", [])
 			cleared_stages.clear()
