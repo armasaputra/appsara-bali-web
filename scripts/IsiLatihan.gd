@@ -1123,6 +1123,8 @@ func _ready() -> void:
 	if pd and "from_latihan_retry" in pd and pd.from_latihan_retry:
 		start_q = pd.latihan_return_question_idx
 		pd.from_latihan_retry = false
+	elif pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+		start_q = pd.current_stage_question_idx
 	
 	# Setup button animations
 	_setup_button_effects(btn_periksa_choice)
@@ -1158,8 +1160,8 @@ func _ready() -> void:
 		btn_hapus.pressed.connect(_on_hapus_draw_pressed)
 	if btn_periksa_draw and not btn_periksa_draw.pressed.is_connected(_on_periksa_draw_pressed):
 		btn_periksa_draw.pressed.connect(_on_periksa_draw_pressed)
-	if btn_jawab_lagi and not btn_jawab_lagi.pressed.is_connected(_close_wrong_popup):
-		btn_jawab_lagi.pressed.connect(_close_wrong_popup)
+	if btn_jawab_lagi and not btn_jawab_lagi.pressed.is_connected(_on_btn_lanjut_wrong_pressed):
+		btn_jawab_lagi.pressed.connect(_on_btn_lanjut_wrong_pressed)
 	if btn_lihat_materi and not btn_lihat_materi.pressed.is_connected(_on_lihat_materi_pressed):
 		btn_lihat_materi.pressed.connect(_on_lihat_materi_pressed)
 	if btn_ulangi and not btn_ulangi.pressed.is_connected(_on_ulangi_pressed):
@@ -1210,6 +1212,9 @@ func _on_timer_tick() -> void:
 	if time_remaining_seconds > 0:
 		time_remaining_seconds -= 1
 		_update_timer_display()
+		var pd = _get_player_data()
+		if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+			pd.current_stage_timer_seconds = time_remaining_seconds
 		if time_remaining_seconds <= 0:
 			_handle_timeout()
 
@@ -1229,23 +1234,48 @@ func _handle_timeout() -> void:
 	if pause_popup_layer:
 		pause_popup_layer.visible = false
 		
-	# Play wrong/alert SFX
-	var am = _get_audio_manager()
-	if am and am.has_method("play_wrong"):
-		am.play_wrong()
-	elif AudioManager and AudioManager.has_method("play_wrong"):
-		AudioManager.play_wrong()
+	var pd = _get_player_data()
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	
+	if is_gameplay:
+		# Timer 0 -> Whole level finishes and unlocks next level!
+		pd.complete_stage(current_latihan_id)
+		pd.current_stage_level = current_latihan_id + 1
+		pd.current_stage_question_idx = 0
+		pd.current_stage_timer_seconds = 95
+		pd.save_progress()
+		_update_stars_display()
 		
-	# Setup popup as "Waktu Habis!"
-	if label_complete_title:
-		label_complete_title.text = "Waktu Habis!"
-	if label_complete_desc:
-		label_complete_desc.text = "Waktu pengerjaan latihan telah habis.\nAyo coba lagi!"
-	if label_ulangi:
-		label_ulangi.text = "Ulang"
-	if label_kembali_menu:
-		label_kembali_menu.text = "Kembali"
-		
+		var am = _get_audio_manager()
+		if am and am.has_method("play_stage_complete"):
+			am.play_stage_complete()
+		elif AudioManager and AudioManager.has_method("play_stage_complete"):
+			AudioManager.play_stage_complete()
+			
+		if label_complete_title:
+			label_complete_title.text = "WAKTU HABIS!"
+		if label_complete_desc:
+			label_complete_desc.text = "Waktu telah habis! Level telah selesai\ndan level berikutnya telah terbuka."
+		if label_ulangi:
+			label_ulangi.text = "Level Selanjutnya"
+		if label_kembali_menu:
+			label_kembali_menu.text = "Peta Belajar"
+	else:
+		var am = _get_audio_manager()
+		if am and am.has_method("play_wrong"):
+			am.play_wrong()
+		elif AudioManager and AudioManager.has_method("play_wrong"):
+			AudioManager.play_wrong()
+			
+		if label_complete_title:
+			label_complete_title.text = "WAKTU HABIS!"
+		if label_complete_desc:
+			label_complete_desc.text = "Waktu pengerjaan latihan telah habis."
+		if label_ulangi:
+			label_ulangi.text = "Ulangi"
+		if label_kembali_menu:
+			label_kembali_menu.text = "Menu Latihan"
+			
 	complete_popup_layer.visible = true
 	complete_popup_layer.modulate.a = 0.0
 	complete_popup_container.scale = Vector2(0.7, 0.7)
@@ -1318,9 +1348,9 @@ func load_latihan(latihan_id: int, start_q_idx: int = 0) -> void:
 		var pd = _get_player_data()
 		var q_indices: Array[int] = []
 		if pd and pd.has_method("get_next_random_question_indices"):
-			q_indices = pd.get_next_random_question_indices(4, LATIHAN_SOAL_ACAK_25.size())
+			q_indices = pd.get_next_random_question_indices(7, LATIHAN_SOAL_ACAK_25.size())
 		else:
-			for i in range(4):
+			for i in range(7):
 				q_indices.append(randi() % LATIHAN_SOAL_ACAK_25.size())
 				
 		var generated_questions: Array = []
@@ -1339,12 +1369,22 @@ func load_latihan(latihan_id: int, start_q_idx: int = 0) -> void:
 	var questions: Array = current_latihan_data.get("questions", [])
 	if start_q_idx >= 0 and start_q_idx < questions.size():
 		current_question_index = start_q_idx
+	elif start_q_idx >= questions.size():
+		current_question_index = questions.size()
 	else:
 		current_question_index = 0
 		
-	question_fail_count = 0
 	is_timeout = false
-	time_remaining_seconds = 95
+	var pd = _get_player_data()
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	if is_gameplay and pd:
+		if current_question_index > 0 and pd.current_stage_timer_seconds > 0:
+			time_remaining_seconds = pd.current_stage_timer_seconds
+		else:
+			time_remaining_seconds = 95
+			pd.current_stage_timer_seconds = 95
+	else:
+		time_remaining_seconds = 95
 	_update_timer_display()
 	if _timer_node:
 		_timer_node.paused = false
@@ -1779,8 +1819,19 @@ func _handle_answer_correct() -> void:
 	elif AudioManager and AudioManager.has_method("play_correct"):
 		AudioManager.play_correct()
 		
+	var pd = _get_player_data()
+	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	if is_gameplay:
+		pd.add_star(1)
+		_update_stars_display()
+		
 	question_fail_count = 0
 	current_question_index += 1
+	
+	if is_gameplay:
+		pd.current_stage_question_idx = current_question_index
+		pd.current_stage_timer_seconds = time_remaining_seconds
+		pd.save_progress()
 	
 	var questions: Array = current_latihan_data.get("questions", [])
 	if current_question_index >= questions.size():
@@ -1803,10 +1854,23 @@ func _handle_answer_wrong() -> void:
 func _show_wrong_popup() -> void:
 	_stop_sound_clip()
 	label_wrong_message.text = "Maaf jawaban kamu masih salah"
-	if question_fail_count >= 3:
-		btn_lihat_materi.visible = true
+	
+	# If level 1-8, BtnLihatMateri is available on the 1st wrong answer
+	if current_latihan_id <= 8:
+		if btn_lihat_materi:
+			btn_lihat_materi.visible = true
+			btn_lihat_materi.offset_top = 190.0
+			btn_lihat_materi.offset_bottom = 348.0
+		if btn_jawab_lagi:
+			btn_jawab_lagi.offset_top = 8.0
+			btn_jawab_lagi.offset_bottom = 166.0
 	else:
-		btn_lihat_materi.visible = false
+		# Level 9+ (endless): No specific materi
+		if btn_lihat_materi:
+			btn_lihat_materi.visible = false
+		if btn_jawab_lagi:
+			btn_jawab_lagi.offset_top = 50.0
+			btn_jawab_lagi.offset_bottom = 208.0
 		
 	wrong_popup_layer.visible = true
 	wrong_popup_layer.modulate.a = 0.0
@@ -1824,9 +1888,27 @@ func _close_wrong_popup() -> void:
 		wrong_popup_layer.visible = false
 	)
 
+func _on_btn_lanjut_wrong_pressed() -> void:
+	_stop_sound_clip()
+	_close_wrong_popup()
+	question_fail_count = 0
+	current_question_index += 1
+	
+	var pd = _get_player_data()
+	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+		pd.current_stage_question_idx = current_question_index
+		pd.current_stage_timer_seconds = time_remaining_seconds
+		pd.save_progress()
+	
+	var questions: Array = current_latihan_data.get("questions", [])
+	if current_question_index >= questions.size():
+		_show_complete_popup()
+	else:
+		_animate_question_transition()
+
 func _on_lihat_materi_pressed() -> void:
 	_stop_sound_clip()
-	print("Membuka Materi terkait dari Latihan (3x gagal)...")
+	print("Membuka Materi terkait dari Latihan (1x salah)...")
 	var pd = _get_player_data()
 	if pd:
 		var target_m_id = current_latihan_id
@@ -1834,8 +1916,11 @@ func _on_lihat_materi_pressed() -> void:
 			target_m_id = ((current_latihan_id - 1) % 8) + 1
 		pd.set_current_materi(target_m_id)
 		pd.from_latihan_retry = true
-		pd.latihan_return_question_idx = current_question_index
+		pd.latihan_return_question_idx = current_question_index + 1
+		pd.current_stage_question_idx = current_question_index + 1
+		pd.current_stage_timer_seconds = time_remaining_seconds
 		pd.set_current_latihan(current_latihan_id)
+		pd.save_progress()
 	get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
 
 func _show_complete_popup() -> void:
@@ -1854,16 +1939,18 @@ func _show_complete_popup() -> void:
 	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
 	
 	if is_gameplay:
-		pd.add_star(1)
+		# Note: Stars are already awarded per correct answer (+1 per question)
 		pd.complete_stage(current_latihan_id)
 		pd.current_stage_level = current_latihan_id + 1
+		pd.current_stage_question_idx = 0
+		pd.current_stage_timer_seconds = 95
 		pd.save_progress()
 		_update_stars_display()
 		
 		if label_complete_title:
 			label_complete_title.text = "LEVEL SELESAI!"
 		if label_complete_desc:
-			label_complete_desc.text = "Selamat! Kamu mendapatkan 1 Bintang ⭐\ndan membuka level berikutnya."
+			label_complete_desc.text = "Selamat! Kamu telah menyelesaikan level ini\ndan membuka level berikutnya."
 		if label_ulangi:
 			label_ulangi.text = "Level Selanjutnya"
 		if label_kembali_menu:
@@ -1892,22 +1979,14 @@ func _on_ulangi_pressed() -> void:
 	complete_popup_layer.visible = false
 	var pd = _get_player_data()
 	var is_gameplay = (pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode)
+	is_timeout = false
 	
-	if is_timeout:
-		# Replay current level/latihan after timeout
-		is_timeout = false
-		current_question_index = 0
-		question_fail_count = 0
-		time_remaining_seconds = 95
-		_update_timer_display()
-		if _timer_node:
-			_timer_node.paused = false
-		load_latihan(current_latihan_id, 0)
-		return
-		
 	if is_gameplay:
-		# Advance to the next level
+		# Advance to the next level (whether questions completed or timer reached 0)
 		current_latihan_id = pd.current_stage_level
+		pd.current_stage_question_idx = 0
+		pd.current_stage_timer_seconds = 95
+		pd.save_progress()
 		current_question_index = 0
 		question_fail_count = 0
 		time_remaining_seconds = 95
@@ -1922,14 +2001,14 @@ func _on_ulangi_pressed() -> void:
 		else:
 			load_latihan(current_latihan_id, 0)
 	else:
-		# Replay current latihan
+		# Replay current standalone latihan
 		current_question_index = 0
 		question_fail_count = 0
 		time_remaining_seconds = 95
 		_update_timer_display()
 		if _timer_node:
 			_timer_node.paused = false
-		_render_question()
+		load_latihan(current_latihan_id, 0)
 
 func _on_kembali_menu_pressed() -> void:
 	_stop_sound_clip()
@@ -1983,5 +2062,10 @@ func _close_pause_popup() -> void:
 func _on_kembali_pause_pressed() -> void:
 	if _timer_node:
 		_timer_node.paused = false
+	var pd = _get_player_data()
+	if pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
+		pd.current_stage_question_idx = current_question_index
+		pd.current_stage_timer_seconds = time_remaining_seconds
+		pd.save_progress()
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 

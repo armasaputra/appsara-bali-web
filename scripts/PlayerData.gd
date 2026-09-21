@@ -14,6 +14,8 @@ var current_latihan_index: int = 1
 var is_gameplay_mode: bool = false
 var total_stars: int = 0
 var current_stage_level: int = 1
+var current_stage_question_idx: int = 0
+var current_stage_timer_seconds: int = 95
 var max_unlocked_stage: int = 1
 var cleared_stages: Dictionary = {} # stage_number -> true
 
@@ -153,6 +155,8 @@ func reset_all_progress() -> void:
 	# 2. Reset in-memory state
 	total_stars = 0
 	current_stage_level = 1
+	current_stage_question_idx = 0
+	current_stage_timer_seconds = 95
 	max_unlocked_stage = 1
 	cleared_stages.clear()
 	is_profile_registered = false
@@ -175,6 +179,8 @@ func save_progress() -> void:
 		"is_sound_muted": is_sound_muted,
 		"total_stars": total_stars,
 		"current_stage_level": current_stage_level,
+		"current_stage_question_idx": current_stage_question_idx,
+		"current_stage_timer_seconds": current_stage_timer_seconds,
 		"max_unlocked_stage": max_unlocked_stage,
 		"cleared_stages": cleared_keys
 	}
@@ -201,6 +207,8 @@ func load_progress() -> void:
 			is_sound_muted = data.get("is_sound_muted", false)
 			total_stars = int(data.get("total_stars", 0))
 			current_stage_level = int(data.get("current_stage_level", 1))
+			current_stage_question_idx = int(data.get("current_stage_question_idx", 0))
+			current_stage_timer_seconds = int(data.get("current_stage_timer_seconds", 95))
 			max_unlocked_stage = int(data.get("max_unlocked_stage", 1))
 			
 			var cl = data.get("cleared_stages", [])

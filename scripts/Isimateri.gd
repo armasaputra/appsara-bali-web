@@ -683,7 +683,7 @@ func _update_buttons(total_pages: int) -> void:
 	elif current_page_index >= total_pages - 1:
 		# Last Page
 		if is_from_latihan:
-			label_top.text = "Jawab Lagi"
+			label_top.text = "Lanjut Soal"
 			label_top.label_settings.font_size = 56
 		elif is_gameplay:
 			label_top.text = "Coba Latihan"
@@ -710,7 +710,7 @@ func _on_btn_top_pressed() -> void:
 		# Last page
 		var pd = _get_player_data()
 		if pd and "from_latihan_retry" in pd and pd.from_latihan_retry:
-			print("Kembali ke IsiLatihan (Jawab Lagi)...")
+			print("Kembali ke IsiLatihan (Lanjut Soal)...")
 			get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
 		elif pd and "is_gameplay_mode" in pd and pd.is_gameplay_mode:
 			print("Memulai Latihan dari Materi (Coba Latihan)...")

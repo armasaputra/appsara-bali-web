@@ -244,11 +244,19 @@ func _on_mulai_pressed() -> void:
 		pd.current_stage_level = current_active_stage_num
 		pd.set_current_latihan(current_active_stage_num)
 		pd.from_latihan_retry = false
-		pd.latihan_return_question_idx = 0
-		if current_active_stage_num <= 8:
-			pd.set_current_materi(current_active_stage_num)
-			get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
-			return
+		
+		var resume_q = pd.current_stage_question_idx if ("current_stage_question_idx" in pd) else 0
+		pd.latihan_return_question_idx = resume_q
+		
+		# If starting fresh from question 0 in level 1-8, reset timer and show Materi first.
+		# If resuming mid-level (resume_q > 0), jump directly to IsiLatihan at the saved question without rollback!
+		if resume_q == 0:
+			pd.current_stage_timer_seconds = 95
+			pd.save_progress()
+			if current_active_stage_num <= 8:
+				pd.set_current_materi(current_active_stage_num)
+				get_tree().change_scene_to_file("res://scenes/Isimateri.tscn")
+				return
 	get_tree().change_scene_to_file("res://scenes/IsiLatihan.tscn")
 
 func _on_kembali_pressed() -> void:
